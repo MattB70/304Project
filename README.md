@@ -1,6 +1,5 @@
 <h1> 304 Project Group 7 </h1>
 
-By:
 <table style="width:100%">
 <tr>
     <th>Name</th>
