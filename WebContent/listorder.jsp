@@ -11,6 +11,7 @@
 <h1>Order List</h1>
 
 <%
+// test comment!
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 String uid = "SA";
 String pw = "YourStrong@Passw0rd";
