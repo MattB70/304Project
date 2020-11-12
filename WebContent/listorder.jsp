@@ -1,5 +1,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 
 <!DOCTYPE html>
@@ -12,7 +13,6 @@
 <h1>Order List</h1>
 
 <%
-// test comment!
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 String uid = "SA";
 String pw = "YourStrong@Passw0rd";
@@ -24,7 +24,7 @@ catch (java.lang.ClassNotFoundException e){
 }
 
 // Useful code for formatting currency values:
- NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 // Make connection
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
