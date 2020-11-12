@@ -22,3 +22,7 @@
     <td>TODO</td>
 </tr>
 </table>
+
+
+<h2> Help </h2>
+Load DB: http://localhost/shop/loaddata.jsp
