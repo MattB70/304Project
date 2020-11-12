@@ -31,14 +31,14 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
       Statement stmt = con.createStatement();) 
 {	
 	String q1 = "SELECT O.orderId, O.orderDate, O.customerId, C.firstName, C.lastName, O.totalAmount "
-			   +"FROM ordersummary O, customer C "
-			   +"WHERE O.customerId = C.customerId";
+			   +"FROM ordersummary O LEFT JOIN customer C ON O.customerId = C.customerId";
+
 	ResultSet rst = stmt.executeQuery(q1);
 
 	out.println("<h1>Orders</h1><table border=1><tr><th>OrderId</th><th>Order Date</th><th>CustomerId</th><th>Customer Name</th><th>Total Amount</th></tr>");
 	
 	while (rst.next()){			
-		out.println("<tr><td>"+rst.getString(1)+"</td><td>"+rst.getDate(2)+"</td><td>"+rst.getString(3)+"</td><td>"+rst.getString(4)+" "+rst.getString(5)+"</td><td>"+currFormat.format(rst.getFloat(6))+"</td></tr>");
+		out.println("<tr><td>"+rst.getString(1)+"</td><td>"+rst.getString(2)+"</td><td>"+rst.getString(3)+"</td><td>"+rst.getString(4)+" "+rst.getString(5)+"</td><td>"+currFormat.format(rst.getFloat(6))+"</td></tr>");
 		
 		String q2 = "SELECT productId, quantity, price "
 				   +"FROM orderproduct "
