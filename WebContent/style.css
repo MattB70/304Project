@@ -1,0 +1,72 @@
+/*=========================================================*/
+/* Variables (color scheme)*/
+:root {
+    --background: #25282c;
+    --font: #cccccc;
+    --boarder: #5d5f70;
+    --accent1: #313b3f;
+    --accent2: #1f2527;
+    --accent3: #606783;
+}
+
+
+/*=========================================================*/
+/* Main */
+body {
+    font-family: sans-serif;
+    font-size: 1rem;
+    background-color: var(--background);
+    color: var(--font);
+}
+
+
+/*=========================================================*/
+/* TABLES */
+table {
+    border-collapse: collapse;
+}
+
+/* Table Headers */
+th {
+    border: 1px solid var(--accent1);
+    background-color: var(--accent1);
+    color: var(--font);
+    padding: 12px;
+}
+/* Table Rows */
+td {
+    border: 1px solid var(--accent1);
+    background-color: var(--accent2);
+    color: var(--font);
+    padding: 4px;
+}
+
+
+/*=========================================================*/
+/* Links */
+ /* unvisited link */
+ a:link {
+     color: rgb(128, 164, 175);
+  }
+/* visited link */
+a:visited {
+    color: rgb(112, 102, 146);
+}
+/* mouse over link */
+a:hover {
+    color: rgb(235, 155, 255);
+} 
+/* selected link */
+a:active {
+    color: rgb(93, 253, 179);
+} 
+
+
+/*=========================================================*/
+/* Input Field */
+input {
+    padding: 5px;
+    border: 1px solid var(--boarder);
+    background-color: var(--accent1);
+    color: var(--font);
+}

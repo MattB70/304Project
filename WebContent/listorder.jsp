@@ -7,6 +7,7 @@
 <html>
 <head>
 <title>Ramon World Order's</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 
