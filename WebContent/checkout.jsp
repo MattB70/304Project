@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Ray's Grocery CheckOut Line</title>
+<title>Ramon's World CheckOut</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 

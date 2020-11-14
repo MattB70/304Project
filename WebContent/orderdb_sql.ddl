@@ -60,7 +60,7 @@ CREATE TABLE category (
 );
 
 CREATE TABLE product (
-    productId           INT IDENTITY,
+    productId           INT IDENTITY(1,1),
     productName         VARCHAR(40),
     productPrice        DECIMAL(10,2),
     productImageURL     VARCHAR(100),

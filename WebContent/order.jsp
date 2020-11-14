@@ -4,11 +4,13 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>YOUR NAME Grocery Order Processing</title>
+<title>Ramon's World Order Summary</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 
@@ -18,11 +20,73 @@ String custId = request.getParameter("customerId");
 @SuppressWarnings({"unchecked"})
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 
-// Determine if valid customer id was entered
-// Determine if there are products in the shopping cart
-// If either are not true, display an error message
 
 // Make connection
+try
+{	// Load driver class
+	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+}
+catch (java.lang.ClassNotFoundException e)
+{
+	out.println("ClassNotFoundException: " +e);
+}
+String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
+String uid = "SA";
+String pw = "YourStrong@Passw0rd";
+NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
+
+
+
+try ( Connection con = DriverManager.getConnection(url, uid, pw);
+		Statement stmt = con.createStatement();) { 
+	// Determine if valid customer id was entered
+	Integer.parseInt(custId);
+
+	// Determine if there are products in the shopping cart
+	String sql = "SELECT COUNT(productId) "
+				+"FROM ordersummary OS JOIN orderproduct OP ON OS.orderId = OP.orderId "
+				+"WHERE OS.customerId = "+custId;
+	PreparedStatement pst = con.prepareStatement(sql);
+	ResultSet rst = pst.executeQuery();
+	rst.next();
+	if(rst.getInt(1) > 0)	// There exists products in the cart
+	{
+		// Header
+		out.println("<h1>Your Order Summary</h1>");
+
+
+
+		// Do the stuff
+		sql = "SELECT P.productId, P.productName, OP.quantity, P.productPrice "
+					+"FROM product P JOIN orderproduct OP ON P.productId = OP.productId";
+		pst = con.prepareStatement(sql);
+		rst = pst.executeQuery();	
+
+		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
+	
+		while (rst.next()){	
+			out.println("<tr><td>" + rst.getString(1) +"</td><td>"+ rst.getString(2) +"</td><td>"+ rst.getString(3) +"</td><td>"+ currFormat.format(rst.getFloat(4)) + "</td></tr>");
+		}
+		out.println("</table>");
+		if (con!=null) con.close();
+
+
+
+	}
+	else	// There exists no products in the cart
+	{
+		out.println("<h2>No items in cart!</h2>");
+	}
+
+} catch(NumberFormatException e) { 
+	out.println("<h2>Invalid custId: "+custId+"</h2>");
+} catch (SQLException e) { 	
+	out.println("SQLException: " +e); 
+} catch(Exception e) {
+	out.println("<h2>"+e+"</h2>");
+}
+
+
 
 // Save order information to database
 
