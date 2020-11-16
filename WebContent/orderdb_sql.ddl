@@ -149,9 +149,9 @@ INSERT INTO category(categoryName) VALUES ('Bobble Heads');
 
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon', 1, 'Black',30.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon', 1,'White',30.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon,1,'Grey',30.00;
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon',1,'Grey',30.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('SomeoneGotMeThis', 1,'Black',30.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('SomeoneGotMeThis, 1,'White',30.00;
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('SomeoneGotMeThis', 1,'White',30.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('SomeoneGotMeThis', 1,'Grey',30.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatSleepCode', 1,'Black',30.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatSleepCode', 1,'White',30.00);
@@ -159,7 +159,7 @@ INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatS
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon',2,'250 mL mug',15.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon',3,'2 x 3 inch',5.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('iWentToRamonsWorld',3,'2 x 3 inch',5.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('You're my Databae',3,'2 x 3 inch',5.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Youre my Databae',3,'2 x 3 inch',5.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon',4,'30 inch',17.45);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('RamonsWorld',5,'20 - 1 kg tins',39.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('RamonsWorld',5,'16 kg pkg.',62.50);

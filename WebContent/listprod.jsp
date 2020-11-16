@@ -19,7 +19,8 @@
 
 <%
  // Get product name to search for
-String name = request.getParameter("productName");	
+String name = request.getParameter("productName");
+if(name == null) name = ""; // ensure name is never null.
 //Note: Forces loading of SQL Server driver
 try
 {	// Load driver class
@@ -37,11 +38,9 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 // Make the connection
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
       Statement stmt = con.createStatement();) {
-		//CHECK: Part 3 of question 2 --> We may need to modify "LIKE" clause
-	name = '%'+name+'%';
-	String sql = "SELECT productId, productName, productPrice FROM product WHERE productName LIKE ?";
+
+	String sql = "SELECT productId, productName, productPrice FROM product WHERE productName LIKE '%"+name+"%'";
 	PreparedStatement pst = con.prepareStatement(sql);
-	pst.setString(1, name);
 	ResultSet rst = pst.executeQuery();	
 
 	out.println("<table border=1><tr><th> </th><th>Product Name</th><th>Price</th></tr>");
