@@ -9,6 +9,8 @@
     --accent3: #606783;
 }
 
+/*=========================================================*/
+/* Banner */
 * {
     margin: 0; 
     padding: 0;
@@ -31,6 +33,7 @@
     margin: 30px; 
  }
 
+
 /*=========================================================*/
 /* Main */
 body {
@@ -47,6 +50,7 @@ table {
     border-collapse: separate;
     border-color: var(--accent1);
     border-spacing: 1px;
+    
 }
 
 /* Table Headers */
