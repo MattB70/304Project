@@ -10,7 +10,16 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<h2 align = "left"><a href="shop.html"> Home Page</a></h2>
+
+<div id="banner">
+        <div id="banner-content">
+                <table border="1"><tr><th><a href="shop.html"> Home</a></th><th><a href="listprod.jsp">Search Products</a></th></tr></table>
+        </div>
+</div>
+
+
+<div id="main-content">
+
 <h1>Order List: </h1>
 	
 <%
@@ -61,5 +70,6 @@ catch (SQLException ex) {
 	out.println(ex); 
 }
 %>
+</div>
 </body>
 </html>

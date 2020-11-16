@@ -9,8 +9,16 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<h2 align="left"><a href="shop.html"> Home Page</a></h2>
-<h1>Search for the products you want to buy:</h1>
+
+<div id="banner">
+        <div id="banner-content">
+                <table border="1"><tr><th><a href="shop.html"> Home</a></th><th><a href="listorder.jsp">List All Orders</a></th></tr></table>
+        </div>
+</div>
+
+<div id="main-content">
+
+<h2>Search for the products you want to buy:</h2>
 
 <form method="get" action="listprod.jsp">
 <input type="text" name="productName" size="50">
@@ -44,7 +52,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	PreparedStatement pst = con.prepareStatement(sql);
 	ResultSet rst = pst.executeQuery();	
 
-	out.println("<table border=1><tr><th> </th><th>Product Name</th><th>Price</th></tr>");
+	out.println("<table><tr><th> </th><th>Product Name</th><th>Price</th></tr>");
 	while (rst.next()){	
 		String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
 		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
@@ -56,5 +64,6 @@ catch (SQLException ex) {
 	out.println(ex); 
 } 
 %>
+</div>
 </body>
 </html>

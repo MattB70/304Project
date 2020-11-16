@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<div id="main-content">
+
 <h1>Enter your customer id to complete the transaction:</h1>
 
 <form method="get" action="order.jsp">
@@ -13,6 +15,7 @@
 <input type="submit" value="Submit"><input type="reset" value="Reset">
 </form>
 
+</div>
 </body>
 </html>
 

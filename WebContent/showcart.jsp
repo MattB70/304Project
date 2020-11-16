@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-
+<div id="main-content">
 <%
 // Get the current list of products
 @SuppressWarnings({"unchecked"})
@@ -79,6 +79,7 @@ else
 }
 %>
 <h2><a href="listprod.jsp">Continue Shopping</a></h2>
+</div>
 </body>
 </html> 
 

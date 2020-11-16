@@ -14,6 +14,14 @@
 </head>
 <body>
 
+<div id="banner">
+        <div id="banner-content">
+                <table border="1"><tr><th><a href="shop.html"> Home</a></th></table>
+        </div>
+</div>
+
+<div id="main-content">
+
 <% 
 // Get customer id
 String custId = request.getParameter("customerId");
@@ -124,6 +132,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 // Clear cart if order placed successfully
 %>
+</div>
 </BODY>
 </HTML>
 

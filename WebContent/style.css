@@ -1,7 +1,7 @@
 /*=========================================================*/
 /* Variables (color scheme)*/
 :root {
-    --background: #25282c;
+    --background: #1d2024;
     --font: #cccccc;
     --border: #5d5f70;
     --accent1: #313b3f;
@@ -9,11 +9,32 @@
     --accent3: #606783;
 }
 
+* {
+    margin: 0; 
+    padding: 0;
+  }
+
+  div#banner { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    background-color: var(--accent2); 
+    width: 100%; 
+  }
+  div#banner-content { 
+    width: auto; 
+    margin: auto; 
+    padding: 5px; 
+  }
+  div#main-content { 
+    padding-top: 60px;
+    margin: 30px; 
+ }
 
 /*=========================================================*/
 /* Main */
 body {
-    font-family: sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 1rem;
     background-color: var(--background);
     color: var(--font);
@@ -23,7 +44,9 @@ body {
 /*=========================================================*/
 /* TABLES */
 table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-color: var(--accent1);
+    border-spacing: 1px;
 }
 
 /* Table Headers */
@@ -31,34 +54,38 @@ th {
     border: 1px solid var(--accent1);
     background-color: var(--accent1);
     color: var(--font);
-    padding: 12px;
+    font-variant-caps: all-small-caps;
+    font-size: x-large;
+    padding: 8px;
 }
 /* Table Rows */
 td {
     border: 1px solid var(--accent1);
     background-color: var(--accent2);
     color: var(--font);
-    padding: 4px;
+    font-weight: 600;
+    padding: 6px;
 }
 
 
 /*=========================================================*/
 /* Links */
  /* unvisited link */
- a:link {
-     color: rgb(128, 164, 175);
-  }
+a:link {
+     color: rgb(158, 196, 207);
+     text-decoration:none;
+}
 /* visited link */
 a:visited {
-    color: rgb(112, 102, 146);
+    color: rgb(151, 139, 189);
 }
 /* mouse over link */
 a:hover {
-    color: rgb(235, 155, 255);
+    color: rgb(243, 193, 255);
 } 
 /* selected link */
 a:active {
-    color: rgb(93, 253, 179);
+    color: rgb(158, 255, 210);
 } 
 
 
