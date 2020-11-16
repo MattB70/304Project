@@ -1,5 +1,6 @@
 <%@ page import="java.sql.*,java.net.URLEncoder" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,7 @@ catch (java.lang.ClassNotFoundException e)
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 String uid = "SA";
 String pw = "YourStrong@Passw0rd";
-NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 // Make the connection
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
