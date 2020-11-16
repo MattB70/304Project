@@ -10,10 +10,9 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-
-<h1>Order List</h1>
-<h2 align="left"><a href="shop.html"> Home Page</a></h2>
-
+<h2 align = "left"><a href="shop.html"> Home Page</a></h2>
+<h1>Order List: </h1>
+	
 <%
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 String uid = "SA";

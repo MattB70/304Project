@@ -38,18 +38,17 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
       Statement stmt = con.createStatement();) {
 		//CHECK: Part 3 of question 2 --> We may need to modify "LIKE" clause
-	String sql = "SELECT productName, price, productId FROM Product WHERE productName LIKE %?% AND Inventory > 0 ORDER BY productName";
+	name = '%'+name+'%';
+	String sql = "SELECT productId, productName, productPrice FROM Product WHERE productName LIKE ?";
 	PreparedStatement pst = con.prepareStatement(sql);
+	pst.setString(1, name);
 	ResultSet rst = pst.executeQuery();	
-	String prodName = rst.getString("productName");
-	pst.setString(1, prodName);	
 
 	out.println("<table border=1><tr><th> </th><th>Product Name</th><th>Price</th></tr>");
 	
 	while (rst.next()){	
-	out.println("<tr><td><a href=\"addcart.jsp?id=" + rst.getString(3) + "&name=" + rst.getString(1)
-							+ "&price=" + rst.getString(2) + "\">Add to cart</a>" + "</td><td>" + rst.getString(1)
-							+ "</td><td>" + rst.getString(2) + "</td></tr>");
+	String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
+		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
 	}
 	out.println("</table>");
 	if (con!=null) con.close();
@@ -57,16 +56,6 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 catch (SQLException ex) { 	
 	out.println(ex); 
 } 
-// Print out the ResultSet
-
-// For each product create a link of the form
-// addcart.jsp?id=productId&name=productName&price=productPrice
-// Close connection
-
-// Useful code for formatting currency values:
-// NumberFormat currFormat = NumberFormat.getCurrencyInstance();
-// out.println(currFormat.format(5.0);	// Prints $5.00
 %>
-
 </body>
 </html>
