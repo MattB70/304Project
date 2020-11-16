@@ -40,7 +40,11 @@ try
         }
         catch (Exception e)
         {	// Keep running on exception.  This is mostly for DROP TABLE if table does not exist.
-            out.print(e);
+            out.println("<br>");
+            out.println("<br>");
+            out.println("<h3 style=\"color:red;\">EXCEPTION: . . . "+e+"</h3>");
+            out.println("<br>");
+            out.println("<br>");
         }
     }	 
     scanner.close();
@@ -49,7 +53,11 @@ try
 }
 catch (Exception e)
 {
-    out.print(e);
+    out.println("<br>");
+    out.println("<br>");
+    out.println("<h3 style=\"color:red;\">EXCEPTION: . . . "+e+"</h3>");
+    out.println("<br>");
+    out.println("<br>");
 }  
 %>
 </body>

@@ -39,15 +39,14 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
       Statement stmt = con.createStatement();) {
 		//CHECK: Part 3 of question 2 --> We may need to modify "LIKE" clause
 	name = '%'+name+'%';
-	String sql = "SELECT productId, productName, productPrice FROM Product WHERE productName LIKE ?";
+	String sql = "SELECT productId, productName, productPrice FROM product WHERE productName LIKE ?";
 	PreparedStatement pst = con.prepareStatement(sql);
 	pst.setString(1, name);
 	ResultSet rst = pst.executeQuery();	
 
 	out.println("<table border=1><tr><th> </th><th>Product Name</th><th>Price</th></tr>");
-	
 	while (rst.next()){	
-	String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
+		String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
 		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
 	}
 	out.println("</table>");
