@@ -48,7 +48,7 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
       Statement stmt = con.createStatement();) {
 
-	String sql = "SELECT productId, productName, productPrice, productImageURL, productImage FROM product WHERE productName LIKE '%"+name+"%'";
+	String sql = "SELECT productId, productName, productPrice, productImageURL FROM product WHERE productName LIKE '%"+name+"%'";
 	PreparedStatement pst = con.prepareStatement(sql);
 	ResultSet rst = pst.executeQuery();	
 
