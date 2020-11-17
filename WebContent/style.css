@@ -1,7 +1,7 @@
 /*=========================================================*/
 /* Variables (color scheme)*/
 :root {
-    --background: #1d2024;
+    --background: #2d3133;
     --font: #cccccc;
     --border: #5d5f70;
     --accent1: #313b3f;
@@ -20,7 +20,7 @@
     position: absolute; 
     top: 0; 
     left: 0; 
-    background-color: var(--accent2); 
+    background-color: var(--background); 
     width: 100%; 
   }
   div#banner-content { 
@@ -29,9 +29,9 @@
     padding: 5px; 
   }
   div#main-content { 
-    padding-top: 60px;
-    margin: 30px; 
- }
+    padding-top: 260px;
+    margin: 30px;
+  }
 
 
 /*=========================================================*/
