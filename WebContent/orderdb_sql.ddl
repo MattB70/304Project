@@ -161,20 +161,20 @@ INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('iWentToRamonsWorld',3,'2 x 3 inch',5.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Youre my Databae',3,'2 x 3 inch',5.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon',4,'30 inch',17.45);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('RamonsWorld',5,'20 - 1 kg tins',39.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('RamonsWorld',5,'16 kg pkg.',62.50);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('RamonsWorld',5,'10 boxes x 12 pieces',9.20);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Computer',5,'30 gift boxes',81.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Nerd',5,'24 pkgs. x 4 pieces',10.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('iWentToRamonsWorld',5,'24 - 500 g pkgs.',21.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Sasquatch Ale',6,'24 - 12 oz bottles',14.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Steeleye Stout',6,'24 - 12 oz bottles',18.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Inlagd Sill',6,'24 - 250 g  jars',19.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Boston Crab Meat',6,'24 - 4 oz tins',18.40);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Jack''s New England Clam Chowder',7,'12 - 12 oz cans',9.65);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Singaporean Hokkien Fried Mee',7,'32 - 1 kg pkgs.',14.00);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Louisiana Fiery Hot Pepper Sauce',7,'32 - 8 oz bottles',21.05);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Laughing Lumberjack Lager',8,'24 - 12 oz bottles',14.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramons World',5,'20 - 1 kg tins',17.45);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramons World',5,'16 kg pkg.',17.45);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramons World',5,'10 boxes x 12 pieces',17.45);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Computer',5,'30 gift boxes',17.45);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Nerd',5,'24 pkgs. x 4 pieces',17.45);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('iWentToRamonsWorld',5,'24 - 500 g pkgs.',17.45);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramons World',6,'24 - 12 oz bottles',2.50);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramon is God',6,'24 - 12 oz bottles',2.50);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Autographed',6,'24 - 250 g  jars',2.50);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatSleepCode',6,'24 - 4 oz tins',2.50);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramons World,7,'Baseball Cap',19.99);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon',7,'Baseball Cap',19.99);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatSleepCode',7,'Baseball Cap,19.99);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramon Bobble Head',8,'24 - 12 oz bottles',40.00);
     
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Arnold', 'Anderson', 'a.anderson@gmail.com', '204-111-2222', '103 AnyWhere Street', 'Winnipeg', 'MB', 'R3X 45T', 'Canada', 'arnold' , 'test');
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Bobby', 'Brown', 'bobby.brown@hotmail.ca', '572-342-8911', '222 Bush Avenue', 'Boston', 'MA', '22222', 'United States', 'bobby' , 'bobby');
@@ -216,3 +216,15 @@ SELECT @orderId = @@IDENTITY
 INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 5, 4, 21.35)
 INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 19, 2, 81)
 INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 20, 3, 10);
+
+-- insert images
+UPDATE Product SET productImageURL = 'images/1.jpg' WHERE productId = 1;
+UPDATE Product SET productImageURL = 'images/2.jpg' WHERE productId = 2;
+UPDATE Product SET productImageURL = 'images/3.jpg' WHERE productId = 3;
+UPDATE Product SET productImageURL = 'images/4.jpg' WHERE productId = 4;
+UPDATE Product SET productImageURL = 'images/5.jpg' WHERE productId = 5;
+UPDATE Product SET productImageURL = 'images/6.jpg' WHERE productId = 6;
+UPDATE Product SET productImageURL = 'images/7.jpg' WHERE productId = 7;
+UPDATE Product SET productImageURL = 'images/8.jpg' WHERE productId = 8;
+UPDATE Product SET productImageURL = 'images/9.jpg' WHERE productId = 9;
+UPDATE Product SET productImageURL = 'images/10.jpg' WHERE productId = 10;
