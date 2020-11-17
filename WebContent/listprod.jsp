@@ -48,14 +48,15 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
       Statement stmt = con.createStatement();) {
 
-	String sql = "SELECT productId, productName, productPrice FROM product WHERE productName LIKE '%"+name+"%'";
+	String sql = "SELECT productId, productName, productPrice, productImageURL, productImage FROM product WHERE productName LIKE '%"+name+"%'";
 	PreparedStatement pst = con.prepareStatement(sql);
 	ResultSet rst = pst.executeQuery();	
 
-	out.println("<table><tr><th> </th><th>Product Name</th><th>Price</th></tr>");
+	out.println("<table><tr><th> </th><th>Product Name</th><th>Image</th><th>Price</th></tr>");
 	while (rst.next()){	
+
 		String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
-		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
+		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+ "<img style='height:200px' src='"+ rst.getString("productImageURL") +"'>" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
 	}
 	out.println("</table>");
 	if (con!=null) con.close();
