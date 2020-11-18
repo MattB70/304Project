@@ -12,8 +12,8 @@
 <body>
 
 <div id="banner">
-        <div id="banner-content">
-                <table border="1"><tr><th><a href="shop.html"> Home</a></th><th><a href="listprod.jsp">Search Products</a></th></tr></table>
+        <div id="banner-content" style="background: url('images/banner.png') no-repeat center;">
+                <table border="1"><tr><th><a href="shop.html"><img src="images/icon.png" alt="Home" height="200" ></a></th><th><a href="listprod.jsp">Begin<br>Shopping</a></th><th><a href="listorder.jsp">List All<br>Orders</a></th></tr></table>
         </div>
 </div>
 

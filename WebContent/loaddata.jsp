@@ -9,6 +9,13 @@
 </head>
 <body>
 
+<div id="banner">
+        <div id="banner-content" style="background: url('images/banner.png') no-repeat center;">
+                <table border="1"><tr><th><a href="shop.html"><img src="images/icon.png" alt="Home" height="200" ></a></th><th><a href="listprod.jsp">Begin<br>Shopping</a></th><th><a href="listorder.jsp">List All<br>Orders</a></th></tr></table>
+        </div>
+</div>
+
+<div id="main-content">
 <%
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 String uid = "SA";
@@ -60,5 +67,6 @@ catch (Exception e)
     out.println("<br>");
 }  
 %>
+</div>
 </body>
 </html> 

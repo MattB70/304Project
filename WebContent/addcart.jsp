@@ -1,9 +1,6 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.ArrayList" %>
-<!DOCTYPE html>
-<html>
-<body>
-<div id="main-content">
+
 <%
 // Get the current list of products
 @SuppressWarnings({"unchecked"})
@@ -40,6 +37,3 @@ else
 session.setAttribute("productList", productList);
 %>
 <jsp:forward page="showcart.jsp" />
-</div>
-</body>
-</html>
