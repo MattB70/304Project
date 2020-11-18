@@ -56,7 +56,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	while (rst.next()){	
 
 		String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
-		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+ "<img style='height:200px' src='"+ rst.getString("productImageURL") +"'>" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
+		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+ "<img style='height:200px' src='"+ rst.getString("productImageURL") +"' alt=\"image unavailable\">" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
 	}
 	out.println("</table>");
 	if (con!=null) con.close();

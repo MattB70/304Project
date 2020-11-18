@@ -171,9 +171,9 @@ INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramo
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramon is God',6,'24 - 12 oz bottles',2.50);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Autographed',6,'24 - 250 g  jars',2.50);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatSleepCode',6,'24 - 4 oz tins',2.50);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramons World,7,'Baseball Cap',19.99);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramons World',7,'Baseball Cap',19.99);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon',7,'Baseball Cap',19.99);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatSleepCode',7,'Baseball Cap,19.99);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('EatSleepCode',7,'Baseball Cap',19.99);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ramon Bobble Head',8,'24 - 12 oz bottles',40.00);
     
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Arnold', 'Anderson', 'a.anderson@gmail.com', '204-111-2222', '103 AnyWhere Street', 'Winnipeg', 'MB', 'R3X 45T', 'Canada', 'arnold' , 'test');
