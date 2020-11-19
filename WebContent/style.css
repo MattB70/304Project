@@ -58,8 +58,9 @@ th {
     font-variant-caps: all-small-caps;
     font-size: x-large;
     padding: 8px;
+    min-width: 120px;
 }
-/* Table Rows */
+/* Table content */
 td {
     border: 1px solid var(--accent1);
     background-color: var(--accent2);
