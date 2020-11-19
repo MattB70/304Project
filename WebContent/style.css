@@ -20,7 +20,6 @@
   div#main-content {
     padding-top: 50px; 
     margin: auto;
-    border: 2px solid #FFFF00;
     width: min-content;
     min-width: 300px;
   }
