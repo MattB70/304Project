@@ -1,7 +1,8 @@
 /*=========================================================*/
 /* Variables (color scheme)*/
 :root {
-    --background: #2d3133;
+    --background: #21262e;
+    --backgroundtop: #002f52;
     --font: #cccccc;
     --border: #5d5f70;
     --accent1: #313b3f;
@@ -16,21 +17,19 @@
     padding: 0;
   }
 
-  div#banner { 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    background-color: var(--background); 
-    width: 100%; 
+  div#main-content {
+    padding-top: 50px; 
+    margin: auto;
+    border: 2px solid #FFFF00;
+    width: min-content;
+    min-width: 300px;
   }
-  div#banner-content { 
-    width: auto; 
-    margin: auto; 
-    padding: 5px; 
-  }
-  div#main-content { 
-    padding-top: 260px;
-    margin: 30px;
+  div#bannerimage {
+    width: 100%;
+    background-image: url(images/banner.PNG);
+    height: 316px;
+    background-color: purple;
+    background-position: center;
   }
 
 
@@ -52,7 +51,6 @@ table {
     border-spacing: 1px;
     
 }
-
 /* Table Headers */
 th {
     border: 1px solid var(--accent1);
@@ -71,6 +69,21 @@ td {
     padding: 6px;
 }
 
+table.buttons {
+    border-collapse: collapse;
+}
+th.buttons {
+    border: 0px;
+    background-color: var(--backgroundtop);
+    color: var(--font);
+    font-variant-caps: all-small-caps;
+    font-size: xx-large;
+}
+td.buttons {
+    background-color: var(--backgroundtop);
+    color: var(--font);
+    font-weight: 600;
+}
 
 /*=========================================================*/
 /* Links */
