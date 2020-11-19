@@ -115,9 +115,13 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	*/
 
 // Insert each item into OrderProduct table using OrderId from previous INSERT
-
+	//get previous insert
+		//check it is non null/not current
+	//while .hasnext()
+	//insert into table
+	//exit
 // Update total amount for order record
-
+	//could recursive SUM(amount)
 // Here is the code to traverse through a HashMap
 // Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
 
