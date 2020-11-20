@@ -21,10 +21,13 @@
 
 <div id="main-content">
 
-<h1>Enter your customer id to complete the transaction:</h1>
+<h1>Enter your customer id and password to complete the transaction:</h1>
 
 <form method="get" action="order.jsp">
-<input type="text" name="customerId" size="50">
+<table>
+<tr><td>Customer ID: </td><td><input type="text" name="customerId" size="50"></td></tr>
+<tr><td>Password: </td><td><input type="password" name="password" size="50"></td></tr>
+</table>
 <input type="submit" value="Submit"><input type="reset" value="Reset">
 </form>
 
