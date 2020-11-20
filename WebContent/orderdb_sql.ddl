@@ -217,6 +217,7 @@ INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId,
 INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 19, 2, 81)
 INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, 20, 3, 10);
 
+
 -- insert images
 UPDATE Product SET productImageURL = 'images/1.jpg' WHERE productId = 1;
 UPDATE Product SET productImageURL = 'images/2.jpg' WHERE productId = 2;
