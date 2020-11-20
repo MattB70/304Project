@@ -25,20 +25,55 @@
 
 <div id="main-content">
 
-<h2>Search for the products you want to buy:</h2>
+<h2>Browse products by category and search by product name:</h2>
 
 <form method="get" action="listprod.jsp">
+<select size = "1" name= "categoryName">
+<option>All</option>
+<option>T-Shirts</option>
+<option>Mugs</option>
+<option>Magnets</option>
+<option>Lanyards</option>
+<option>Keychains</option>
+<option>Post Cards</option>
+<option>Hats</option>
+<option>Bobble Heads</option>
+</select>
 <input type="text" name="productName" size="50">
-<input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
+<input type="submit" value="Submit"><input type="reset" value="Reset"> <br>(Leave blank for all products)
 </form>
 <br>
-<h2>All Products</h2>
+
 
 <%
  // Get product name to search for
 String name = request.getParameter("productName");
+String category = request.getParameter("categoryName");
+boolean hasNameEntered = name != null && !name.equals("");
+boolean hasCategoryEntered = category != null && !category.equals("") && !category.equals("All");
+
 if(name == null) name = ""; // ensure name is never null.
+String filter = "";
+String sql = "";
 //Note: Forces loading of SQL Server driver
+if(hasNameEntered && hasCategoryEntered){
+	filter = "<h2>Products matching: "+name+"in category: "+category+"</h2>";
+	name = '%'+name+'%';
+	sql = "SELECT P.productId, P.productName, P.productPrice, P.productImageURL, P.productDesc, C.categoryName FROM product P, category C WHERE P.categoryId = C.categoryId AND productName LIKE ? AND categoryName LIKE ?"; 
+}
+else if(hasNameEntered && !hasCategoryEntered){
+	filter = "<h2>Products matching: "+name+"</h2>";
+	name = '%'+name+'%';
+	sql = "SELECT P.productId, P.productName, P.productPrice, P.productImageURL, P.productDesc, C.categoryName FROM product P, category C WHERE P.categoryId = C.categoryId AND productName LIKE ?"; 
+}
+else if(!hasNameEntered && hasCategoryEntered){
+	filter = "<h2>Products in category: "+category+"</h2>";
+	sql = "SELECT P.productId, P.productName, P.productPrice, P.productImageURL, P.productDesc, C.categoryName FROM product P, category C WHERE P.categoryId = C.categoryId AND categoryName LIKE ?"; 
+}else{
+filter = "<h2>All products: </h2>";
+	sql = "SELECT P.productId, P.productName, P.productPrice, P.productImageURL, P.productDesc, C.categoryName FROM product P, category C WHERE P.categoryId = C.categoryId"; 	
+}
+out.println(filter);
 try
 {	// Load driver class
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -56,15 +91,22 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
       Statement stmt = con.createStatement();) {
 
-	String sql = "SELECT productId, productName, productPrice, productImageURL FROM product WHERE productName LIKE '%"+name+"%'";
 	PreparedStatement pst = con.prepareStatement(sql);
+	if (hasNameEntered){
+		pst.setString(1, name);	
+		if (hasCategoryEntered){
+			pst.setString(2, category);
+		}
+	}else if (hasCategoryEntered){
+		pst.setString(1, category);
+	}
 	ResultSet rst = pst.executeQuery();	
 
-	out.println("<table><tr><th> </th><th>Product Name</th><th>Image</th><th>Price</th></tr>");
+	out.println("<table><tr><th> </th><th>Category</th><th>Product Name</th><th>Description</th><th>Image</th><th>Price</th></tr>");
 	while (rst.next()){	
 
 		String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
-		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(2)+"</td><td>"+ "<img style='height:200px' src='"+ rst.getString("productImageURL") +"' alt=\"image unavailable\">" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
+		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(6)+"</td><td>"+rst.getString(2)+"</td><td>"+rst.getString(5)+"</td><td>"+ "<img style='height:200px' src='"+ rst.getString("productImageURL") +"' alt=\"image unavailable\">" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
 	}
 	out.println("</table>");
 	if (con!=null) con.close();
