@@ -59,6 +59,7 @@ th {
     font-size: x-large;
     padding: 8px;
     min-width: 120px;
+    white-space: nowrap;
 }
 /* Table content */
 td {
@@ -67,6 +68,7 @@ td {
     color: var(--font);
     font-weight: 600;
     padding: 6px;
+    white-space: nowrap;
 }
 
 table.buttons {
