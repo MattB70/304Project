@@ -116,6 +116,13 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 // Insert each item into OrderProduct table using OrderId from previous INSERT
 	//get previous insert
+	if (rst.orderId != null){
+		sql = "INSERT INTO orderproduct";
+		//syntax for values and columns
+		pst = con.prepareStatement(sql);
+		rst = pst.executeQuery();	
+	}
+	else(con!=null) con.close();
 		//check it is non null/not current
 	//while .hasnext()
 	//insert into table
