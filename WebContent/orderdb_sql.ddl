@@ -141,7 +141,7 @@ INSERT INTO category(categoryName) VALUES ('T-Shirts');
 INSERT INTO category(categoryName) VALUES ('Mugs');
 INSERT INTO category(categoryName) VALUES ('Magnets');
 INSERT INTO category(categoryName) VALUES ('Lanyards');
-INSERT INTO category(categoryName) VALUES ('Key Chains');
+INSERT INTO category(categoryName) VALUES ('Keychains');
 INSERT INTO category(categoryName) VALUES ('Post Cards');
 INSERT INTO category(categoryName) VALUES ('Hats');
 INSERT INTO category(categoryName) VALUES ('Bobble Heads');
