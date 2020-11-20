@@ -78,7 +78,6 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	PreparedStatement pst = con.prepareStatement(sql);
 	ResultSet rst1 = pst.executeQuery();
 	rst1.next();
-
 	if(rst1.getInt(1) > 0)	// There exists products in the cart
 	{
 		// Header
@@ -95,9 +94,14 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		//insert into orderproduct
 		//can probably insert the value we just got into the orderproduct table
 		sql = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
-			+ "VALUES "+"("+rst2.getInt(0)+","+rst2.getString(1)+","+rst2.getString(2)+","+rst2.getString(3)+") ";
+			+ "VALUES "+"("+rst2.getInt(1)+","+rst2.getString(2)+","+rst2.getString(3)+","+rst2.getString(4)+") ";
 		pst = con.prepareStatement(sql);
 		ResultSet rst3 = pst.executeQuery();
+
+
+		//clear cart
+		//
+		//
 
 		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
 	
