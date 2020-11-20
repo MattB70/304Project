@@ -166,7 +166,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		out.println("<h2>Shipping to customer:"+custId+" Name: </h2>");
 
 		//end session
-		session.invalidate();
+		session.setAttribute("productList", null); 
 		
 
 	}
