@@ -30,6 +30,19 @@
 <div id="main-content">
 
 <% 
+// This file must save an order and all its products to the database as long as a valid customer id was entered.
+/*
+DONE+1 mark - 	for SQL Server connection information and making a successful connection
+	+3 marks - 	for validating that the customer id is a number and the customer id exists in the database.
+				Display an error if customer id is invalid.
+	+1 mark - 	for showing error message if shopping cart is empty
+	+3 marks - 	for inserting into ordersummary table and retrieving auto-generated id
+	+6 marks - 	for traversing list of products and storing each ordered product in the orderproduct table
+	+2 marks - 	for updating total amount for the order in OrderSummary table
+	+2 marks - 	for displaying the order information including all ordered items
+	+1 mark - 	for clearing the shopping cart (sessional variable) after order has been successfully placed
+DONE+1 mark - 	for closing connection (either explicitly or as part of try-catch with resources syntax)
+*/
 // Get customer id
 String custId = request.getParameter("customerId");
 @SuppressWarnings({"unchecked"})
