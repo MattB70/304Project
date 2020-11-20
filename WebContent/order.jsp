@@ -5,6 +5,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="java.sql.Time" %>
+<%@ page import="java.time.LocalTime" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
@@ -35,8 +37,8 @@
 DONE+1 mark - 	for SQL Server connection information and making a successful connection
 	+3 marks - 	for validating that the customer id is a number and the customer id exists in the database.
 				Display an error if customer id is invalid.
-	+1 mark - 	for showing error message if shopping cart is empty
-	+3 marks - 	for inserting into ordersummary table and retrieving auto-generated id
+DONE+1 mark - 	for showing error message if shopping cart is empty
+DONE+3 marks - 	for inserting into ordersummary table and retrieving auto-generated id
 	+6 marks - 	for traversing list of products and storing each ordered product in the orderproduct table
 	+2 marks - 	for updating total amount for the order in OrderSummary table
 	+2 marks - 	for displaying the order information including all ordered items
@@ -84,31 +86,73 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		out.println("<h1>Your Order Summary</h1>");
 
 
-
+		// CUSTOEMR INFO ===================================================
 		// Do the stuff
-		sql = "SELECT P.productId, P.productName, OP.quantity, P.productPrice "
-					+"FROM product P JOIN orderproduct OP ON P.productId = OP.productId";
+		sql = "SELECT address, city, state, postalCode, country "
+			 +"FROM customer "
+			 +"WHERE customerId = "+custId;
 		pst = con.prepareStatement(sql);
-		ResultSet rst2 = pst.executeQuery();
-		rst2.next();
-		//insert into orderproduct
-		//can probably insert the value we just got into the orderproduct table
-		sql = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
-			+ "VALUES "+"("+rst2.getInt(1)+","+rst2.getString(2)+","+rst2.getString(3)+","+rst2.getString(4)+") ";
-		pst = con.prepareStatement(sql);
-		ResultSet rst3 = pst.executeQuery();
-
-
-		//clear cart
-		//
-		//
+		ResultSet rstc = pst.executeQuery();
+		rstc.next();
+		String address = rstc.getString(1);
+		String city = rstc.getString(2);
+		String state = rstc.getString(3);
+		String postalCode = rstc.getString(4);
+		String country = rstc.getString(5);
+		// ===================================================================
+		
 
 		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
-	
-		while (rst3.next()){	
-			out.println("<tr><td>" + rst3.getString(1) +"</td><td>"+ rst3.getString(2) +"</td><td>"+ rst3.getString(3) +"</td><td>"+ currFormat.format(rst3.getFloat(4)) + "</td></tr>");
+
+		sql = "SELECT P.productId, OP.quantity, P.productPrice, P.productName "
+			 +"FROM product P JOIN orderproduct OP ON P.productId = OP.productId "
+			 +"JOIN ordersummary OS ON OP.orderId = OS.orderId "
+			 +"WHERE OS.customerId = "+custId;
+		pst = con.prepareStatement(sql);
+		ResultSet rst2 = pst.executeQuery();
+
+		while (rst2.next()){
+
+
+			//insert into ordersummary
+			//can probably insert the value we just got into the orderproduct table
+			sql = "INSERT INTO ordersummary (orderDate, totalAmount, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) "
+				+ "VALUES (?,?,?,?,?,?,?,?)";
+			// Use retrieval of auto-generated keys.
+			PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			
+			LocalTime now = LocalTime.now();
+			Time time = Time.valueOf( now );
+
+			pstmt.setString(1, "2019-10-15 10:25:55.0");			//orderDate
+			pstmt.setDouble(2, rst2.getDouble(3)*rst2.getInt(2));	//totalAmount
+			pstmt.setString(3, address);							//shiptoAddress
+			pstmt.setString(4, city);								//shiptoCity
+			pstmt.setString(5, state);								//shiptoState
+			pstmt.setString(6, postalCode);							//shiptoPostalCode
+			pstmt.setString(7, country);							//shiptoCountry
+			pstmt.setInt(8, Integer.parseInt(custId));				//customerId
+
+			int updated = pstmt.executeUpdate();
+
+			ResultSet keys = pstmt.getGeneratedKeys();
+			keys.next();
+			int orderId = keys.getInt(1);
+
+			out.println("<tr><td>" + rst2.getString(1) +"</td><td>"+ rst2.getString(4) +"</td><td>"+ rst2.getString(2) +"</td><td>"+ currFormat.format(rst2.getFloat(3)) + "</td></tr>");
+
+			/*
+			sql = "SELECT address, city, state, postalCode, country "
+			 	+ "FROM customer "
+			 	+ "WHERE customerId = "+custId;
+			pst = con.prepareStatement(sql);
+			ResultSet rstc = pst.executeQuery();
+			rstc.next();
+			*/
 		}
+
 		out.println("</table>");
+		
 		if (con!=null) con.close();
 
 

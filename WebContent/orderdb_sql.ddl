@@ -1,14 +1,14 @@
-DROP TABLE review;
-DROP TABLE shipment;
-DROP TABLE productinventory;
-DROP TABLE warehouse;
-DROP TABLE orderproduct;
-DROP TABLE incart;
-DROP TABLE product;
-DROP TABLE category;
-DROP TABLE ordersummary;
-DROP TABLE paymentmethod;
-DROP TABLE customer;
+DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS shipment;
+DROP TABLE IF EXISTS productinventory;
+DROP TABLE IF EXISTS warehouse;
+DROP TABLE IF EXISTS orderproduct;
+DROP TABLE IF EXISTS incart;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS ordersummary;
+DROP TABLE IF EXISTS paymentmethod;
+DROP TABLE IF EXISTS customer;
 
 
 CREATE TABLE customer (
@@ -39,7 +39,7 @@ CREATE TABLE paymentmethod (
 );
 
 CREATE TABLE ordersummary (
-    orderId             INT IDENTITY,
+    orderId             INT IDENTITY(1,1),
     orderDate           DATETIME,
     totalAmount         DECIMAL(10,2),
     shiptoAddress       VARCHAR(50),
@@ -60,7 +60,7 @@ CREATE TABLE category (
 );
 
 CREATE TABLE product (
-    productId           INT IDENTITY(1,1),
+    productId           INT IDENTITY,
     productName         VARCHAR(40),
     productPrice        DECIMAL(10,2),
     productImageURL     VARCHAR(100),
