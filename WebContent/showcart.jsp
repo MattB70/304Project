@@ -83,7 +83,8 @@ else{
 			+product.get(3)+"\"></td>");
 		
 		// id and name format:  								quantity<id>						quantity<id>
-		out.print("<td><form><input type=\"number\" id=\"quantity"+product.get(0)+"\" name=\"quantity"+product.get(0)+"\" value=\""+product.get(3)+"\" min=\"0\" max=\"100\"><input type=\"button\" onclick=\"updateQuantity("+product.get(0)+")\" value=\"Update\"> </form></td>");		// Quantity
+		// Provides an extra column for quantity, values are then not aligned with headers
+			//out.print("<td><form><input type=\"number\" id=\"quantity"+product.get(0)+"\" name=\"quantity"+product.get(0)+"\" value=\""+product.get(3)+"\" min=\"0\" max=\"100\"><input type=\"button\" onclick=\"updateQuantity("+product.get(0)+")\" value=\"Update\"> </form></td>");		// Quantity
 		
 		Object price = product.get(2);
 		Object itemqty = product.get(3);
