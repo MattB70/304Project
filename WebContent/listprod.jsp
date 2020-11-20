@@ -40,7 +40,7 @@
 <option>Bobble Heads</option>
 </select>
 <input type="text" name="productName" size="50">
-<input type="submit" value="Submit"><input type="reset" value="Reset"> <br>(Leave blank for all products)
+<input type="submit" value="Submit"><input type="reset" value="Clear"> <br>(Leave blank for all products)
 </form>
 <br>
 
