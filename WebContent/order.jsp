@@ -39,15 +39,14 @@ DONE+1 mark - 	for SQL Server connection information and making a successful con
 				Display an error if customer id is invalid.
 DONE+1 mark - 	for showing error message if shopping cart is empty
 DONE+3 marks - 	for inserting into ordersummary table and retrieving auto-generated id
-DONE+6 marks - 	for traversing list of products and storing each ordered product in the orderproduct table
-DONE+2 marks - 	for updating total amount for the order in OrderSummary table
-DONE+2 marks - 	for displaying the order information including all ordered items
+	+6 marks - 	for traversing list of products and storing each ordered product in the orderproduct table
+	+2 marks - 	for updating total amount for the order in OrderSummary table
+	+2 marks - 	for displaying the order information including all ordered items
 	+1 mark - 	for clearing the shopping cart (sessional variable) after order has been successfully placed
 DONE+1 mark - 	for closing connection (either explicitly or as part of try-catch with resources syntax)
 */
 // Get customer id
 String custId = request.getParameter("customerId");
-String password = request.getParameter("password");
 @SuppressWarnings({"unchecked"})
 // id, name, price, quantity
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
@@ -88,28 +87,21 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);) {
 			out.println("<h1>Your Order Summary</h1>");
 
 
-			// CUSTOEMR INFO ===================================================
-			// Do the stuff
-			String sql = "SELECT address, city, state, postalCode, country "
-						+"FROM customer "
-						+"WHERE customerId = "+custId;
-			pstmt = con.prepareStatement(sql);
-			ResultSet rstc = pstmt.executeQuery();
-			rstc.next();
-			String address = rstc.getString(1);
-			String city = rstc.getString(2);
-			String state = rstc.getString(3);
-			String postalCode = rstc.getString(4);
-			String country = rstc.getString(5);
-			
-			// ===================================================================
-			
-
-			out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
+		while (rst2.next()){
 
 
 			double total = 0;
 
+			pstmt.setString(1, "2019-10-15 10:25:55.0");			//orderDate
+			pstmt.setDouble(2, rst2.getDouble(3)*rst2.getInt(2));	//totalAmount
+			pstmt.setString(3, address);							//shiptoAddress
+			pstmt.setString(4, city);								//shiptoCity
+			pstmt.setString(5, state);								//shiptoState
+			pstmt.setString(6, postalCode);							//shiptoPostalCode
+			pstmt.setString(7, country);							//shiptoCountry
+			pstmt.setInt(8, Integer.parseInt(custId));				//customerId
+
+			int updated = pstmt.executeUpdate();
 
 			// Retrieve auto-generated key for orderId
 			pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -117,87 +109,23 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);) {
 			pstmt.executeUpdate();
 			ResultSet keys = pstmt.getGeneratedKeys();
 			keys.next();
-			orderId = keys.getInt(1);
+			int orderId = keys.getInt(1);
 
 
-			Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
-			while (iterator.hasNext())
-			{ 
-				Map.Entry<String, ArrayList<Object>> entry = iterator.next();
-				ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
-				String productId = (String) product.get(0);
-				String price = (String) product.get(2);
-				double pr = Double.parseDouble(price.substring(1));
-				int qty = ( (Integer)product.get(3)).intValue();
-
-				total = total + pr*qty;
-
-				
-				// get product name
-				sql = "SELECT productName "
-				+"FROM product "
-				+"WHERE productId = "+productId;
-				pstmt = con.prepareStatement(sql);
-				ResultSet rst2 = pstmt.executeQuery();
-				rst2.next();
-				String productName = rst2.getString(1);
-
-
-				//insert into ordersummary
-				//can probably insert the value we just got into the orderproduct table
-				sql = "INSERT INTO ordersummary (orderDate, totalAmount, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) "
-					+ "VALUES (?,?,?,?,?,?,?,?)";
-				// Use retrieval of auto-generated keys.
-				pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				
-				LocalTime now = LocalTime.now();
-				Time time = Time.valueOf( now );
-				
-				pstmt.setString(1, "2019-10-15 10:25:55.0");			//orderDate
-				pstmt.setDouble(2, total);								//totalAmount
-				pstmt.setString(3, address);							//shiptoAddress
-				pstmt.setString(4, city);								//shiptoCity
-				pstmt.setString(5, state);								//shiptoState
-				pstmt.setString(6, postalCode);							//shiptoPostalCode
-				pstmt.setString(7, country);							//shiptoCountry
-				pstmt.setInt(8, Integer.parseInt(custId));				//customerId
-
-				int updatedOS = pstmt.executeUpdate();
-				
-
-				out.println("<tr><td>" + productId +"</td><td>"+ productName +"</td><td>"+ qty +"</td><td>"+ currFormat.format(pr) + "</td></tr>");
-
-				/*
-				sql = "INSERT INTO orderproduct (orderId, productId, quantity, price) "
-					+ "VALUES (?,?,?,?)";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, orderId);					//orderId
-				pstmt.setString(2, rst2.getString(1));		//productId
-				pstmt.setString(3, rst2.getString(2));		//quantity
-				pstmt.setString(4, rst2.getString(3));		//price
-				int updatedOP = pstmt.executeUpdate();
-				*/
-				
-			}
+			/*
+			sql = "SELECT address, city, state, postalCode, country "
+			 	+ "FROM customer "
+			 	+ "WHERE customerId = "+custId;
+			pst = con.prepareStatement(sql);
+			ResultSet rstc = pst.executeQuery();
+			rstc.next();
+			*/
 		}
-		else
-		{
-			out.println("<h2>Invalid Customer Id! Customer not found.</h2>");
-		}
-
-		//productList.clear();
 
 		out.println("</table>");
-
+		
 		if (con!=null) con.close();
 
-		out.println("<h2>Order completed. Will be shipped soon...</h2>");
-		out.println("<h2>Your order reference number is: "+orderId+"</h2>");
-		out.println("<h2>Shipping to customer:"+custId+" Name: </h2>");
-
-		//end session
-		session.setAttribute("productList", null);
-		
 
 	}
 
@@ -210,16 +138,58 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);) {
 } catch(Exception e) {
 	out.println("<h2>"+e+"</h2>");
 }
+
+
+
+// Save order information to database
+
+
+	/*
+	// Use retrieval of auto-generated keys.
+	PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);			
+	ResultSet keys = pstmt.getGeneratedKeys();
+	keys.next();
+	int orderId = keys.getInt(1);
+	*/
+
+// Insert each item into OrderProduct table using OrderId from previous INSERT
+	//get previous insert
+	//if (rst.getInt() != null){
+	//	sql = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
+	//		+ "VALUES ('rst.getObject(0)','rst.getObject(1)','rst.getObject(2)','rst.getObject(3)')";
+	//	//syntax for values and columns
+	//	pst = con.prepareStatement(sql);
+	//	rst = pst.executeQuery();
+	//	
+	//}
+	//else(con!=null) con.close();
+		//check it is non null/not current
+	//while .hasnext()
+	//insert into table
+	//exit
+// Update total amount for order record
+	//could recursive SUM(amount)
+// Here is the code to traverse through a HashMap
+// Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
+
+/*
+	Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
+	while (iterator.hasNext())
+	{ 
+		Map.Entry<String, ArrayList<Object>> entry = iterator.next();
+		ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
+		String productId = (String) product.get(0);
+        String price = (String) product.get(2);
+		double pr = Double.parseDouble(price);
+		int qty = ( (Integer)product.get(3)).intValue();
+            ...
+	}
+*/
+
+// Print out order summary
+
+// Clear cart if order placed successfully
 %>
-
-
-<script>
-
-	//let stateObj = { id: "100" };
-	//window.history.replaceState(stateObj, "Page 3", "/shop/order.jsp"); 
-
-</script>
-
 </div>
 </BODY>
 </HTML>
