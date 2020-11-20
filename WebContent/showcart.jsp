@@ -51,11 +51,11 @@ else
 		
 		try
 		{
-			pr = Double.parseDouble(price.toString());
+			pr = Double.parseDouble(price.toString().substring(1));
 		}
 		catch (Exception e)
 		{
-			out.println("Invalid price for product: "+product.get(0)+" price: "+price);
+			out.println(e+" Invalid price for product: "+product.get(0)+" price: "+price);
 		}
 		try
 		{
@@ -63,7 +63,7 @@ else
 		}
 		catch (Exception e)
 		{
-			out.println("Invalid quantity for product: "+product.get(0)+" quantity: "+qty);
+			out.println(e+" Invalid quantity for product: "+product.get(0)+" quantity: "+qty);
 		}		
 
 		out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
