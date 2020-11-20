@@ -76,10 +76,10 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 				+"FROM ordersummary OS JOIN orderproduct OP ON OS.orderId = OP.orderId "
 				+"WHERE OS.customerId = "+custId;
 	PreparedStatement pst = con.prepareStatement(sql);
-	ResultSet rst = pst.executeQuery();
-	rst.next();
+	ResultSet rst1 = pst.executeQuery();
+	rst1.next();
 
-	if(rst.getInt(1) > 0)	// There exists products in the cart
+	if(rst1.getInt(1) > 0)	// There exists products in the cart
 	{
 		// Header
 		out.println("<h1>Your Order Summary</h1>");
@@ -90,19 +90,19 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		sql = "SELECT P.productId, P.productName, OP.quantity, P.productPrice "
 					+"FROM product P JOIN orderproduct OP ON P.productId = OP.productId";
 		pst = con.prepareStatement(sql);
-		rst = pst.executeQuery();
-		rst.next();
+		ResultSet rst2 = pst.executeQuery();
+		rst2.next();
 		//insert into orderproduct
 		//can probably insert the value we just got into the orderproduct table
 		sql = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
-			+ "VALUES "+"("+rst.getInt(0)+","+rst.getString(1)+","+rst.getString(2)+","+rst.getString(3)+") ";
+			+ "VALUES "+"("+rst2.getInt(0)+","+rst2.getString(1)+","+rst2.getString(2)+","+rst2.getString(3)+") ";
 		pst = con.prepareStatement(sql);
-		rst = pst.executeQuery();
+		ResultSet rst3 = pst.executeQuery();
 
 		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
 	
-		while (rst.next()){	
-			out.println("<tr><td>" + rst.getString(1) +"</td><td>"+ rst.getString(2) +"</td><td>"+ rst.getString(3) +"</td><td>"+ currFormat.format(rst.getFloat(4)) + "</td></tr>");
+		while (rst3.next()){	
+			out.println("<tr><td>" + rst3.getString(1) +"</td><td>"+ rst3.getString(2) +"</td><td>"+ rst3.getString(3) +"</td><td>"+ currFormat.format(rst3.getFloat(4)) + "</td></tr>");
 		}
 		out.println("</table>");
 		if (con!=null) con.close();
