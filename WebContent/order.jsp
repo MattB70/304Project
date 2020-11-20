@@ -76,6 +76,12 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 					+"FROM product P JOIN orderproduct OP ON P.productId = OP.productId";
 		pst = con.prepareStatement(sql);
 		rst = pst.executeQuery();	
+		//insert into orderproduct
+		//can probably insert the value we just got into the orderproduct table
+		String sql2 = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
+			+ "VALUES "+(rst.getInt(0),rst.getObject(1),rst.getObject(2),rst.getObject(3))+" ";
+		pst = con.prepareStatement(sql2);
+		rst = pst.executeQuery();
 
 		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
 	
@@ -116,13 +122,15 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 // Insert each item into OrderProduct table using OrderId from previous INSERT
 	//get previous insert
-	if (rst.orderId != null){
-		sql = "INSERT INTO orderproduct";
-		//syntax for values and columns
-		pst = con.prepareStatement(sql);
-		rst = pst.executeQuery();	
-	}
-	else(con!=null) con.close();
+	//if (rst.getInt() != null){
+	//	sql = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
+	//		+ "VALUES ('rst.getObject(0)','rst.getObject(1)','rst.getObject(2)','rst.getObject(3)')";
+	//	//syntax for values and columns
+	//	pst = con.prepareStatement(sql);
+	//	rst = pst.executeQuery();
+	//	
+	//}
+	//else(con!=null) con.close();
 		//check it is non null/not current
 	//while .hasnext()
 	//insert into table
