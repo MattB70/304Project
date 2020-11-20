@@ -20,7 +20,7 @@
 <table class="buttons" border="0" width="100%"><tr>     <th class="buttons" align="left"><a href="shop.html"><img src="images/icon.png" alt="Home" height="100" ></a></th>
                                                         <th class="buttons"><a href="listprod.jsp">Begin Shopping</a></th>
                                                         <th class="buttons"><a href="listorder.jsp">List All Orders</a></th>
-                                                        <th class="buttons" align="right"><a href="checkout.jsp"><img src="images/cart.png" alt="Cart" height="100" ></a></th></tr></table>
+                                                        <th class="buttons" align="right"><a href="addcart.jsp"><img src="images/cart.png" alt="Cart" height="100" ></a></th></tr></table>
 
 <! banner image below buttons !>
 <div id="bannerimage"></div>
@@ -116,6 +116,13 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 // Insert each item into OrderProduct table using OrderId from previous INSERT
 	//get previous insert
+	if (rst.orderId != null){
+		sql = "INSERT INTO orderproduct";
+		//syntax for values and columns
+		pst = con.prepareStatement(sql);
+		rst = pst.executeQuery();	
+	}
+	else(con!=null) con.close();
 		//check it is non null/not current
 	//while .hasnext()
 	//insert into table
