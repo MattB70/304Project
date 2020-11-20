@@ -1,12 +1,10 @@
+<%@ page import="java.sql.*,java.util.*" %>
+
 <!DOCTYPE html>
 <html>
-<head>
-<title>Ramon World CheckOut</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-
-
 
 <! buttons !>
 <table class="buttons" border="0" width="100%"><tr>     <th class="buttons" align="left"><a href="shop.html"><img src="images/icon.png" alt="Home" height="100" ></a></th>
@@ -17,21 +15,24 @@
 <! banner image below buttons !>
 <div id="bannerimage"></div>
 
-
-
 <div id="main-content">
+<%
+String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
+String uid = "SA";
+String pw = "YourStrong@Passw0rd";
+String productId = request.getParameter("productId");
 
-<h1>Enter your customer id and password to complete the transaction:</h1>
+// Make the connection
+try ( Connection con = DriverManager.getConnection(url, uid, pw);
+      Statement stmt = con.createStatement();) {
 
-<form method="get" action="order.jsp">
-<table>
-<tr><td>Customer ID: </td><td><input type="text" name="customerId" size="50"></td></tr>
-<tr><td>Password: </td><td><input type="password" name="password" size="50"></td></tr>
-</table>
-<input type="submit" value="Submit"><input type="reset" value="Reset">
-</form>
+String sql = "DELETE FROM orderproduct WHERE productId ="+productId;
+stmt.executeUpdate(sql);
+}catch(SQLException ex){
+    out.println(ex);
+}
+%>
 
 </div>
 </body>
-</html>
-
+</html

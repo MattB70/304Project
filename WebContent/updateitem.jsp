@@ -1,12 +1,11 @@
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html>
 <html>
-<head>
-<title>Ramon World CheckOut</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-
-
 
 <! buttons !>
 <table class="buttons" border="0" width="100%"><tr>     <th class="buttons" align="left"><a href="shop.html"><img src="images/icon.png" alt="Home" height="100" ></a></th>
@@ -17,21 +16,27 @@
 <! banner image below buttons !>
 <div id="bannerimage"></div>
 
-
-
 <div id="main-content">
-
-<h1>Enter your customer id and password to complete the transaction:</h1>
-
-<form method="get" action="order.jsp">
-<table>
-<tr><td>Customer ID: </td><td><input type="text" name="customerId" size="50"></td></tr>
-<tr><td>Password: </td><td><input type="password" name="password" size="50"></td></tr>
-</table>
-<input type="submit" value="Submit"><input type="reset" value="Reset">
-</form>
+<%
+@SuppressWarnings({"unchecked"})
+HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
+if (productList == null)
+{	out.println("No products");
+	productList = new HashMap<String, ArrayList<Object>>();
+}
+// Read parameters
+String id = request.getParameter("id");
+String qty = request.getParameter("qty");
+out.println("ID: "+id);
+// Update quantity for product selected
+if (productList.containsKey(id)) 
+{ // find item in shopping cart
+	ArrayList<Object> product = (ArrayList<Object>) productList.get(id);
+	product.set(3, (new Integer(qty))); 	// change quantity to new quantity
+}
+session.setAttribute("productList", productList);
+%>
 
 </div>
 </body>
-</html>
-
+</html
