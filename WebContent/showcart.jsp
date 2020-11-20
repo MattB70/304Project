@@ -43,8 +43,7 @@ else
 	NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 	out.println("<h1>Your Shopping Cart</h1>");
-	out.print("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th>");
-	out.println("<th>Price</th><th>Subtotal</th></tr>");
+	out.println("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>");
 
 	double total =0;
 	Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
@@ -58,10 +57,14 @@ else
 			continue;
 		}
 		
-		out.print("<tr><td>"+product.get(0)+"</td>");
-		out.print("<td>"+product.get(1)+"</td>");
+		out.print("<tr><td>"+product.get(0)+"</td>");	// Id
+		out.print("<td>"+product.get(1)+"</td>");		// Product Name
 
-		out.print("<td align=\"center\">"+product.get(3)+"</td>");
+		//out.print("<td>"+product.get(3)+"</td>");		// Quantity
+
+		// id and name format:  								quantity<id>						quantity<id>
+		out.print("<td><form><input type=\"number\" id=\"quantity"+product.get(0)+"\" name=\"quantity"+product.get(0)+"\" value=\""+product.get(3)+"\" min=\"0\" max=\"100\"><input type=\"button\" onclick=\"updateQuantity("+product.get(0)+")\" value=\"Update\"> </form></td>");		// Quantity
+		
 		Object price = product.get(2);
 		Object itemqty = product.get(3);
 		double pr = 0;
@@ -84,18 +87,29 @@ else
 			out.println(e+" Invalid quantity for product: "+product.get(0)+" quantity: "+qty);
 		}		
 
-		out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
-		out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
+		out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");			// Price
+		out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");	// Subtotal
 		out.println("</tr>");
 		total = total +pr*qty;
 	}
 	out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
-			+"<td align=\"right\">"+currFormat.format(total)+"</td></tr>");
+			+"<td align=\"right\">"+currFormat.format(total)+"</td></tr>");			// Total
 	out.println("</table>");
+
+
 
 	out.println("<h2><a href=\"checkout.jsp\">Check Out</a></h2>");
 }
 %>
+
+<%!
+String updateQuantity(int id)
+{
+	//Update page with new quantity.
+	return "test "+id;
+}
+%>
+
 <h2><a href="listprod.jsp">Continue Shopping</a></h2>
 </div>
 </body>
