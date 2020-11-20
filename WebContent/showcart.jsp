@@ -89,6 +89,8 @@ else
 
 		out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");			// Price
 		out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");	// Subtotal
+		out.print("<td><a href=\"showcart.jsp?delete=" + product.get(0) + "\">");
+		out.print("Remove Item from cart</a></td>");
 		out.println("</tr>");
 		total = total +pr*qty;
 	}
