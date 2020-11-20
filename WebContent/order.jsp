@@ -67,6 +67,7 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Statement stmt = con.createStatement();) { 
+
 	// Determine if valid customer id was entered
 	Integer.parseInt(custId);
 
@@ -77,6 +78,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	PreparedStatement pst = con.prepareStatement(sql);
 	ResultSet rst = pst.executeQuery();
 	rst.next();
+
 	if(rst.getInt(1) > 0)	// There exists products in the cart
 	{
 		// Header
@@ -89,7 +91,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 					+"FROM product P JOIN orderproduct OP ON P.productId = OP.productId";
 		pst = con.prepareStatement(sql);
 		rst = pst.executeQuery();
-		//rst.next();
+		rst.next();
 		//insert into orderproduct
 		//can probably insert the value we just got into the orderproduct table
 		sql = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
@@ -106,12 +108,13 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		if (con!=null) con.close();
 
 
-
 	}
 	else	// There exists no products in the cart
 	{
 		out.println("<h2>No items in cart!</h2>");
 	}
+
+
 
 } catch(NumberFormatException e) { 
 	out.println("<h2>Invalid custId: "+custId+"</h2>");
