@@ -40,7 +40,7 @@
 <option>Bobble Heads</option>
 </select>
 <input type="text" name="productName" size="50">
-<input type="submit" value="Submit"><input type="reset" value="Clear"> <br>(Leave blank for all products)
+<input type="submit" value="Submit"><input type="reset" value="Reset"> <br>(Leave blank for all products)
 </form>
 <br>
 
@@ -102,11 +102,13 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	}
 	ResultSet rst = pst.executeQuery();	
 
-	out.println("<table><tr><th> </th><th>Category</th><th>Product Name</th><th>Description</th><th>Image</th><th>Price</th></tr>");
+	out.println("<table border=3><tr><th> </th><th>Category</th><th>Product Name</th><th>Description</th><th>Image</th><th>Price</th></tr>");
 	while (rst.next()){	
 
 		String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
-		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(6)+"</td><td>"+rst.getString(2)+"</td><td>"+rst.getString(5)+"</td><td>"+ "<img style='height:200px' src='"+ rst.getString("productImageURL") +"' alt=\"image unavailable\">" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
+		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(6)+"</td><td>"+rst.getString(2)+"</td><td>"
+		+rst.getString(5)+"</td><td style='text-align:center;'>"+ "<img style='height:200px;' src='"+ rst.getString("productImageURL") 
+		+"' alt=\"image unavailable\">" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
 	}
 	out.println("</table>");
 	if (con!=null) con.close();
