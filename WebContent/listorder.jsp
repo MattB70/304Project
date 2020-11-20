@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Ramon World Orders</title>
+<title>Ramon's World Orders</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
@@ -26,7 +26,7 @@
 
 <div id="main-content">
 
-<h1>Order List: </h1>
+<h1>Ramon's World Order List: </h1>
 	
 <%
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
@@ -51,7 +51,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 	ResultSet rst = stmt.executeQuery(q1);
 
-	out.println("<table border=1><tr><th>OrderId</th><th>Order Date</th><th>CustomerId</th><th>Customer Name</th><th>Total Amount</th></tr>");
+	out.println("<table border=3><tr><th>OrderId</th><th>Order Date</th><th>CustomerId</th><th>Customer Name</th><th>Total Amount</th></tr>");
 	
 	while (rst.next()){			
 		out.println("<tr><td>"+rst.getString(1)+"</td><td>"+rst.getString(2)+"</td><td>"+rst.getString(3)+"</td><td>"+rst.getString(4)+" "+rst.getString(5)+"</td><td>"+currFormat.format(rst.getFloat(6))+"</td></tr>");
