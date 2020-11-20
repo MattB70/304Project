@@ -2,6 +2,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="java.util.Map" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
@@ -11,6 +12,22 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
+
+
+
+
+<! buttons !>
+<table class="buttons" border="0" width="100%"><tr>     <th class="buttons" align="left"><a href="shop.html"><img src="images/icon.png" alt="Home" height="100" ></a></th>
+                                                        <th class="buttons"><a href="listprod.jsp">Begin Shopping</a></th>
+                                                        <th class="buttons"><a href="listorder.jsp">List All Orders</a></th>
+                                                        <th class="buttons" align="right"><a href="checkout.jsp"><img src="images/cart.png" alt="Cart" height="100" ></a></th></tr></table>
+
+<! banner image below buttons !>
+<div id="bannerimage"></div>
+
+
+
+
 <div id="main-content">
 <%
 // Get the current list of products
@@ -23,7 +40,7 @@ if (productList == null)
 }
 else
 {
-	NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+	NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 	out.println("<h1>Your Shopping Cart</h1>");
 	out.print("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th>");

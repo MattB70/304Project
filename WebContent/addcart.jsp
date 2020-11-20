@@ -1,6 +1,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.ArrayList" %>
-
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%
 // Get the current list of products
 @SuppressWarnings({"unchecked"})
