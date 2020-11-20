@@ -88,12 +88,13 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		sql = "SELECT P.productId, P.productName, OP.quantity, P.productPrice "
 					+"FROM product P JOIN orderproduct OP ON P.productId = OP.productId";
 		pst = con.prepareStatement(sql);
-		rst = pst.executeQuery();	
+		rst = pst.executeQuery();
+		//rst.next();
 		//insert into orderproduct
 		//can probably insert the value we just got into the orderproduct table
-		String sql2 = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
-			+ "VALUES "+(rst.getInt(0),rst.getObject(1),rst.getObject(2),rst.getObject(3))+" ";
-		pst = con.prepareStatement(sql2);
+		sql = "INSERT INTO orderproduct (orderId, productId, quantity, price)"
+			+ "VALUES "+"("+rst.getInt(0)+","+rst.getString(1)+","+rst.getString(2)+","+rst.getString(3)+") ";
+		pst = con.prepareStatement(sql);
 		rst = pst.executeQuery();
 
 		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
