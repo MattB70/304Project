@@ -38,26 +38,23 @@ DONE+1 mark - 	for SQL Server connection information and making a successful con
 				Display an error if customer id is invalid.
 DONE+1 mark - 	for showing error message if shopping cart is empty
 DONE+3 marks - 	for inserting into ordersummary table and retrieving auto-generated id
-	+6 marks - 	for traversing list of products and storing each ordered product in the orderproduct table
-	+2 marks - 	for updating total amount for the order in OrderSummary table
-	+2 marks - 	for displaying the order information including all ordered items
+DONE+6 marks - 	for traversing list of products and storing each ordered product in the orderproduct table
+DONE+2 marks - 	for updating total amount for the order in OrderSummary table
+DONE+2 marks - 	for displaying the order information including all ordered items
 	+1 mark - 	for clearing the shopping cart (sessional variable) after order has been successfully placed
 DONE+1 mark - 	for closing connection (either explicitly or as part of try-catch with resources syntax)
 */
 // Get customer id
 String custId = request.getParameter("customerId");
+String password = request.getParameter("password");
 @SuppressWarnings({"unchecked"})
-// id, name, price, quantity
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 
-
 // Make connection
-try
-{	// Load driver class
+try{	// Load driver class
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 }
-catch (java.lang.ClassNotFoundException e)
-{
+catch (java.lang.ClassNotFoundException e){
 	out.println("ClassNotFoundException: " +e);
 }
 String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
@@ -65,110 +62,117 @@ String uid = "SA";
 String pw = "YourStrong@Passw0rd";
 NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
-int orderId = -1;
-
-try (Connection con = DriverManager.getConnection(url, uid, pw); 
+try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Statement stmt = con.createStatement();) { 
+
 	// Determine if valid customer id was entered
-	String sql = "SELECT COUNT(*) FROM customer "
-				+ "WHERE customerId = '" + custId + "' ";
-	ResultSet rst = stmt.executeQuery(sql);
-	rst.next();
-	if(rst.getInt(1) != 1)
-		out.println("<h1>Invalid customer id.  Go back to the previous page and try again.</h1>");
-	
-	// Save order information to database
-	
+	Integer.parseInt(custId);
+
 	// Determine if there are products in the shopping cart
-	else if (productList == null || productList.isEmpty()) 
-	{	
-		out.println("<H1>Your shopping cart is empty!</H1>");
-	} else {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-	    Date date = new Date();
-	    
-	    float orderTotal = 0;
-	    
-	    Set<String> keys = productList.keySet();
-	    for(String key: keys){
-	    	ArrayList<Object> product = (ArrayList<Object>) productList.get(key);
-	    	int curAmount = ((Integer) product.get(3)).intValue();
-	    	float price = Float.parseFloat(product.get(2).toString());
-	    	orderTotal += curAmount * price;
-	    }
-	    
-	    sql = "INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES ('" + custId + 
-	    				"', '" + formatter.format(date) + "', " + orderTotal + ")";
-	    PreparedStatement psmt = con.prepareStatement(sql);
-    	psmt.execute();
-    	sql = "SELECT TOP 1 orderId, customerId, totalAmount FROM ordersummary ORDER BY orderId DESC";
-	    rst = stmt.executeQuery(sql);
-		rst.next();
+	String sql = "SELECT COUNT(productId) "
+				+"FROM ordersummary OS JOIN orderproduct OP ON OS.orderId = OP.orderId "
+				+"WHERE OS.customerId = "+custId;
+	PreparedStatement pst = con.prepareStatement(sql);
+	ResultSet rst1 = pst.executeQuery();
+	rst1.next();
+	if(rst1.getInt(1) > 0){	// There exists products in the cart
+		// Header
+		out.println("<h1>Your Order Summary</h1>");
+
+		// CUSTOEMR INFO ===================================================
+		// Do the stuff
+		sql = "SELECT address, city, state, postalCode, country "
+			 +"FROM customer "
+			 +"WHERE customerId = "+custId;
+		pst = con.prepareStatement(sql);
+		ResultSet rstc = pst.executeQuery();
+		rstc.next();
+		String address = rstc.getString(1);
+		String city = rstc.getString(2);
+		String state = rstc.getString(3);
+		String postalCode = rstc.getString(4);
+		String country = rstc.getString(5);
+		// ===================================================================
 		
-		orderId = rst.getInt("orderId");
-		int customerId = rst.getInt("customerId");
-		float totalAmount = rst.getFloat("totalAmount");
-		
-		sql = "SELECT firstName, lastName FROM customer WHERE customerId = '" + customerId + "' ";
-	    rst = stmt.executeQuery(sql);
-		rst.next();
-		
-		String firstName = rst.getString("firstName");
-		String lastName = rst.getString("lastName");
-	    
-	    for(String key: keys){
-	    	ArrayList<Object> product = (ArrayList<Object>) productList.get(key);
-	    	String productId = product.get(0).toString();
-	    	String price = product.get(2).toString();
-	    	int amount = ((Integer) product.get(3)).intValue();
-	    	sql = "INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (" + orderId + ", " + productId +
-	    			", " + amount + ", " + price + ")";
-	    	psmt = con.prepareStatement(sql);
-	    	psmt.execute();
-	    }
-	    
-	    sql = "SELECT orderproduct.productId, quantity, price, productName FROM orderproduct, product WHERE orderId = '" + orderId + "' AND product.productId = orderproduct.productId";
-	    rst = stmt.executeQuery(sql);
-	    out.print("<div>");
-	    out.print("<h1>Your Order Summary</h1>");
-	    out.print("<table align=\"center\"><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>");
-		while(rst.next()) {
-			String prodId = rst.getString("productId");
-			int quantity = rst.getInt("quantity");
-			float prodPrice = rst.getFloat("price");
-			float subTotal = (quantity * prodPrice);
-			String prodName = rst.getString("productName");
-			out.print("<tr><td>" + prodId + "</td><td>" + prodName + "</td><td align=\"center\">" + quantity + "</td><td align=\"right\">" +
-			    	currFormat.format(prodPrice) + "</td><td align=\"right\">" + currFormat.format(subTotal) + "</td></tr></tr>");
-		};
-		out.print("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td><td aling=\"right\">" + currFormat.format(orderTotal) + "</td></tr>");
-	    out.print("</table>");
-	    out.print("<h2>Order completed.  Will be shipped soon...</h2>");
-	    out.print("<h2>Your order reference number is: " + orderId + "</h2>");
-	    out.print("<h2>Shipping to customer: " + custId + " Name: " + firstName + " " + lastName + "</h2>");
-	    out.print("<h2><a href=\"shop.html\">Return to shopping</a></h2>");
-	    out.print("</div>");
-		
-		sql = "SELECT productName FROM product ORDER BY productName ASC";
-	    rst = stmt.executeQuery(sql);
-		rst.next();
-	    
-	    session.setAttribute("orderId", orderId);
-	    
-	    session.setAttribute("productList", productList);
-	 	
-	 	if (!productList.isEmpty()) {
-	 		session.removeAttribute("productList");
-	 	} else {
-	 		return;
-	 	}
-	    
+
+		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
+
+		sql = "SELECT P.productId, OP.quantity, P.productPrice, P.productName "
+			 +"FROM product P JOIN orderproduct OP ON P.productId = OP.productId "
+			 +"JOIN ordersummary OS ON OP.orderId = OS.orderId "
+			 +"WHERE OS.customerId = "+custId;
+		pst = con.prepareStatement(sql);
+		ResultSet rst2 = pst.executeQuery();
+
+		int orderId = -1;
+
+		while (rst2.next()){
+
+			//insert into ordersummary
+			//can probably insert the value we just got into the orderproduct table
+			sql = "INSERT INTO ordersummary (orderDate, totalAmount, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) "
+				+ "VALUES (?,?,?,?,?,?,?,?)";
+			// Use retrieval of auto-generated keys.
+			PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			
+			LocalTime now = LocalTime.now();
+			Time time = Time.valueOf( now );
+
+			pstmt.setString(1, "2019-10-15 10:25:55.0");			//orderDate
+			pstmt.setDouble(2, rst2.getDouble(3)*rst2.getInt(2));	//totalAmount
+			pstmt.setString(3, address);							//shiptoAddress
+			pstmt.setString(4, city);								//shiptoCity
+			pstmt.setString(5, state);								//shiptoState
+			pstmt.setString(6, postalCode);							//shiptoPostalCode
+			pstmt.setString(7, country);							//shiptoCountry
+			pstmt.setInt(8, Integer.parseInt(custId));				//customerId
+
+			int updatedOS = pstmt.executeUpdate();
+
+			ResultSet keys = pstmt.getGeneratedKeys();
+			keys.next();
+			orderId = keys.getInt(1);
+
+			out.println("<tr><td>" + rst2.getString(1) +"</td><td>"+ rst2.getString(4) +"</td><td>"+ rst2.getString(2) +"</td><td>"+ currFormat.format(rst2.getFloat(3)) + "</td></tr>");
+
+	
+			sql = "INSERT INTO orderproduct (orderId, productId, quantity, price) "
+			 	+ "VALUES (?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, orderId);					//orderId
+			pstmt.setString(2, rst2.getString(1));		//productId
+			pstmt.setString(3, rst2.getString(2));		//quantity
+			pstmt.setString(4, rst2.getString(3));		//price
+			int updatedOP = pstmt.executeUpdate();
+		}
+
+		//productList.clear();
+
+		out.println("</table>");
+
+		if (con!=null) con.close();
+
+		out.println("<h2>Order completed. Will be shipped soon...</h2>");
+		out.println("<h2>Your order reference number is: "+orderId+"</h2>");
+		out.println("<h2>Shipping to customer:"+custId+" Name: </h2>");
+
+		//end session
+		session.setAttribute("productList", null); 
+
+	}
+	else{	// There exists no products in the cart
+		out.println("<h2>No items in cart!</h2>");
 	}
 }
-	
-catch (SQLException ex) {
-	out.println(ex);
-}
 %>
+
+<script>
+	console.info(performance.navigation.type);
+	if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+		location.replace("http://localhost/shop/order.jsp");
+	}
+</script>
+
+</div>
 </BODY>
 </HTML>
