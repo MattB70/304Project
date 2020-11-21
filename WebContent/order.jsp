@@ -52,12 +52,12 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Statement stmt = con.createStatement();) { 
-	if (custId == null || custId.equals("")){
+	if (custId == null || custId.equals("")){ //if null entered
 		out.println("<h1>Invalid customer id. Please go back and try again!</h1>");
 		%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 			<%
-	}else if (productList == null){
+	}else if (productList == null){ //if empty cart
 		out.println("<h1>Your shopping cart is empty! Please add a product.</h1>");
 		%>
 			<h2><a href="listprod.jsp">Back to Product Page</a></h2>
@@ -108,11 +108,12 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		String country = rstc.getString(8);
 
 		// Enter order information into database
-		String sql = "INSERT INTO ordersummary (customerId, totalAmount) VALUES(?, 0);";
+		String sql = "INSERT INTO ordersummary (customerId, orderDate) VALUES(?, ?);";
 
 		// Retrieve auto-generated key for orderId
 		PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		pstmt.setInt(1, num);
+		pstmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 		pstmt.executeUpdate();
 		ResultSet keys = pstmt.getGeneratedKeys();
 		keys.next();
@@ -124,8 +125,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		double total =0;
 		Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
 
-		while (iterator.hasNext())
-		{ 
+		while (iterator.hasNext()){ 
 			Map.Entry<String, ArrayList<Object>> entry = iterator.next();
 			ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
 			String productId = (String) product.get(0);
@@ -133,19 +133,19 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 			out.print("<td>"+product.get(1)+"</td>");
 			out.print("<td align=\"center\">"+product.get(3)+"</td>");
 			String price = (String) product.get(2);
-            double pr = Double.parseDouble(price);;
+            double pr = Double.parseDouble(price.substring(1));;
 			int qty = ( (Integer)product.get(3)).intValue();
 			out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
 			out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
 			out.println("</tr>");
-			total = total +pr*qty;
+			total += pr*qty;
 
 			sql = "INSERT INTO orderproduct VALUES(?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, orderId);
 			pstmt.setInt(2, Integer.parseInt(productId));
 			pstmt.setInt(3, qty);
-			pstmt.setString(4, price);
+			pstmt.setString(4, pr);
 			pstmt.executeUpdate();				
 		}
 		out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
@@ -159,9 +159,9 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		pstmt.setInt(2, orderId);			
 		pstmt.executeUpdate();						
 
-		out.println("<h1>Order completed.  Will be shipped soon...</h1>");
-		out.println("<h1>Your order reference number is: "+orderId+"</h1>");
-		out.println("<h1>Shipping to customer: "+custId+" Name: "+cFirstName+" "+cLastName+"</h1>");
+		out.println("<h2>Order completed.  Will be shipped soon...</h2>");
+		out.println("<h2>Your order reference number is: "+orderId+"</h2>");
+		out.println("<h2>Shipping to customer: "+custId+" Name: "+cFirstName+" "+cLastName+"</h2>");
 
 		// Clear session variables (cart)
 		session.setAttribute("productList", null);  
@@ -173,7 +173,7 @@ catch (SQLException e){
 	out.println(e);
 }
 %>
-<h2><a href="listprod.jsp">Continue Shopping</a></h2>
+<br><br><h2><a href="listprod.jsp">Continue Shopping</a></h2>
 
 </div>
 </BODY>
