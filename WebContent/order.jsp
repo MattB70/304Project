@@ -21,9 +21,9 @@
 
 <! buttons !>
 <table class="buttons" border="0" width="100%"><tr>     <th class="buttons" align="left"><a href="shop.html"><img src="images/icon.png" alt="Home" height="100" ></a></th>
-                                                        <th class="buttons"><a href="listprod.jsp">Begin Shopping</a></th>
-                                                        <th class="buttons"><a href="listorder.jsp">List All Orders</a></th>
-                                                        <th class="buttons" align="right"><a href="addcart.jsp"><img src="images/cart.png" alt="Cart" height="100" ></a></th></tr></table>
+<th class="buttons"><a href="listprod.jsp">Begin Shopping</a></th>
+<th class="buttons"><a href="listorder.jsp">List All Orders</a></th>
+<th class="buttons" align="right"><a href="addcart.jsp"><img src="images/cart.png" alt="Cart" height="100" ></a></th></tr></table>
 
 <! banner image below buttons !>
 <div id="bannerimage"></div>
@@ -31,25 +31,13 @@
 <div id="main-content">
 
 <% 
-// This file must save an order and all its products to the database as long as a valid customer id was entered.
-/*
-DONE+1 mark - 	for SQL Server connection information and making a successful connection
-	+3 marks - 	for validating that the customer id is a number and the customer id exists in the database.
-				Display an error if customer id is invalid.
-DONE+1 mark - 	for showing error message if shopping cart is empty
-DONE+3 marks - 	for inserting into ordersummary table and retrieving auto-generated id
-DONE+6 marks - 	for traversing list of products and storing each ordered product in the orderproduct table
-DONE+2 marks - 	for updating total amount for the order in OrderSummary table
-DONE+2 marks - 	for displaying the order information including all ordered items
-	+1 mark - 	for clearing the shopping cart (sessional variable) after order has been successfully placed
-DONE+1 mark - 	for closing connection (either explicitly or as part of try-catch with resources syntax)
-*/
+
 // Get customer id
 String custId = request.getParameter("customerId");
 String password = request.getParameter("password");
 @SuppressWarnings({"unchecked"})
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
-
+session.getAttribute("productList");
 // Make connection
 try{	// Load driver class
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -64,114 +52,122 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Statement stmt = con.createStatement();) { 
-
-	// Determine if valid customer id was entered
-	Integer.parseInt(custId);
-
-	// Determine if there are products in the shopping cart
-	String sql = "SELECT COUNT(productId) "
-				+"FROM ordersummary OS JOIN orderproduct OP ON OS.orderId = OP.orderId "
-				+"WHERE OS.customerId = "+custId;
-	PreparedStatement pst = con.prepareStatement(sql);
-	ResultSet rst1 = pst.executeQuery();
-	rst1.next();
-	if(rst1.getInt(1) > 0){	// There exists products in the cart
-		// Header
-		out.println("<h1>Your Order Summary</h1>");
-
-		// CUSTOEMR INFO ===================================================
-		// Do the stuff
-		sql = "SELECT address, city, state, postalCode, country "
-			 +"FROM customer "
-			 +"WHERE customerId = "+custId;
-		pst = con.prepareStatement(sql);
-		ResultSet rstc = pst.executeQuery();
-		rstc.next();
-		String address = rstc.getString(1);
-		String city = rstc.getString(2);
-		String state = rstc.getString(3);
-		String postalCode = rstc.getString(4);
-		String country = rstc.getString(5);
-		// ===================================================================
-		
-
-		out.println("<table border=1><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>");
-
-		sql = "SELECT P.productId, OP.quantity, P.productPrice, P.productName "
-			 +"FROM product P JOIN orderproduct OP ON P.productId = OP.productId "
-			 +"JOIN ordersummary OS ON OP.orderId = OS.orderId "
-			 +"WHERE OS.customerId = "+custId;
-		pst = con.prepareStatement(sql);
-		ResultSet rst2 = pst.executeQuery();
-
-		int orderId = -1;
-
-		while (rst2.next()){
-
-			//insert into ordersummary
-			//can probably insert the value we just got into the orderproduct table
-			sql = "INSERT INTO ordersummary (orderDate, totalAmount, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) "
-				+ "VALUES (?,?,?,?,?,?,?,?)";
-			// Use retrieval of auto-generated keys.
-			PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			
-			LocalTime now = LocalTime.now();
-			Time time = Time.valueOf( now );
-
-			pstmt.setString(1, "2019-10-15 10:25:55.0");			//orderDate
-			pstmt.setDouble(2, rst2.getDouble(3)*rst2.getInt(2));	//totalAmount
-			pstmt.setString(3, address);							//shiptoAddress
-			pstmt.setString(4, city);								//shiptoCity
-			pstmt.setString(5, state);								//shiptoState
-			pstmt.setString(6, postalCode);							//shiptoPostalCode
-			pstmt.setString(7, country);							//shiptoCountry
-			pstmt.setInt(8, Integer.parseInt(custId));				//customerId
-
-			int updatedOS = pstmt.executeUpdate();
-
-			ResultSet keys = pstmt.getGeneratedKeys();
-			keys.next();
-			orderId = keys.getInt(1);
-
-			out.println("<tr><td>" + rst2.getString(1) +"</td><td>"+ rst2.getString(4) +"</td><td>"+ rst2.getString(2) +"</td><td>"+ currFormat.format(rst2.getFloat(3)) + "</td></tr>");
-
-	
-			sql = "INSERT INTO orderproduct (orderId, productId, quantity, price) "
-			 	+ "VALUES (?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, orderId);					//orderId
-			pstmt.setString(2, rst2.getString(1));		//productId
-			pstmt.setString(3, rst2.getString(2));		//quantity
-			pstmt.setString(4, rst2.getString(3));		//price
-			int updatedOP = pstmt.executeUpdate();
+	if (custId == null || custId.equals("")){
+		out.println("<h1>Invalid customer id.  Go back to the previous page and try again.</h1>");
+	}else if (productList == null){
+		out.println("<h1>Your shopping cart is empty!</h1>");
+	}else{
+		// Determine if customer id entered is an integer
+		int num = -1;
+		try{
+			num = Integer.parseInt(custId);	
+		}catch(Exception e){
+			out.println("Please enter a valid customer ID!");
+			%>
+			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+			<%
+			return;
 		}
+		//Determine if customer id exists in the database
+		String sqlc = "SELECT customerId, firstName, lastName, address, city, state, postalCode, country, password FROM Customer WHERE customerId = ?";
+		PreparedStatement pstc = con.prepareStatement(sqlc);
+		pstc.setInt(1, num);
+		ResultSet rstc = pstc.executeQuery();
+		int orderId = 0;
+		String cFirstName = "";
+		String cLastName = "";
 
-		//productList.clear();
+		if(!rstc.next()){
+			out.println("<h1>Invalid customer id. Please go back and try again!</h1><br>");
+			%>
+			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+			<%
+		}else{
+			String dbpw = rstc.getString(9);
 
+			if(!dbpw.equals(password)){ //check if password matches the one stored in db
+				out.println("<h1>Incorrect Password. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+		}
+		cFirstName = rstc.getString(2);
+		cLastName = rstc.getString(3);
+		String address = rstc.getString(4);
+		String city = rstc.getString(5);
+		String state = rstc.getString(6);
+		String postalCode = rstc.getString(7);
+		String country = rstc.getString(8);
+
+		// Enter order information into database
+		String sql = "INSERT INTO ordersummary (customerId, totalAmount) VALUES(?, 0);";
+
+		// Retrieve auto-generated key for orderId
+		PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		pstmt.setInt(1, num);
+		pstmt.executeUpdate();
+		ResultSet keys = pstmt.getGeneratedKeys();
+		keys.next();
+		orderId = keys.getInt(1);
+
+		out.println("<h1>Your Order Summary</h1>");
+		out.println("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>");
+
+		double total =0;
+		Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
+
+		while (iterator.hasNext())
+		{ 
+			Map.Entry<String, ArrayList<Object>> entry = iterator.next();
+			ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
+			String productId = (String) product.get(0);
+			out.print("<tr><td>"+productId+"</td>");
+			out.print("<td>"+product.get(1)+"</td>");
+			out.print("<td align=\"center\">"+product.get(3)+"</td>");
+			String price = (String) product.get(2);
+            double pr = Double.parseDouble(price);;
+			int qty = ( (Integer)product.get(3)).intValue();
+			out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
+			out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
+			out.println("</tr>");
+			total = total +pr*qty;
+
+			sql = "INSERT INTO OrderedProduct VALUES(?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, orderId);
+			pstmt.setInt(2, Integer.parseInt(productId));
+			pstmt.setInt(3, qty);
+			pstmt.setString(4, price);
+			pstmt.executeUpdate();				
+		}
+		out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
+				+"<td aling=\"right\">"+currFormat.format(total)+"</td></tr>");
 		out.println("</table>");
 
-		if (con!=null) con.close();
+		// Update order total
+		sql = "UPDATE Orders SET totalAmount=? WHERE orderId=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setDouble(1, total);
+		pstmt.setInt(2, orderId);			
+		pstmt.executeUpdate();						
 
-		out.println("<h2>Order completed. Will be shipped soon...</h2>");
-		out.println("<h2>Your order reference number is: "+orderId+"</h2>");
-		out.println("<h2>Shipping to customer:"+custId+" Name: </h2>");
+		out.println("<h1>Order completed.  Will be shipped soon...</h1>");
+		out.println("<h1>Your order reference number is: "+orderId+"</h1>");
+		out.println("<h1>Shipping to customer: "+custId+" Name: "+cFirstName+" "+cLastName+"</h1>");
 
-		//end session
-		session.setAttribute("productList", null); 
+		// Clear session variables (cart)
+		session.setAttribute("productList", null);  
 
-	}
-	else{	// There exists no products in the cart
-		out.println("<h2>No items in cart!</h2>");
 	}
 }
-%>
 
-<script>
-	console.info(performance.navigation.type);
-	if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-		location.replace("http://localhost/shop/order.jsp");
-	}
-</script>
+catch (SQLException e){
+	out.println(e);
+}
+%>
+<h2><a href="listprod.jsp">Continue Shopping</a></h2>
 
 </div>
 </BODY>
