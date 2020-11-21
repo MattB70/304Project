@@ -145,7 +145,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 			pstmt.setInt(1, orderId);
 			pstmt.setInt(2, Integer.parseInt(productId));
 			pstmt.setInt(3, qty);
-			pstmt.setString(4, pr);
+			pstmt.setDouble(4, pr);
 			pstmt.executeUpdate();				
 		}
 		out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
