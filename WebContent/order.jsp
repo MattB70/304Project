@@ -53,9 +53,15 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Statement stmt = con.createStatement();) { 
 	if (custId == null || custId.equals("")){
-		out.println("<h1>Invalid customer id.  Go back to the previous page and try again.</h1>");
+		out.println("<h1>Invalid customer id. Please go back and try again!</h1>");
+		%>
+			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+			<%
 	}else if (productList == null){
-		out.println("<h1>Your shopping cart is empty!</h1>");
+		out.println("<h1>Your shopping cart is empty! Please add a product.</h1>");
+		%>
+			<h2><a href="listprod.jsp">Back to Product Page</a></h2>
+			<%
 	}else{
 		// Determine if customer id entered is an integer
 		int num = -1;
@@ -134,7 +140,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 			out.println("</tr>");
 			total = total +pr*qty;
 
-			sql = "INSERT INTO OrderedProduct VALUES(?, ?, ?, ?)";
+			sql = "INSERT INTO orderproduct VALUES(?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, orderId);
 			pstmt.setInt(2, Integer.parseInt(productId));
@@ -147,7 +153,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		out.println("</table>");
 
 		// Update order total
-		sql = "UPDATE Orders SET totalAmount=? WHERE orderId=?";
+		sql = "UPDATE ordersummary SET totalAmount=? WHERE orderId=?";
 		pstmt = con.prepareStatement(sql);
 		pstmt.setDouble(1, total);
 		pstmt.setInt(2, orderId);			
