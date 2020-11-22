@@ -39,7 +39,8 @@ String password = request.getParameter("password");
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 session.getAttribute("productList");
 // Make connection
-try{	// Load driver class
+try{	
+	// Load driver class
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 }
 catch (java.lang.ClassNotFoundException e){
@@ -52,12 +53,14 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Statement stmt = con.createStatement();) { 
-	if (custId == null || custId.equals("")){ //if null entered
+	if (custId == null || custId.equals("")){ 
+		//if null entered
 		out.println("<h1>Invalid customer id. Please go back to the previous page and try again!</h1>");
 		%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 			<%
-	}else if (productList == null){ //if empty cart
+	}else if (productList == null){ 
+		//if empty cart
 		out.println("<h1>Your shopping cart is empty! Please add a product.</h1>");
 		%>
 			<h2><a href="listprod.jsp">Back to Product Page</a></h2>
@@ -92,7 +95,8 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		}else{
 			String dbpw = rstc.getString(9);
 
-			if(!dbpw.equals(password)){ //check if password matches the one stored in db
+			if(!dbpw.equals(password)){
+				 //check if password matches the one stored in db
 				out.println("<h1>Incorrect Password. Please go back and try again!</h1><br>");
 				%>
 				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
@@ -100,6 +104,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 				return;
 			}
 		}
+		//getting values
 		cFirstName = rstc.getString(2);
 		cLastName = rstc.getString(3);
 		String address = rstc.getString(4);
@@ -127,6 +132,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
 
 		while (iterator.hasNext()){ 
+			//Traversing the hashmap
 			Map.Entry<String, ArrayList<Object>> entry = iterator.next();
 			ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
 			String productId = (String) product.get(0);
@@ -141,6 +147,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 			out.println("</tr>");
 			total += pr*qty;
 
+			//inserting into orderproduct table
 			sql = "INSERT INTO orderproduct VALUES(?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, orderId);
@@ -168,8 +175,9 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		session.setAttribute("productList", null);  
 
 	}
+	//close connection
+	if (con!=null) con.close();
 }
-
 catch (SQLException e){
 	out.println(e);
 }
