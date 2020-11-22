@@ -75,7 +75,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 			return;
 		}
 		//Determine if customer id exists in the database
-		String sqlc = "SELECT customerId, firstName, lastName, address, city, state, postalCode, country, password FROM Customer WHERE customerId = ?";
+		String sqlc = "SELECT customerId, firstName, lastName, address, city, state, postalCode, country, password FROM customer WHERE customerId = ?";
 		PreparedStatement pstc = con.prepareStatement(sqlc);
 		pstc.setInt(1, num);
 		ResultSet rstc = pstc.executeQuery();
@@ -88,6 +88,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 			%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 			<%
+			return;
 		}else{
 			String dbpw = rstc.getString(9);
 
