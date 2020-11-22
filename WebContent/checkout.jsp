@@ -19,7 +19,7 @@
 
 <div id="main-content">
 
-<h1>Enter your customer id and password to complete the transaction:</h1>
+<h1>Enter your Customer ID and Password to complete the transaction:</h1>
 
 <form method="get" action="order.jsp">
 <table>

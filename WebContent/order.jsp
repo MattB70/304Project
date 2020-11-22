@@ -53,7 +53,7 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		Statement stmt = con.createStatement();) { 
 	if (custId == null || custId.equals("")){ //if null entered
-		out.println("<h1>Invalid customer id. Please go back and try again!</h1>");
+		out.println("<h1>Invalid customer id. Please go back to the previous page and try again!</h1>");
 		%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 			<%
@@ -68,7 +68,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		try{
 			num = Integer.parseInt(custId);	
 		}catch(Exception e){
-			out.println("<h1>Please enter a valid Customer ID!</h1>");
+			out.println("<h1>Invalid Customer ID. Please go back and try again!</h1>");
 			%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 			<%
@@ -84,7 +84,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		String cLastName = "";
 
 		if(!rstc.next()){
-			out.println("<h1>Invalid customer id. Please go back and try again!</h1><br>");
+			out.println("<h1>Invalid Customer ID. Please go back and try again!</h1><br>");
 			%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 			<%
