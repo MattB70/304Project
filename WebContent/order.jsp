@@ -68,7 +68,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		try{
 			num = Integer.parseInt(custId);	
 		}catch(Exception e){
-			out.println("Please enter a valid customer ID!");
+			out.println("<h1>Please enter a valid Customer ID!</h1>");
 			%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 			<%
