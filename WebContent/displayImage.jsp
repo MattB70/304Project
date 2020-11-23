@@ -21,8 +21,7 @@ catch(Exception e)
 // TODO: Modify SQL to retrieve productImage given productId
 String sql = "";
 
-try 
-{
+try {
 	getConnection();
 	PreparedStatement stmt = con.prepareStatement(sql);
 	stmt.setInt(1,idVal);
@@ -48,8 +47,7 @@ try
 catch (SQLException ex) {
 	out.println(ex);
 }
-finally
-{
+finally{
 	closeConnection();
 }
 %>
