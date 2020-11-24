@@ -4,19 +4,17 @@
 	String authenticatedUser = null;
 	session = request.getSession(true);
 
-	try
-	{
+	try{
 		authenticatedUser = validateLogin(out,request,session);
 	}
-	catch(IOException e)
-	{	System.err.println(e); }
+	catch(IOException e){	
+		System.err.println(e); }
 
 	if(authenticatedUser != null)
 		response.sendRedirect("index.jsp");		// Successful login
 	else
 		response.sendRedirect("login.jsp");		// Failed login - redirect back to login page with a message 
 %>
-
 
 <%!
 	String validateLogin(JspWriter out,HttpServletRequest request, HttpSession session) throws Exception
@@ -30,8 +28,7 @@
 		if((username.length() == 0) || (password.length() == 0))
 				return null;
 
-		try 
-		{
+		try {
 			getConnection();
 			
 			//Check if userId and password match some customer account. If so, set retStr to be the username.
@@ -41,11 +38,9 @@
 			pst.setString(2, password);
 			ResultSet rst = pst.executeQuery();
 			rst.next();
-			if(!rst.getString(1).equals(null))
-			{
+			if(!rst.getString(1).equals(null)){
 				retStr = rst.getString(1);
 			}
-			
 		} 
 		catch (SQLException ex) {
 			out.println("SQLException:  "+ex);
@@ -53,11 +48,9 @@
 		catch (Exception ex) {
 			out.println("Exception:  "+ex);
 		}
-		finally
-		{
+		finally{
 			closeConnection();
 		}	
-		
 		if(retStr != null)
 		{	session.removeAttribute("loginMessage");
 			session.setAttribute("authenticatedUser",username);

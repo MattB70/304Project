@@ -20,8 +20,8 @@ String price = request.getParameter("price");
 Integer quantity = new Integer(1);
 
 // Skip if null
-if(id != null) 
-{
+if(id != null) {
+	
 	// Store product information in an ArrayList
 	ArrayList<Object> product = new ArrayList<Object>();
 	product.add(id);

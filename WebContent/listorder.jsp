@@ -13,30 +13,19 @@
 
 
 <%@ include file="header.jsp" %>
-
+<%@ include file="jdbc.jsp" %>
 
 <div id="main-content">
 
 <h1>Ramon's World Order List: </h1>
 	
 <%
-String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-String uid = "SA";
-String pw = "YourStrong@Passw0rd";
-try{	// Load driver class
-	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-}
-catch (java.lang.ClassNotFoundException e){
-	out.println("ClassNotFoundException: " +e);
-}
 
 // Useful code for formatting currency values:
 NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
 // Make connection
-try ( Connection con = DriverManager.getConnection(url, uid, pw);
-      Statement stmt = con.createStatement();) 
-{	
+try {	getConnection();
 	String q1 = "SELECT O.orderId, O.orderDate, O.customerId, C.firstName, C.lastName, O.totalAmount "
 			   +"FROM ordersummary O LEFT JOIN customer C ON O.customerId = C.customerId";
 
@@ -61,7 +50,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		}
 		out.println("</table></td></tr>");
 	}
-	if (con!=null) con.close();
+	closeConnection();
 }
 catch (SQLException ex) { 	
 	out.println(ex); 

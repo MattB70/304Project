@@ -12,36 +12,29 @@
 
 
 <%@ include file="header.jsp" %>
+<%@ include file="jdbc.jsp" %>
 
 
 <div id="main-content">
 <%
-String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-String uid = "SA";
-String pw = "YourStrong@Passw0rd";
 
-out.print("<h1>Connecting to database.</h1><br><br>");
-
-Connection con = DriverManager.getConnection(url, uid, pw);
-        
+out.print("<h1>Connecting to database.</h1><br><br>");        
 String fileName = "/usr/local/tomcat/webapps/shop/orderdb_sql.ddl";
 
-try
-{
+try{
+    getConnection();
     // Create statement
     Statement stmt = con.createStatement();
     
     Scanner scanner = new Scanner(new File(fileName));
     // Read commands separated by ;
     scanner.useDelimiter(";");
-    while (scanner.hasNext())
-    {
+    while (scanner.hasNext()){
         String command = scanner.next();
         if (command.trim().equals(""))
             continue;
         out.print(command);        // Uncomment if want to see commands executed
-        try
-        {
+        try{
             stmt.execute(command);
         }
         catch (Exception e)
@@ -53,12 +46,11 @@ try
             out.println("<br>");
         }
     }	 
-    scanner.close();
+    closeConnection();
     
     out.print("<br><br><h1>Database loaded.</h1>");
 }
-catch (Exception e)
-{
+catch (Exception e){
     out.println("<br>");
     out.println("<br>");
     out.println("<h3 style=\"color:red;\">EXCEPTION: . . . "+e+"</h3>");
