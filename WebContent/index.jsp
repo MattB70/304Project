@@ -1,26 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <title>Ramon's World Main Page</title>
+<style>
+</style>
+        <title>Ramon World Gift Shop Main Page</title>
+        
+        <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<h1 align="center">Welcome to Ramon World's Gift Shop</h1>
 
-<h2 align="center"><a href="login.jsp">Login</a></h2>
 
-<h2 align="center"><a href="listprod.jsp">Begin Shopping</a></h2>
 
-<h2 align="center"><a href="listorder.jsp">List All Orders</a></h2>
+<%@ include file="header.jsp" %>
 
-<h2 align="center"><a href="customer.jsp">Customer Info</a></h2>
 
-<h2 align="center"><a href="admin.jsp">Administrators</a></h2>
 
-<h2 align="center"><a href="logout.jsp">Log out</a></h2>
 
-<%
-// TODO: Display user name that is logged in (or nothing if not logged in)	
-%>
+<div id="main-content" align="center">
+        <h1 align="center">Welcome to the Ramon World Gift Shop!</h1>
+        <br>
+        <br>
+        <img src="images/ramonworld.png" alt="RamonWorld" align = "center">
+        <br>
+        <br>
+        <br>
+        <h2 align="center">Popular Products</h2>
+        <br>
+        <table align="center" width="Page" border="30" cellpadding="5">
+                <tr>
+
+                        <td align="center" valign="center">
+                                <img src="images/ramon.png" alt="Image failed to load... I can't solve this." height="300">
+                        </td>
+                        
+                        <td align="center" valign="center">
+                                <img src="images/ramontele.png" alt="Image failed to load... I can't solve this." height="300">
+                        </td>
+
+                        <td align="center" valign="center">
+                                <img src="images/ramon.png" alt="Image failed to load... I can't solve this." height="300">
+                        </td>
+                        
+                </tr> 
+                <tr>
+
+                        <td align="center" valign="center">
+                                <img src="images/ramontele.png" alt="Image failed to load... I can't solve this." height="300">
+                        </td>
+                        
+                        <td align="center" valign="center">
+                                <img src="images/ramon.png" alt="Image failed to load... I can't solve this." height="300">
+                        </td>
+
+                        <td align="center" valign="center">
+                                <img src="images/ramontele.png" alt="Image failed to load... I can't solve this." height="300">
+                        </td>
+                        
+                </tr> 
+        </table>
+        </p>
+</div>
+
 </body>
 </head>
 
