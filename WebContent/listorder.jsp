@@ -28,8 +28,8 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 try {	getConnection();
 	String q1 = "SELECT O.orderId, O.orderDate, O.customerId, C.firstName, C.lastName, O.totalAmount "
 			   +"FROM ordersummary O LEFT JOIN customer C ON O.customerId = C.customerId";
-
-	ResultSet rst = stmt.executeQuery(q1);
+	PreparedStatement stmt = con.prepareStatement(q1);
+	ResultSet rst = stmt.executeQuery();
 
 	out.println("<table border=3><tr><th>OrderId</th><th>Order Date</th><th>CustomerId</th><th>Customer Name</th><th>Total Amount</th></tr>");
 	
