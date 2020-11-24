@@ -12,6 +12,7 @@
 <%@ include file="jdbc.jsp" %>
 <%@ include file="header.jsp" %>
 
+<div id="main-content">
 <%
 // Get product name to search for
 // TODO: Retrieve and display info for the product
@@ -58,7 +59,7 @@ catch (SQLException ex) {
 		
 // TODO: Add links to Add to Cart and Continue Shopping
 %>
-
+</div>
 </body>
 </html>
 

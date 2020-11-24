@@ -8,7 +8,7 @@
 
 <%@ include file="header.jsp" %>
 
-<div style="margin:0 auto;text-align:center;display:inline">
+<div id="main-content">
 
 <h3>Please Login to System</h3>
 

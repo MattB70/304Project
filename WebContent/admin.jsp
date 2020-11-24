@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<div id="main-content">
+
 <%
 // TODO: Include files auth.jsp and jdbc.jsp
 %>
@@ -16,6 +18,7 @@ String sql = "";
 
 %>
 
+</div>
 </body>
 </html>
 

@@ -16,6 +16,8 @@
         
 <%@ include file="header.jsp" %>
 
+<div id="main-content">
+
 <%
 try{
 	getConnection();
@@ -76,5 +78,6 @@ catch (SQLException ex) {
 
 <h3><a href="index.jsp">Back to Main Page</a></h3>
 
+</div>
 </body>
 </html>
