@@ -10,6 +10,7 @@
 <html>
 <head>
 <title>YOUR NAME Grocery Shipment Processing</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
         
@@ -31,7 +32,7 @@
 	// TODO: Auto-commit should be turned back on
 %>                       				
 
-<h2><a href="shop.html">Back to Main Page</a></h2>
+<h2><a href="index.jsp">Back to Main Page</a></h2>
 
 </body>
 </html>
