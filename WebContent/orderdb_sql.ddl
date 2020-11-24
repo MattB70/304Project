@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS shipment;
-DROP TABLE IF EXISTS productinventory;
+DROP TABLE IF EXISTS productInventory;
 DROP TABLE IF EXISTS warehouse;
 DROP TABLE IF EXISTS orderproduct;
 DROP TABLE IF EXISTS incart;
@@ -111,7 +111,7 @@ CREATE TABLE shipment (
         ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
-CREATE TABLE productinventory ( 
+CREATE TABLE productInventory ( 
     productId           INT,
     warehouseId         INT,
     quantity            INT,

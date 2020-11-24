@@ -43,16 +43,25 @@ try{
 	
 	// TODO: Retrieve all items in order with given id
 	String sql = "SELECT * FROM orderproduct WHERE orderId = ?";
-		PreparedStatement pst = con.prepareStatement(sql);
-		pst.setString(1, orderId);
-		ResultSet rst = pst.executeQuery();
-		while(rst.next()){
-			out.println("<h1>Ordered Product: "+rst.getInt(2)+"  Qty: " + rst.getInt(3)+"</h1>");
+	PreparedStatement pst = con.prepareStatement(sql);
+	pst.setString(1, orderId);
+	ResultSet rst = pst.executeQuery();
+	while(rst.next()){
+			Integer productId = rst.getInt(2);
+			String sql2 ="SELECT * FROM  productInventory WHERE productId =?";
+			PreparedStatement pst2 = con.prepareStatement(sql2);
+			pst2.setInt(1, rst.getInt(2));
+			ResultSet rst2 = pst2.executeQuery();
+			if(rst.getInt(3)>rst2.getInt(3)){
+				out.println("<h1>Shipment not done. Insufficient inventory for product id: "+productId +"</h1>");
+				return;
+			}
+			out.println("<h1>Ordered Product: "+rst.getInt(2)+"  Qty: " + rst.getInt(3)+" Previous Inventory: "+rst2.getInt(3)+"</h1>");
 			
 		}
-	
+	out.println("<h2>Shipment successfully processed. </h2>");
 	// TODO: Create a new shipment record.
-
+	//String sqlShip = "INSERT INTO shipment "...
 	// TODO: For each item verify sufficient quantity available in warehouse 1.
 	// TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
 	
@@ -65,7 +74,7 @@ catch (SQLException ex) {
 }
 %>                       				
 
-<h2><a href="index.jsp">Back to Main Page</a></h2>
+<h3><a href="index.jsp">Back to Main Page</a></h3>
 
 </body>
 </html>
