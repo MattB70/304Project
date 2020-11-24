@@ -19,7 +19,7 @@
 
 
 <%!
-	String validateLogin(JspWriter out,HttpServletRequest request, HttpSession session) throws IOException
+	String validateLogin(JspWriter out,HttpServletRequest request, HttpSession session) throws Exception
 	{
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -34,11 +34,24 @@
 		{
 			getConnection();
 			
-			// TODO: Check if userId and password match some customer account. If so, set retStr to be the username.
-			retStr = "";			
+			//Check if userId and password match some customer account. If so, set retStr to be the username.
+			String sql = "SELECT userId, password FROM customer WHERE userId = ? AND password = ?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, username);
+			pst.setString(2, password);
+			ResultSet rst = pst.executeQuery();
+			rst.next();
+			if(!rst.getString(1).equals(null))
+			{
+				retStr = rst.getString(1);
+			}
+			
 		} 
 		catch (SQLException ex) {
-			out.println(ex);
+			out.println("SQLException:  "+ex);
+		}
+		catch (Exception ex) {
+			out.println("Exception:  "+ex);
 		}
 		finally
 		{

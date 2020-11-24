@@ -6,12 +6,13 @@
 </head>
 <body>
 
-<%@ include file="auth.jsp"%>
+<!-- <%@ include file="auth.jsp"%> -->
 <%@ page import="java.text.NumberFormat" %>
 <%@ include file="jdbc.jsp" %>
 
 <%
-	String userName = (String) session.getAttribute("authenticatedUser");
+	//String userName = (String) session.getAttribute("authenticatedUser");
+	out.print("HELLO");
 %>
 
 <%

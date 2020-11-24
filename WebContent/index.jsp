@@ -30,30 +30,30 @@
                 <tr>
 
                         <td align="center" valign="center">
-                                <img src="images/ramon.png" alt="Image failed to load... I can't solve this." height="300">
+                                <img src="images/ramon.png" alt="product image" height="300">
                         </td>
                         
                         <td align="center" valign="center">
-                                <img src="images/ramontele.png" alt="Image failed to load... I can't solve this." height="300">
+                                <img src="images/ramontele.png" alt="product image" height="300">
                         </td>
 
                         <td align="center" valign="center">
-                                <img src="images/ramon.png" alt="Image failed to load... I can't solve this." height="300">
+                                <img src="images/ramon.png" alt="product image" height="300">
                         </td>
                         
                 </tr> 
                 <tr>
 
                         <td align="center" valign="center">
-                                <img src="images/ramontele.png" alt="Image failed to load... I can't solve this." height="300">
+                                <img src="images/ramontele.png" alt="product image" height="300">
                         </td>
                         
                         <td align="center" valign="center">
-                                <img src="images/ramon.png" alt="Image failed to load... I can't solve this." height="300">
+                                <img src="images/ramon.png" alt="product image" height="300">
                         </td>
 
                         <td align="center" valign="center">
-                                <img src="images/ramontele.png" alt="Image failed to load... I can't solve this." height="300">
+                                <img src="images/ramontele.png" alt="product image" height="300">
                         </td>
                         
                 </tr> 
