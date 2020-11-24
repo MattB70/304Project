@@ -79,7 +79,7 @@ th.buttons {
     background-color: var(--backgroundtop);
     color: var(--font);
     font-variant-caps: all-small-caps;
-    font-size: xx-large;
+    font-size: x-large;
 }
 td.buttons {
     background-color: var(--backgroundtop);
