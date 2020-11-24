@@ -17,6 +17,14 @@
 	String userName = (String) session.getAttribute("authenticatedUser");
 
 	out.print("<h2>Customer Profile</h2><br><br>");
+
+%>
+
+<%!
+	String formatRow(String title, String info)
+	{
+		return "<tr><td><h3>	"+title+"			</h3></td><td>"+info+"</td></tr>";
+	}
 %>
 
 <%
@@ -30,17 +38,17 @@
 
 	// Print Customer Info
 	out.print("<table>");
-	out.print("<tr><td><h3>	Id			</h3></td><td>"+rst.getString(1)+"</td></tr>");
-	out.print("<tr><td><h3>	First Name	</h3></td><td>"+rst.getString(2)+"</td></tr>");
-	out.print("<tr><td><h3>	Last Name	</h3></td><td>"+rst.getString(3)+"</td></tr>");
-	out.print("<tr><td><h3>	Email		</h3></td><td>"+rst.getString(4)+"</td></tr>");
-	out.print("<tr><td><h3>	Phone		</h3></td><td>"+rst.getString(5)+"</td></tr>");
-	out.print("<tr><td><h3>	Address		</h3></td><td>"+rst.getString(6)+"</td></tr>");
-	out.print("<tr><td><h3>	City		</h3></td><td>"+rst.getString(7)+"</td></tr>");
-	out.print("<tr><td><h3>	State		</h3></td><td>"+rst.getString(8)+"</td></tr>");
-	out.print("<tr><td><h3>	Postal Code	</h3></td><td>"+rst.getString(9)+"</td></tr>");
-	out.print("<tr><td><h3>	Country		</h3></td><td>"+rst.getString(10)+"</td></tr>");
-	out.print("<tr><td><h3>	User id		</h3></td><td>"+rst.getString(11)+"</td></tr>");
+	out.print(formatRow("id", 			rst.getString(1)));
+	out.print(formatRow("First Name", 	rst.getString(2)));
+	out.print(formatRow("Last Name", 	rst.getString(3)));
+	out.print(formatRow("Email", 		rst.getString(4)));
+	out.print(formatRow("Phone", 		rst.getString(5)));
+	out.print(formatRow("Address", 		rst.getString(6)));
+	out.print(formatRow("City", 		rst.getString(7)));
+	out.print(formatRow("State", 		rst.getString(8)));
+	out.print(formatRow("Postal Code", 	rst.getString(9)));
+	out.print(formatRow("Country", 		rst.getString(10)));
+	out.print(formatRow("User id", 		rst.getString(11)));
 	out.print("</table>");
 
 	
