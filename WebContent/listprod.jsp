@@ -10,8 +10,7 @@
 </head>
 <body>
 
-
-
+<%@ include file="jdbc.jsp" %>
 <%@ include file="header.jsp" %>
 
 <div id="main-content">
@@ -34,7 +33,6 @@
 <input type="submit" value="Submit"><input type="reset" value="Reset"> <br>(Leave blank for all products)
 </form>
 <br>
-
 
 <%
  // Get product name to search for
@@ -65,24 +63,12 @@ filter = "<h2>All products: </h2>";
 	sql = "SELECT P.productId, P.productName, P.productPrice, P.productImageURL, P.productDesc, C.categoryName FROM product P, category C WHERE P.categoryId = C.categoryId"; 	
 }
 out.println(filter);
-try
-{	// Load driver class
-	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-}
-catch (java.lang.ClassNotFoundException e)
-{
-	out.println("ClassNotFoundException: " +e);
-}
-String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-String uid = "SA";
-String pw = "YourStrong@Passw0rd";
+
 NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
-// Make the connection
-try ( Connection con = DriverManager.getConnection(url, uid, pw);
-      Statement stmt = con.createStatement();) {
-
-	PreparedStatement pst = con.prepareStatement(sql);
+try { 
+		getConnection();  // Make the connection
+		PreparedStatement pst = con.prepareStatement(sql);
 	if (hasNameEntered){
 		pst.setString(1, name);	
 		if (hasCategoryEntered){
@@ -96,13 +82,17 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	out.println("<table border=3><tr><th> </th><th>Category</th><th>Product Name</th><th>Description</th><th>Image</th><th>Price</th></tr>");
 	while (rst.next()){	
 
-		String link = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
-		out.print("<tr><td><a href=\"" + link + "\">Add to Cart</a></td><td>"+rst.getString(6)+"</td><td>"+rst.getString(2)+"</td><td>"
-		+rst.getString(5)+"</td><td style='text-align:center;'>"+ "<img style='height:200px;' src='"+ rst.getString("productImageURL") 
-		+"' alt=\"image unavailable\">" +"</td><td>"+currFormat.format(rst.getDouble(3))+"</td></tr>");
+		String addCartLink = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
+		String productLink = "product.jsp?id=" + rst.getInt(1);
+		
+		out.print("<tr><td><a href=\"" + addCartLink + "\">Add to Cart</a></td><td>"+rst.getString(6)
+		+"</td><td><a href=\""+ productLink+"\">" + rst.getString(2) +"</a></td><td>"+rst.getString(5)
+		+"</td><td style='text-align:center;'>"+ "<img style='height:200px;' src='"
+		+ rst.getString("productImageURL")+"' alt=\"image unavailable\">" +"</td><td>"
+		+currFormat.format(rst.getDouble(3))+"</td></tr>");
 	}
 	out.println("</table>");
-	if (con!=null) con.close();
+	closeConnection();
 }
 catch (SQLException ex) { 	
 	out.println(ex); 
