@@ -20,6 +20,7 @@
 <body>
 
 <%@ include file="header.jsp" %>
+<%@ include file="jdbc.jsp" %>
 
 <div id="main-content">
 
@@ -31,21 +32,10 @@ String password = request.getParameter("password");
 @SuppressWarnings({"unchecked"})
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 session.getAttribute("productList");
-// Make connection
-try{	
-	// Load driver class
-	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-}
-catch (java.lang.ClassNotFoundException e){
-	out.println("ClassNotFoundException: " +e);
-}
-String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-String uid = "SA";
-String pw = "YourStrong@Passw0rd";
+
 NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
-try ( Connection con = DriverManager.getConnection(url, uid, pw);
-		Statement stmt = con.createStatement();) { 
+try { getConnection();
 	if (custId == null || custId.equals("")){ 
 		//if null entered
 		out.println("<h1>Invalid customer id. Please go back to the previous page and try again!</h1>");
@@ -166,10 +156,9 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 		// Clear session variables (cart)
 		session.setAttribute("productList", null);  
-
 	}
 	//close connection
-	if (con!=null) con.close();
+	closeConnection();
 }
 catch (SQLException e){
 	out.println(e);
