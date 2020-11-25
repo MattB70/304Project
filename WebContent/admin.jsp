@@ -1,3 +1,5 @@
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,15 +12,10 @@
 <div id="main-content">
 
 <%
-// TODO: Include files auth.jsp and jdbc.jsp
-// done above
-
-%>
-<%
-
 // TODO: Write SQL query that prints out total order amount by day
 try{
 getConnection();
+NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 //get the orderdate and sum for the orders made
 String sql = "SELECT CAST(orderDate AS DATE), SUM(totalAmount)" 
             +"FROM ordersummary "
@@ -30,23 +27,24 @@ String sql = "SELECT CAST(orderDate AS DATE), SUM(totalAmount)"
 
 PreparedStatement pst = con.prepareStatement(sql);
 ResultSet rst = pst.executeQuery();
-    out.println("</td></tr><tr><td>"+"Order Date: "+"</td><td>"+" Total:" +"</tr><br>");
+    out.println("<table><tr><th>"+"Order Date: "+"</th><th>"+" Total:" +"</th></tr>");
 
 while(rst.next()){
   
     //print it out
     //need to make pretty but brain too smooth
-    out.println("</td></tr><tr><td>"+"/n "+rst.getDate(1)+"</td><td>"+" /n "+rst.getDouble(2)+"</tr><br>");
-    out.println("</table>");
+    out.println("<tr><td>"+rst.getDate(1)+"</td><td>"+currFormat.format(rst.getDouble(2))+"</td></tr>");
     }
-out.println("<h2><a href=listprod.jsp>Continue Shopping</a></h2>");
+    out.println("</table><br>");
+    out.println("<h2><a href=listprod.jsp>Continue Shopping</a></h2>");
 
 
 }
 catch (SQLException ex) { 	
 	out.println(ex); 
 }
-finally {closeConnection();}
+finally {
+    closeConnection();}
 %>
 
 </div>

@@ -39,10 +39,10 @@ while(rst.next()){
     out.println("<table border=3><th colspan = 2><h1>"+rst.getString(2)+ " - "+ rst.getString(6)
   +"</h1></th><tr><td style='text-align:center;' colspan = 2>");
   if (imageInFile != null){
-     out.println("<img style='height:100px' src='"+ rst.getString(4) + "'>");
+     out.println("<img style='height:500px' src='"+ rst.getString(4) + "'>");
   }
   if (imageInBinary != null){
-      out.println("<img style='height:100px' src=\"" + binaryLink + "\">");
+      out.println("<img style='height:500px' src=\"" + binaryLink + "\">");
   }
     out.println("</td></tr><tr><td>"+"Id: "+rst.getString(1)+"</td><td>"+"Price: "+currFormat.format(rst.getDouble(3))+"</tr><br>");
     out.println("</table>");
