@@ -71,7 +71,7 @@ try{
 			<%
 			return;
 		} else{
-			out.println("<h2>Ordered Product: "+rst.getString("productId"));
+			out.println("<h2>Ordered Product: "+rst.getInt("productId"));
 			out.println(" Qty: " + rst.getInt("quantity"));
 			out.println(" Previous Inventory: " + rst2.getInt("quantity"));
 			out.println(" New Inventory:"+ (rst2.getInt("quantity")-rst.getInt("quantity"))+" </h2>");
