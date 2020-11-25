@@ -16,7 +16,7 @@
         <th class="buttons"></th>   <!-- Spacer -->
 <!--    <th class="buttons"></th>   <!-- Spacer -->
         <th class="buttons"></th>   <!-- Spacer -->
-        <th class="buttons"></th>   <!-- Spacer -->
+        <th class="buttons" align="right"><%@ include file="logininfo.jsp" %></th>   <!-- Login info -->
         <th class="buttons"><a href="logout.jsp">Logout</a></th>
     </tr>
 </table>

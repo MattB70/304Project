@@ -19,6 +19,7 @@
 
   div#main-content {
     padding-top: 50px; 
+    padding-bottom: 1000px; 
     margin: auto;
     width: min-content;
     min-width: 300px;
@@ -30,12 +31,6 @@
     background-color: purple;
     background-position: center;
   }
-  div#no-wrap {
-    padding-top: 50px; 
-    margin: 10px;
-    white-space: pre;
-  }
-
 /*=========================================================*/
 /* Main */
 body {

@@ -15,7 +15,6 @@
 
 
 
-
 <div id="main-content" align="center">
         <h1 align="center">Welcome to the Ramon World Gift Shop!</h1>
         <br>
@@ -60,7 +59,6 @@
         </table>
         </p>
 </div>
-
 </body>
 </head>
 
