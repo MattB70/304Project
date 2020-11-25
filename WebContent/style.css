@@ -11,7 +11,7 @@
 }
 
 /*=========================================================*/
-/* Banner */
+/* divs */
 * {
     margin: 0; 
     padding: 0;
@@ -30,7 +30,11 @@
     background-color: purple;
     background-position: center;
   }
-
+  div#no-wrap {
+    padding-top: 50px; 
+    margin: 10px;
+    white-space: pre;
+  }
 
 /*=========================================================*/
 /* Main */
