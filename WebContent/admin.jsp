@@ -17,9 +17,9 @@ try{
 getConnection();
 NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 //get the orderdate and sum for the orders made
-String sql = "SELECT CAST(orderDate AS DATE), SUM(totalAmount)" 
+String sql = "SELECT DATEADD(day, 2, CAST(orderDate AS DATE)), SUM(totalAmount)" 
             +"FROM ordersummary "
-            +"WHERE orderDate BETWEEN '2010-01-01' AND '2020-11-20' "
+            +"WHERE orderDate BETWEEN '2018-01-01' AND '2020-11-20' "
             +"GROUP BY CAST(orderDate AS DATE)"
             +"ORDER BY 1";
             //currently adding the dates totals together
