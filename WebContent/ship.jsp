@@ -89,6 +89,7 @@ try{
 			pst4.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			pst4.setString(2, shipmentDesc);
 			pst4.setInt(3, rst2.getInt("warehouseId"));
+			pst4.executeUpdate();
 			}
 		}
 	out.println("<h1>Shipment successfully processed. </h1>");
