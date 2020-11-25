@@ -6,7 +6,7 @@
         <th class="buttons"><a href="customer.jsp">Customer Info</a></th>       <!-- customer   -->
         <th class="buttons"><a href="admin.jsp">Administators</a></th>          <!-- admin      -->
         <th class="buttons"><a href="listorder.jsp">List All Orders</a></th>    <!-- listorder  -->
-        <th class="buttons"><a href="ship.jsp">Shipment</a></th>                <!-- ship       -->
+<!--    <th class="buttons"><a href="ship.jsp">Shipment</a></th>                <!-- ship       -->
         <th class="buttons" align="right"><a href="addcart.jsp"><img src="images/cart.png" alt="Cart" height="100" ></a></th>   <!-- Cart -->
     </tr>
 
@@ -14,7 +14,7 @@
         <th class="buttons"><a href="login.jsp">Login</a></th>
         <th class="buttons"></th>   <!-- Spacer -->
         <th class="buttons"></th>   <!-- Spacer -->
-        <th class="buttons"></th>   <!-- Spacer -->
+<!--    <th class="buttons"></th>   <!-- Spacer -->
         <th class="buttons"></th>   <!-- Spacer -->
         <th class="buttons"></th>   <!-- Spacer -->
         <th class="buttons"><a href="logout.jsp">Logout</a></th>
