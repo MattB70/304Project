@@ -12,7 +12,6 @@
 
 
 <%@ include file="header.jsp" %>
-<%@ include file="jdbc.jsp" %>
 
 
 <div id="main-content">
