@@ -16,8 +16,6 @@
         
 <%@ include file="header.jsp" %>
 
-
-
 <%
 try{
 	getConnection();
@@ -49,6 +47,7 @@ try{
 		}
 	}
 	// TODO: Start a transaction (turn-off auto-commit)
+	con.setAutoCommit(false);
 	
 	// TODO: Retrieve all items in order with given id
 	String sql = "SELECT * FROM orderproduct WHERE orderId = ?";
@@ -62,6 +61,8 @@ try{
 		PreparedStatement pst2 = con.prepareStatement(sql2);
 		pst2.setString(1,productId);
 		ResultSet rst2 = pst2.executeQuery();
+		out.println(productId);
+		rst.next();
 		if(rst.getInt("quantity")>rst2.getInt("quantity")){
 			out.println("<h1>Shipment not done. Insufficient inventory for Product ID: "+productId +"</h1>");
 			%>
@@ -99,7 +100,7 @@ try{
 	// TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
 	
 	// TODO: Auto-commit should be turned back on
-	
+	con.setAutoCommit(true);
 	closeConnection();
 }
 catch (SQLException ex) { 	
