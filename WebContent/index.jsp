@@ -22,41 +22,55 @@
         <br>
         <br>
         <br>
-        <h2 align="center">Popular Products</h2>
+        <h2 align="center">Popular Items</h2>
         <br>
         <table align="center" width="Page" border="30" cellpadding="5">
                 <tr>
 
                         <td align="center" valign="center">
-                                <img src="images/ramon.png" alt="product image" height="300">
+                                <img src="images/1.jpg" alt="product image" height="300">
                         </td>
                         
                         <td align="center" valign="center">
-                                <img src="images/ramontele.png" alt="product image" height="300">
+                                <img src="images/2.jpg" alt="product image" height="300">
                         </td>
 
                         <td align="center" valign="center">
-                                <img src="images/ramon.png" alt="product image" height="300">
+                                <img src="images/5.jpg" alt="product image" height="300">
                         </td>
                         
                 </tr> 
                 <tr>
 
                         <td align="center" valign="center">
-                                <img src="images/ramontele.png" alt="product image" height="300">
+                                <img src="images/7.jpg" alt="product image" height="300">
                         </td>
                         
                         <td align="center" valign="center">
-                                <img src="images/ramon.png" alt="product image" height="300">
+                                <img src="images/9.jpg" alt="product image" height="300">
                         </td>
 
                         <td align="center" valign="center">
-                                <img src="images/ramontele.png" alt="product image" height="300">
+                                <img src="images/14.jpg" alt="product image" height="300">
+                        </td>
+                        
+                </tr>
+                <tr>
+
+                        <td align="center" valign="center">
+                                <img src="images/25.jpg" alt="product image" height="300">
+                        </td>
+                        
+                        <td align="center" valign="center">
+                                <img src="images/18.jpg" alt="product image" height="300">
+                        </td>
+
+                        <td align="center" valign="center">
+                                <img src="images/13.jpg" alt="product image" height="300">
                         </td>
                         
                 </tr> 
         </table>
-        </p>
 </div>
 </body>
 </head>
