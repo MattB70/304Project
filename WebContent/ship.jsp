@@ -74,9 +74,14 @@ try{
 			out.println(" Qty: " + rst.getInt("quantity"));
 			out.println(" Previous Inventory: " + rst2.getInt("quantity"));
 			out.println(" New Inventory:"+ (rst2.getInt("quantity")-rst.getInt("quantity"))+" </h2>");
+			
 			String sql3 = "UPDATE productInventory "
-					+ "SET quantity = quantity – (SELECT OP.quantity FROM orderproduct OP WHERE orderId = ? AND OP.productId =?) WHERE productId =? ";
+					+ "SET quantity = quantity – (SELECT OP.quantity FROM orderproduct OP WHERE orderId = ? AND OP.productId =?) "
+					+ "WHERE productId =? ";
 			PreparedStatement pst3 = con.prepareStatement(sql3);
+			pst3.setString(1, orderId);
+			pst3.setInt(2, productId);			
+			pst3.setInt(3, productId);
 			pst3.executeUpdate();
 			
 			String shipmentDesc = ("There are " +rst.getInt("quantity")+ "products in this shipment." );
