@@ -19,9 +19,7 @@
 <div id="main-content">
 
 
-<%	// init
-	String userName = (String) session.getAttribute("authenticatedUser");
-
+<%
 	out.print("<h2>Customer Profile</h2><br><br>");
 %>
 
