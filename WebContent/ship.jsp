@@ -57,12 +57,12 @@ try{
 	ResultSet rst = pst.executeQuery();
 
 	while(rst.next()){
-		Integer productId = rst.getInt("productId");
+		String productId = rst.getString("productId");
 		String sql2 ="SELECT * FROM  productInventory WHERE productId = ?";
 		PreparedStatement pst2 = con.prepareStatement(sql2);
-		pst2.setInt(1,productId);
+		pst2.setString(1,productId);
 		ResultSet rst2 = pst2.executeQuery();
-		if(!rst2.next() ||rst.getInt("quantity")>rst2.getInt("quantity")){
+		if(rst.getInt("quantity")>rst2.getInt("quantity")){
 			out.println("<h1>Shipment not done. Insufficient inventory for Product ID: "+productId +"</h1>");
 			%>
 			<div id="main-content">
@@ -81,8 +81,8 @@ try{
 					+ "WHERE productId =? ";
 			PreparedStatement pst3 = con.prepareStatement(sql3);
 			pst3.setString(1, orderId);
-			pst3.setInt(2, productId);			
-			pst3.setInt(3, productId);
+			pst3.setString(2, productId);			
+			pst3.setString(3, productId);
 			pst3.executeUpdate();
 			
 			String shipmentDesc = ("There are " +rst.getInt("quantity")+ "products in this shipment." );
