@@ -12,10 +12,9 @@
 
 
 <%@ include file="header.jsp" %>
-<%@ include file="jdbc.jsp" %>
 
 
-<div id="main-content">
+<div style="white-space: nowrap;">
 <%
 
 out.print("<h1>Connecting to database.</h1><br><br>");        
@@ -33,7 +32,7 @@ try{
         String command = scanner.next();
         if (command.trim().equals(""))
             continue;
-        out.print(command);        // Uncomment if want to see commands executed
+        out.print("<br />"+command);        // Uncomment if want to see commands executed
         try{
             stmt.execute(command);
         }
