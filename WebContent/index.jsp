@@ -16,10 +16,9 @@
 
 
 <div id="main-content" align="center">
-        <h1 align="center">Welcome to the Ramon World Gift Shop!</h1>
         <br>
+        <img src="images/welcometext.png" alt="RamonWorld" align = "center">
         <br>
-        <img src="images/ramonworld.png" alt="RamonWorld" align = "center">
         <br>
         <br>
         <br>
