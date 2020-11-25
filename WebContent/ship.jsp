@@ -58,8 +58,9 @@ try{
 
 	while(rst.next()){
 		Integer productId = rst.getInt("productId");
-		String sql2 ="SELECT * FROM  productInventory WHERE productId ="+productId;
+		String sql2 ="SELECT * FROM  productInventory WHERE productId = ?";
 		PreparedStatement pst2 = con.prepareStatement(sql2);
+		pst2.setInt(1,productId);
 		ResultSet rst2 = pst2.executeQuery();
 		if(!rst2.next() ||rst.getInt("quantity")>rst2.getInt("quantity")){
 			out.println("<h1>Shipment not done. Insufficient inventory for Product ID: "+productId +"</h1>");
