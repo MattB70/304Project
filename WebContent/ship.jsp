@@ -61,8 +61,7 @@ try{
 		PreparedStatement pst2 = con.prepareStatement(sql2);
 		pst2.setString(1,productId);
 		ResultSet rst2 = pst2.executeQuery();
-		out.println(productId);
-		rst.next();
+		rst2.next();
 		if(rst.getInt("quantity")>rst2.getInt("quantity")){
 			out.println("<h1>Shipment not done. Insufficient inventory for Product ID: "+productId +"</h1>");
 			%>
@@ -78,12 +77,10 @@ try{
 			out.println(" New Inventory:"+ (rst2.getInt("quantity")-rst.getInt("quantity"))+" </h2>");
 			
 			String sql3 = "UPDATE productInventory "
-					+ "SET quantity = quantity – (SELECT OP.quantity FROM orderproduct OP WHERE orderId = ? AND OP.productId =?) "
+					+ "SET quantity = " + (rst2.getInt("quantity")-rst.getInt("quantity"))
 					+ "WHERE productId =? ";
 			PreparedStatement pst3 = con.prepareStatement(sql3);
-			pst3.setString(1, orderId);
-			pst3.setString(2, productId);			
-			pst3.setString(3, productId);
+			pst3.setString(1, productId);			
 			pst3.executeUpdate();
 			
 			String shipmentDesc = ("There are " +rst.getInt("quantity")+ "products in this shipment." );
