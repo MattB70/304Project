@@ -55,6 +55,7 @@ try{
 	PreparedStatement pst = con.prepareStatement(sql);
 	pst.setString(1, orderId);
 	ResultSet rst = pst.executeQuery();
+
 	while(rst.next()){
 		Integer productId = rst.getInt("productId");
 		String sql2 ="SELECT * FROM  productInventory WHERE productId ="+productId;
@@ -69,7 +70,6 @@ try{
 			<%
 			return;
 		} else{
-
 			out.println("<h2>Ordered Product: "+rst.getInt("productId"));
 			out.println(" Qty: " + rst.getInt("quantity"));
 			out.println(" Previous Inventory: " + rst2.getInt("quantity"));
@@ -78,11 +78,17 @@ try{
 					+ "SET quantity = quantity – (SELECT OP.quantity FROM orderproduct OP WHERE orderId = ? AND OP.productId =?) WHERE productId =? ";
 			PreparedStatement pst3 = con.prepareStatement(sql3);
 			pst3.executeUpdate();
+			
+			String shipmentDesc = ("There are " +rst.getInt("quantity")+ "products in this shipment." );
+			String sqlShip = "INSERT INTO shipment (shipmentDate, shipmentDesc, warehouseId) VALUES (?,?,?)";       
+			PreparedStatement pst4 = con.prepareStatement(sqlShip);
+			pst4.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pst4.setString(2, shipmentDesc);
+			pst4.setInt(3, rst2.getInt("warehouseId"));
 			}
 		}
 	out.println("<h1>Shipment successfully processed. </h1>");
 	// TODO: Create a new shipment record.
-	//String sqlShip = "INSERT INTO shipment "...
 	// TODO: For each item verify sufficient quantity available in warehouse 1.
 	// TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
 	
