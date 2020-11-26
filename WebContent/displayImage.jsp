@@ -1,4 +1,5 @@
-<%@ page trimDirectiveWhitespaces="true" import="java.sql.*,java.io.*" %><%@ include file="jdbc.jsp" %><%
+<%@ page trimDirectiveWhitespaces="true" import="java.sql.*,java.io.*" %>
+<%@ include file="jdbc.jsp" %><%
 
 // Indicate that we are sending a JPG picture
 response.setContentType("image/jpeg");  
@@ -13,8 +14,8 @@ int idVal = -1;
 try{
 	idVal = Integer.parseInt(id);
 }
-catch(Exception e)
-{	out.println("Invalid image id: "+id+" Error: "+e);
+catch(Exception e){	
+	out.println("Invalid image id: "+id+" Error: "+e);
 	return; 
 }
 
@@ -30,8 +31,7 @@ try {
 	int BUFFER_SIZE = 10000;
 	byte[] data = new byte[BUFFER_SIZE];
 
-	if (rst.next())
-	{
+	if (rst.next()){
 		// Copy stream of bytes from database to output stream for JSP/Servlet
 		InputStream istream = rst.getBinaryStream(1);
 		OutputStream ostream = response.getOutputStream();
