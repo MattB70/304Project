@@ -39,9 +39,9 @@ while(rst.next()){
     out.println("<table border=3><th colspan = 2><h1>"+rst.getString(2)+ " - "+ rst.getString(6)
   +"</h1></th><tr><td style='text-align:center;' colspan = 2>");
  
-  if (imageInBinary != null){
+  if (imageInBinary != null){ //test for product 1 loaded from ddl file
       out.println("<img style='height:500px' src=\"displayImage.jsp?id="+rst.getInt(1)+"\">");
-  } else if (imageInFile != null){
+  } else if (imageInFile != null){ //rest of images stored in file
      out.println("<img style='height:500px' src=\""+ rst.getString(4) + "\">");
   }
     out.println("</td></tr><tr><td>"+"Id: "+rst.getString(1)+"</td><td>"+"Price: "+currFormat.format(rst.getDouble(3))+"</tr><br>");
