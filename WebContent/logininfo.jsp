@@ -9,7 +9,7 @@
 
 
 <%
-
+  try{
     String userName = (String) session.getAttribute("authenticatedUser");
 
     if(userName == null)
@@ -25,6 +25,11 @@
       out.print("Logged in as "+userName);
     }
 
+  }
+  catch(Exception ex)
+  {
+    out.print("Exception at logininfo");
+  }
 %>
 
 
