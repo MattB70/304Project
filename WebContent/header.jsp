@@ -21,5 +21,5 @@
     </tr>
 </table>
 
-<! banner image below buttons !>
+<!-- banner image below buttons -->
 <div id="bannerimage"></div>
