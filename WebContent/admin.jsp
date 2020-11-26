@@ -29,7 +29,7 @@ String sql = "SELECT DATEADD(day, 2, CAST(orderDate AS DATE)), SUM(totalAmount)"
 
 PreparedStatement pst = con.prepareStatement(sql);
 ResultSet rst = pst.executeQuery();
-    out.println("<table><tr><th>"+"Order Date: "+"</th><th>"+" Total Order Amount:" +"</th></tr>");
+    out.println("<table border=3><tr><th>"+"Order Date: "+"</th><th>"+" Total Order Amount:" +"</th></tr>");
 
 while(rst.next()){
   
