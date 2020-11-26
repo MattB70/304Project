@@ -9,6 +9,9 @@
 <body>
 <%@ include file="auth.jsp" %>
 <%@ include file="jdbc.jsp" %>
+
+<%@ include file="header.jsp" %>
+
 <div id="main-content">
 <h2 align="center">Administrator Sales Report by Day</h2>
 <%
