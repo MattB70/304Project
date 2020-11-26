@@ -27,9 +27,8 @@
 
 
 <%!	// Helper for printing table
-	String formatRow(String title, String info)
-	{
-		return "<tr><th><h3>	"+title+"			</h3></th><td>"+info+"</td></tr>";
+	String formatRow(String title, String info){
+		return "<tr><th>	"+title+"			</th><td>"+info+"</td></tr>";
 	}
 %>
 
