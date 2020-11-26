@@ -54,7 +54,17 @@ try{
 	PreparedStatement pst = con.prepareStatement(sql);
 	pst.setString(1, orderId);
 	ResultSet rst = pst.executeQuery();
-
+	
+	if(!rst.next()){
+		out.println("<h1>There are no ordered products in Order ID: "+orderId+"</h1>");
+			%>
+			<div id="main-content">
+				<h2><a href="index.jsp">Back to Main Page</a></h2>
+			</div>
+			<%
+			con.rollback();
+			return;
+	}
 	while(rst.next()){
 		String productId = rst.getString("productId");
 		String sql2 ="SELECT * FROM  productInventory WHERE productId = ?";
@@ -69,6 +79,7 @@ try{
 				<h2><a href="index.jsp">Back to Main Page</a></h2>
 			</div>
 			<%
+			con.rollback();
 			return;
 		} else{
 			out.println("<h2>Ordered Product: "+rst.getInt("productId"));
