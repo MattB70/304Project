@@ -29,7 +29,7 @@
 <%!	// Helper for printing table
 	String formatRow(String title, String info)
 	{
-		return "<tr><td><h3>	"+title+"			</h3></td><td>"+info+"</td></tr>";
+		return "<tr><th><h3>	"+title+"			</h3></th><td>"+info+"</td></tr>";
 	}
 %>
 
@@ -37,8 +37,7 @@
 
 <%
 
-	try
-	{
+	try	{
 		getConnection();
 		// Connect and query
 		String sql = "SELECT customerId,firstName,lastName,email,phonenum,address,city,state,postalCode,country,userid FROM customer WHERE userId = ?";
@@ -48,7 +47,7 @@
 		rst.next();
 
 		// Print Customer Info
-		out.print("<table>");
+		out.print("<table border=3>");
 		out.print(formatRow("id", 			rst.getString(1)));
 		out.print(formatRow("First Name", 	rst.getString(2)));
 		out.print(formatRow("Last Name", 	rst.getString(3)));
