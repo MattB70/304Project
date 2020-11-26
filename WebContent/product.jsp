@@ -24,25 +24,25 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 String productId = request.getParameter("id");
 String sql = "SELECT P.productId, P.productName, P.productPrice, P.productImageURL, P.productImage, P.productDesc, C.categoryName "
                + "FROM product P, category C "
-               + "WHERE P.categoryId = C.categoryId AND productId = ?";
+               + "WHERE P.categoryId = C.categoryId AND P.productId = ?";
 
 PreparedStatement pst = con.prepareStatement(sql);
-pst.setString(1, productId);
+pst.setInt(1, Integer.parseInt(productId));
 ResultSet rst = pst.executeQuery();
 
 while(rst.next()){
 	String addCartLink = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
-    String binaryLink =  "displayImage.jsp?id="+rst.getString(1);
+  //  String binaryLink =  "displayImage.jsp?id="+rst.getInt(1);
     String imageInFile = rst.getString(4);
     String imageInBinary = rst.getString(5);
 
     out.println("<table border=3><th colspan = 2><h1>"+rst.getString(2)+ " - "+ rst.getString(6)
   +"</h1></th><tr><td style='text-align:center;' colspan = 2>");
-  if (imageInFile != null){
-     out.println("<img style='height:500px' src='"+ rst.getString(4) + "'>");
-  }
+ 
   if (imageInBinary != null){
-      out.println("<img style='height:500px' src=\"" + binaryLink + "\">");
+      out.println("<img style='height:500px' src=\"displayImage.jsp?id="+rst.getInt(1)+"\">");
+  } else if (imageInFile != null){
+     out.println("<img style='height:500px' src=\""+ rst.getString(4) + "\">");
   }
     out.println("</td></tr><tr><td>"+"Id: "+rst.getString(1)+"</td><td>"+"Price: "+currFormat.format(rst.getDouble(3))+"</tr><br>");
     out.println("</table>");
