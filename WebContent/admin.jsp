@@ -10,7 +10,7 @@
 <%@ include file="auth.jsp" %>
 <%@ include file="jdbc.jsp" %>
 <div id="main-content">
-
+<h2 align="center">Administrator Sales Report by Day</h2>
 <%
 // TODO: Write SQL query that prints out total order amount by day
 try{
@@ -23,20 +23,18 @@ String sql = "SELECT DATEADD(day, 2, CAST(orderDate AS DATE)), SUM(totalAmount)"
             +"GROUP BY CAST(orderDate AS DATE)"
             +"ORDER BY 1";
             //currently adding the dates totals together
-            //totals are offset back 2 days???
 
 PreparedStatement pst = con.prepareStatement(sql);
 ResultSet rst = pst.executeQuery();
-    out.println("<table><tr><th>"+"Order Date: "+"</th><th>"+" Total:" +"</th></tr>");
+    out.println("<table><tr><th>"+"Order Date: "+"</th><th>"+" Total Order Amount:" +"</th></tr>");
 
 while(rst.next()){
   
     //print it out
-    //need to make pretty but brain too smooth
     out.println("<tr><td>"+rst.getDate(1)+"</td><td>"+currFormat.format(rst.getDouble(2))+"</td></tr>");
     }
     out.println("</table><br>");
-    out.println("<h2><a href=listprod.jsp>Continue Shopping</a></h2>");
+    out.println("<h2><a href=index.jsp>Home</a></h2>");
 
 
 }
