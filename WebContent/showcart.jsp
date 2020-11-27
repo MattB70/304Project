@@ -101,7 +101,7 @@ else{
 		total = total +pr*qty;
 	}
 	
-	out.println("<tr><td colspan=\"5\" align=\"right\"><b>Order Total</b></td>"+"<td align=\"right\">"+currFormat.format(total)+"</td></tr>");			// Total	//TODO: add tax
+	out.println("<tr><td colspan=\"5\" align=\"right\"><b>Order Total</b></td>"+"<td align=\"right\">"+currFormat.format(total)+"</td></tr>");			// Total
 	out.println("</table>");
 
 	out.println("<h2><a href=\"checkout.jsp\">Check Out</a></h2>");

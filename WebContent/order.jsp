@@ -61,7 +61,7 @@ try { getConnection();
 			return;
 		}
 		//Determine if customer id exists in the database
-		String sqlc = "SELECT customerId, firstName, lastName, address, city, state, postalCode, country, password FROM customer WHERE customerId = ?";
+		String sqlc = "SELECT customerId, firstName, lastName, address, city, C.state, postalCode, country, password, T.tax, T.shipping FROM customer C JOIN taxes T ON C.state = T.state WHERE customerId = ?";
 		PreparedStatement pstc = con.prepareStatement(sqlc);
 		pstc.setInt(1, num);
 		ResultSet rstc = pstc.executeQuery();
@@ -95,6 +95,8 @@ try { getConnection();
 		String state = rstc.getString(6);
 		String postalCode = rstc.getString(7);
 		String country = rstc.getString(8);
+		double tax = rstc.getDouble(10);
+		double shipping = rstc.getDouble(11);
 
 		// Enter order information into database
 		String sql = "INSERT INTO ordersummary (customerId, orderDate) VALUES(?, ?);";
@@ -111,7 +113,9 @@ try { getConnection();
 		out.println("<h1>Your Order Summary</h1>");
 		out.println("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>");
 
-		double total =0;
+		double total = 0;
+		double total_withshipping = 0;
+		double total_notax = 0;
 		Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
 
 		while (iterator.hasNext()){ 
@@ -123,12 +127,13 @@ try { getConnection();
 			out.print("<td>"+product.get(1)+"</td>");
 			out.print("<td align=\"center\">"+product.get(3)+"</td>");
 			String price = (String) product.get(2);
-            double pr = Double.parseDouble(price.substring(1));;
+            double pr = Double.parseDouble(price.substring(1));
 			int qty = ( (Integer)product.get(3)).intValue();
-			out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
-			out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
+			out.print("<td align=\"left\">"+currFormat.format(pr)+"</td>");
+			out.print("<td align=\"left\">"+currFormat.format(pr*qty)+"</td></tr>");
 			out.println("</tr>");
-			total += pr*qty;	//TODO: add tax
+			total_notax += pr*qty;
+			total += pr*qty*(1+(tax/100));
 
 			//inserting into orderproduct table
 			sql = "INSERT INTO orderproduct VALUES(?, ?, ?, ?)";
@@ -139,8 +144,13 @@ try { getConnection();
 			pstmt.setDouble(4, pr);
 			pstmt.executeUpdate();				
 		}
+		total_withshipping = shipping + total;
 		out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
-				+"<td aling=\"right\">"+currFormat.format(total)+"</td></tr>");
+				+"<td aling=\"right\">"+currFormat.format(total_notax)+"</td></tr>");	// Plain total
+		out.println("<tr><td colspan=\"4\" align=\"right\"><b><span title=\"Tax depends on location\">Tax: "+tax+"%</span></b></td>"
+				+"<td aling=\"right\">"+currFormat.format(total)+"</td></tr>");			// Total with tax
+		out.println("<tr><td colspan=\"4\" align=\"right\"><b><span title=\"Shipping depends on location\">Shipping: $"+shipping+"</span></b></td>"
+				+"<td aling=\"right\">"+currFormat.format(total_withshipping)+"</td></tr>");						// Total with tax and shipping
 		out.println("</table>");
 
 		// Update order total
@@ -150,9 +160,9 @@ try { getConnection();
 		pstmt.setInt(2, orderId);			
 		pstmt.executeUpdate();						
 
-		out.println("<h2>Order completed.  Will be shipped soon...</h2>");
+		out.println("<br><h2>Order completed.  Will be shipped soon...</h2>");
 		out.println("<h2>Your order reference number is: "+orderId+"</h2>");
-		out.println("<h2>Shipping to customer: "+custId+" Name: "+cFirstName+" "+cLastName+"</h2>");
+		out.println("<h2>Shipping to customer: "+custId+", Name: "+cFirstName+" "+cLastName+"</h2>");
 
 		// Clear session variables (cart)
 		session.setAttribute("productList", null);  
