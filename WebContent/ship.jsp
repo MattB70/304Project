@@ -16,6 +16,7 @@
         
 <%@ include file="header.jsp" %>
 
+<div id="main-content">
 <%
 try{
 	getConnection();
@@ -27,9 +28,7 @@ try{
 		//if null entered
 		out.println("<h1>Invalid Order ID.</h1>");
 		%>
-		<div id="main-content">
 			<h2><a href="index.jsp">Back to Main Page</a></h2>
-		</div>
 		<%
 		return;
 	}else{
@@ -39,9 +38,7 @@ try{
 		}catch(Exception e){
 			out.println("<h1>Invalid Order ID.</h1>");
 			%>
-			<div id="main-content">
 				<h2><a href="index.jsp">Back to Main Page</a></h2>
-			</div>
 			<%
 			return;
 		}
@@ -63,19 +60,19 @@ try{
 		ResultSet rst2 = pst2.executeQuery();
 		rst2.next();
 		if(rst.getInt("quantity")>rst2.getInt("quantity")){
-			out.println("<h1>Shipment not done. Insufficient inventory for Product ID: "+productId +"</h1>");
+			out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Shipment not done.</h2>");
+			out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Insufficient inventory for Product ID: "+productId +"</h2><br>");
 			%>
-			<div id="main-content">
 				<h2><a href="index.jsp">Back to Main Page</a></h2>
-			</div>
 			<%
 			con.rollback();
 			return;
 		} else{
-			out.println("<h2>Ordered Product: "+rst.getInt("productId"));
-			out.println(" Qty: " + rst.getInt("quantity"));
-			out.println(" Previous Inventory: " + rst2.getInt("quantity"));
-			out.println(" New Inventory:"+ (rst2.getInt("quantity")-rst.getInt("quantity"))+" </h2>");
+			out.println("<h2><table><tr><th>Ordered Product </th><td><h1>"+rst.getInt("productId") + "</h1></td></tr>");
+			out.println("<tr><th>Qty </th><td><h1>" + rst.getInt("quantity") + "</h1></td></tr>");
+			out.println("<tr><th>Previous Inventory </th><td><h1>" + rst2.getInt("quantity") + "</h1></td></tr>");
+			if(rst2.getInt("quantity")-rst.getInt("quantity") <= 0) out.println("<tr><th>New Inventory </th><td><h1 style=\"color:#E46F6F\">"+ (rst2.getInt("quantity")-rst.getInt("quantity"))+"</h1></td></tr></table></h2><br>");
+			else 													out.println("<tr><th>New Inventory </th><td><h1>"+ (rst2.getInt("quantity")-rst.getInt("quantity"))+"</h1></td></tr></table></h2><br>");
 			
 			String sql3 = "UPDATE productInventory "
 					+ "SET quantity = " + (rst2.getInt("quantity")-rst.getInt("quantity"))
@@ -93,7 +90,7 @@ try{
 			pst4.executeUpdate();
 			}
 		}
-	out.println("<h1>Shipment successfully processed. </h1>");
+	out.println("<h2 style=\"color:#6FAAE4; white-space:nowrap;\">Shipment successfully processed. </h2><br>");
 	// TODO: Create a new shipment record.
 	// TODO: For each item verify sufficient quantity available in warehouse 1.
 	// TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
@@ -106,7 +103,7 @@ catch (SQLException ex) {
 	out.println(ex); 
 }
 %>                       				
-<div id="main-content">
+
 <h2><a href="index.jsp">Back to Main Page</a></h2>
 
 </div>
