@@ -9,7 +9,13 @@ DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS ordersummary;
 DROP TABLE IF EXISTS paymentmethod;
 DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS taxes;
 
+CREATE TABLE taxes (
+    state               VARCHAR(20),
+    tax                 DECIMAL(10,2),
+    PRIMARY KEY (state)
+);
 
 CREATE TABLE customer (
     customerId          INT IDENTITY,
@@ -24,7 +30,9 @@ CREATE TABLE customer (
     country             VARCHAR(40),
     userid              VARCHAR(20),
     password            VARCHAR(30),
-    PRIMARY KEY (customerId)
+    PRIMARY KEY (customerId),
+    FOREIGN KEY (state) REFERENCES taxes(state)
+        ON UPDATE CASCADE ON DELETE CASCADE 
 );
 
 CREATE TABLE paymentmethod (
@@ -145,6 +153,73 @@ INSERT INTO category(categoryName) VALUES ('Keychains');
 INSERT INTO category(categoryName) VALUES ('Post Cards');
 INSERT INTO category(categoryName) VALUES ('Hats');
 INSERT INTO category(categoryName) VALUES ('Bobble Heads');
+
+
+INSERT INTO taxes(state, tax) VALUES ('AB',5);
+INSERT INTO taxes(state, tax) VALUES ('BC',12);
+INSERT INTO taxes(state, tax) VALUES ('MB',12);
+INSERT INTO taxes(state, tax) VALUES ('NB',15);
+INSERT INTO taxes(state, tax) VALUES ('NF',15);
+INSERT INTO taxes(state, tax) VALUES ('NWT',5);
+INSERT INTO taxes(state, tax) VALUES ('NS',15);
+INSERT INTO taxes(state, tax) VALUES ('NVS',5);
+INSERT INTO taxes(state, tax) VALUES ('ON',13);
+INSERT INTO taxes(state, tax) VALUES ('PEI',15);
+INSERT INTO taxes(state, tax) VALUES ('QB',14.975);
+INSERT INTO taxes(state, tax) VALUES ('SK',11);
+INSERT INTO taxes(state, tax) VALUES ('YK',5);
+
+INSERT INTO taxes(state, tax) VALUES ('WA',9.21);
+INSERT INTO taxes(state, tax) VALUES ('ID',6.03);
+INSERT INTO taxes(state, tax) VALUES ('OR',0);
+INSERT INTO taxes(state, tax) VALUES ('MT',0);
+INSERT INTO taxes(state, tax) VALUES ('ND',6.86);
+INSERT INTO taxes(state, tax) VALUES ('SD',6.4);
+INSERT INTO taxes(state, tax) VALUES ('MN',7.46);
+INSERT INTO taxes(state, tax) VALUES ('WI',5.46);
+INSERT INTO taxes(state, tax) VALUES ('MI',6);
+INSERT INTO taxes(state, tax) VALUES ('NY',10);
+INSERT INTO taxes(state, tax) VALUES ('VT',6.22);
+INSERT INTO taxes(state, tax) VALUES ('NH',0);
+INSERT INTO taxes(state, tax) VALUES ('MA',6.25);
+INSERT INTO taxes(state, tax) VALUES ('RI',7);
+INSERT INTO taxes(state, tax) VALUES ('CT',6.35);
+INSERT INTO taxes(state, tax) VALUES ('NJ',6.6);
+INSERT INTO taxes(state, tax) VALUES ('DE',0);
+INSERT INTO taxes(state, tax) VALUES ('MD',6);
+INSERT INTO taxes(state, tax) VALUES ('DC',6);
+INSERT INTO taxes(state, tax) VALUES ('AK',1.76);
+INSERT INTO taxes(state, tax) VALUES ('HI',4.44);
+INSERT INTO taxes(state, tax) VALUES ('ME',5.5);
+INSERT INTO taxes(state, tax) VALUES ('PA',6.34);
+INSERT INTO taxes(state, tax) VALUES ('OH',7.17);
+INSERT INTO taxes(state, tax) VALUES ('IN',7);
+INSERT INTO taxes(state, tax) VALUES ('IL',9.08);
+INSERT INTO taxes(state, tax) VALUES ('IA',6.94);
+INSERT INTO taxes(state, tax) VALUES ('NE',6.93);
+INSERT INTO taxes(state, tax) VALUES ('WY',5.34);
+INSERT INTO taxes(state, tax) VALUES ('CA',8.66);
+INSERT INTO taxes(state, tax) VALUES ('NV',8.32);
+INSERT INTO taxes(state, tax) VALUES ('UT',7.18);
+INSERT INTO taxes(state, tax) VALUES ('CO',7.65);
+INSERT INTO taxes(state, tax) VALUES ('KS',8.68);
+INSERT INTO taxes(state, tax) VALUES ('MO',8.18);
+INSERT INTO taxes(state, tax) VALUES ('KY',6);
+INSERT INTO taxes(state, tax) VALUES ('WV',6.41);
+INSERT INTO taxes(state, tax) VALUES ('VA',5.65);
+INSERT INTO taxes(state, tax) VALUES ('NC',6.97);
+INSERT INTO taxes(state, tax) VALUES ('TN',9.53);
+INSERT INTO taxes(state, tax) VALUES ('AR',9.47);
+INSERT INTO taxes(state, tax) VALUES ('OK',8.94);
+INSERT INTO taxes(state, tax) VALUES ('NM',7.82);
+INSERT INTO taxes(state, tax) VALUES ('AZ',8.4);
+INSERT INTO taxes(state, tax) VALUES ('TX',8.19);
+INSERT INTO taxes(state, tax) VALUES ('LA',9.52);
+INSERT INTO taxes(state, tax) VALUES ('MS',7.07);
+INSERT INTO taxes(state, tax) VALUES ('AL',9.22);
+INSERT INTO taxes(state, tax) VALUES ('GA',7.31);
+INSERT INTO taxes(state, tax) VALUES ('SC',7.46);
+INSERT INTO taxes(state, tax) VALUES ('FL',7.05);
 
 
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('I <3 Ramon', 1, 'Black',30.00);

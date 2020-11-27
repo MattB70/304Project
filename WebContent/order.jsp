@@ -128,7 +128,7 @@ try { getConnection();
 			out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
 			out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
 			out.println("</tr>");
-			total += pr*qty;
+			total += pr*qty;	//TODO: add tax
 
 			//inserting into orderproduct table
 			sql = "INSERT INTO orderproduct VALUES(?, ?, ?, ?)";
