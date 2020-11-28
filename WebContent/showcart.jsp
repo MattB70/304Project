@@ -57,7 +57,7 @@ else{
 		}
 	}
 	out.println("<h1>Your Shopping Cart</h1>");
-	out.println("<table><tr><th></th><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>");
+	out.println("<table><tr><th>Remove From Cart</th><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr>");
 	int count = 0;
 	double total = 0;
 	Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
