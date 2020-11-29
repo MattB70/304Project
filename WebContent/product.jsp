@@ -21,6 +21,7 @@ try{
 getConnection();
 
 NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
+
 String productId = request.getParameter("id");
 String sql = "SELECT P.productId, P.productName, P.productPrice, P.productImageURL, P.productImage, P.productDesc, C.categoryName "
                + "FROM product P, category C "
@@ -31,10 +32,9 @@ pst.setInt(1, Integer.parseInt(productId));
 ResultSet rst = pst.executeQuery();
 
 while(rst.next()){
-	String addCartLink = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
-  //  String binaryLink =  "displayImage.jsp?id="+rst.getInt(1);
     String imageInFile = rst.getString(4);
     String imageInBinary = rst.getString(5);
+    String addCartLink = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
 
     out.println("<table border=3><th colspan = 2><h1>"+rst.getString(2)+ " - "+ rst.getString(6)
   +"</h1></th><tr><td style='text-align:center;' colspan = 2>");
@@ -45,10 +45,29 @@ while(rst.next()){
      out.println("<img style='height:500px' src=\""+ rst.getString(4) + "\">");
   }
     out.println("</td></tr><tr><td>"+"Id: "+rst.getString(1)+"</td><td>"+"Price: "+currFormat.format(rst.getDouble(3))+"</tr><br>");
-    out.println("</table>");
+    out.println("</table><br>");
+    String reviewLink = "writeareview.jsp?id=" + rst.getInt(1);
+    out.println("<h2><a href=\"" + reviewLink + "\">Write a Review</a></h2>"); 
     out.println("<h2><a href=\"" + addCartLink + "\">Add to Cart</a></h2>");
     out.println("<h2><a href=listprod.jsp>Continue Shopping</a></h2>");
 }
+String sql2 = "SELECT R.reviewId, R.reviewRating, R.reviewDate, R.reviewComment, R.customerId, C.firstName, C.lastName "
+              +"FROM review R, customer C "
+              +"WHERE R.customerId = C.customerId AND productId = ?";
+
+PreparedStatement pst2 = con.prepareStatement(sql2);
+pst2.setInt(1, Integer.parseInt(productId));
+ResultSet rst2 = pst2.executeQuery();
+
+while(rst2.next()){
+out.println("<h1>Reviews: </h2>");
+out.println("<table borde=3><th>Rating</th><th>Customer Name</th><th>Date</th><th>Comment</th>");
+out.println("<tr><td>"+rst2.getInt(2)+"</td><td>"+rst2.getString(6)+" "+rst2.getString(7)+"</td><td>"+rst.getDate(3)+"</td><td>"+rst2.getString(4)+"</td></tr></table>");
+
+}
+
+
+              
 closeConnection();
 }
 catch (SQLException ex) { 	
