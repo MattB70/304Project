@@ -46,7 +46,7 @@ try{
                  city == null || city.equals("") || state == null || state.equals("") ||
                  postalCode == null || postalCode.equals("") || country == null || country.equals("")){
         out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">ERROR: MISSING FIELDS</h2>");
-        out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Please go back and be sure to enter all the given fields.</h2>");
+        out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Please go back and be sure to enter all of the given fields.</h2>");
         %>
         <br>
         <h2><a href="createUser.jsp">Back to Create Account Page</a></h2>
