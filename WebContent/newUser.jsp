@@ -33,9 +33,17 @@ try{
     PreparedStatement pst = con.prepareStatement(sql);
     pst.setString(1, username);
     ResultSet rst = pst.executeQuery();
-    if(rst.next()|| username == null || username.equals("")){
+    if(rst.next()){
         out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Username already exists.</h2>");
         out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Please go back and use a different username.</h2>");
+        %>
+        <br>
+		<h2><a href="createUser.jsp">Back to Create Account Page</a></h2>
+        <%
+        return;
+    } else if(username == null || username.equals("")){
+        out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Username not entered.</h2>");
+        out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Please go back and enter a username.</h2>");
         %>
         <br>
 		<h2><a href="createUser.jsp">Back to Create Account Page</a></h2>
