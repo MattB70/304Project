@@ -149,7 +149,7 @@ try { getConnection();
 				+"<td aling=\"right\">"+currFormat.format(total_notax)+"</td></tr>");	// Plain total
 		out.println("<tr><td colspan=\"4\" align=\"right\"><b><span title=\"Tax depends on location\">Tax: "+tax+"%</span></b></td>"
 				+"<td aling=\"right\">"+currFormat.format(total)+"</td></tr>");			// Total with tax
-		out.println("<tr><td colspan=\"4\" align=\"right\"><b><span title=\"Shipping depends on location\">Shipping: $"+shipping+"</span></b></td>"
+		out.println("<tr><td colspan=\"4\" align=\"right\"><b><span title=\"Shipping depends on location\">Shipping: "+currFormat.format(shipping)+"</span></b></td>"
 				+"<td aling=\"right\">"+currFormat.format(total_withshipping)+"</td></tr>");						// Total with tax and shipping
 		out.println("</table>");
 
