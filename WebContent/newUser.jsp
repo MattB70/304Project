@@ -49,7 +49,14 @@ try{
 		<h2><a href="createUser.jsp">Back to Create Account Page</a></h2>
         <%
         return;
-    } else{
+    } else if(email == null || !email.contains("@")){
+        out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Invalid email.</h2>");
+        out.println("<h2 style=\"color:#E46F6F; white-space:nowrap;\">Please go back and enter a valid email.</h2>");
+        %>
+        <br>
+		<h2><a href="createUser.jsp">Back to Create Account Page</a></h2>
+        <%
+    } else {
         String sql2 = "INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pst2 = con.prepareStatement(sql2);
         pst2.setString(1, firstName);
