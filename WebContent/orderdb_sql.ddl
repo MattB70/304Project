@@ -155,7 +155,6 @@ INSERT INTO category(categoryName) VALUES ('Post Cards');
 INSERT INTO category(categoryName) VALUES ('Hats');
 INSERT INTO category(categoryName) VALUES ('Bobble Heads');
 
-
 INSERT INTO taxes(state, tax, shipping) VALUES ('AB',5,10);
 INSERT INTO taxes(state, tax, shipping) VALUES ('BC',12,10);
 INSERT INTO taxes(state, tax, shipping) VALUES ('MB',12,10);
