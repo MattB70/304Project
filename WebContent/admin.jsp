@@ -48,8 +48,66 @@ try{
                 out.println("<tr><td>"+rst0.getDate(1)+"</td><td>"+currFormat.format(rst0.getDouble(2))+"</td></tr>");
             }
 
-            out.println("</table>");
 
+}
+catch (SQLException ex) { 	
+	out.println(ex); 
+}
+            // CHART
+%>
+
+
+
+
+
+
+<canvas id="line-chart" width="auto" height="auto"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script>
+new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+            // label dates: should print something like " '2019-10-15', '2019-10-16', '2019-10-17' "
+    labels: [<%
+                
+                out.print(" '2019-10-15', '2019-10-16', '2019-10-17' ");
+
+            %>],
+    datasets: [{
+                // label dates: should print something like " 509.10, 106.75, 327.85 "
+        data:   [<%
+
+                    out.print(" 509.10, 106.75, 327.85 ");
+
+                %>],
+        label: "Total Order Amount ($)",
+        borderColor: "#0062ad",
+        fill: true
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'OrderTotal    by    OrderDate'
+    }
+  }
+});
+</script>
+
+
+
+
+
+
+<%
+
+try{
+    getConnection();
+    
+    out.println("</table>");
 
     out.println("</td><td>");
 
@@ -60,8 +118,8 @@ try{
 
             // SQL
             // Get customer info
-            sql = "SELECT customerid, firstName, lastName, userid FROM customer";
-            pst = con.prepareStatement(sql);
+            String sql = "SELECT customerid, firstName, lastName, userid FROM customer";
+            PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rst1 = pst.executeQuery();
 
             // PRINTING
@@ -75,7 +133,6 @@ try{
             }
 
             out.println("</table>");
-
 
     out.print("</td></tr></table>");
 
