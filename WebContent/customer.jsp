@@ -62,7 +62,7 @@
 
 	}
 	catch(Exception ex){
-		out.print("Exception: "+ex);
+		out.print("<span title=\""+ex+"\">You must be logged in to view customer info...</span>");
 	}
 	finally{
 		closeConnection();
