@@ -228,7 +228,23 @@ new Chart(document.getElementById("line-chart"), {
       else if(task.equals("Add Customer"))
       {
         out.print(
-          "<br><h2>Add a Customer: </h2><br>"
+          "<br><h2>Add a Customer: </h2><br>"+
+          "<form action=\"addCustomer.jsp\">"+
+            "<table>"+
+              "<tr><th>firstName: </th><td><input type=\"text\" name=\"firstName\"></td></tr>"+
+              "<tr><th>lastName: </th><td><input type=\"text\" name=\"lastName\"></td></tr>"+
+              "<tr><th>email: </th><td><input type=\"text\" name=\"email\"></td></tr>"+
+              "<tr><th>phonenum: </th><td><input type=\"text\" name=\"phonenum\"></td></tr>"+
+              "<tr><th>address: </th><td><input type=\"text\" name=\"address\"></td></tr>"+
+              "<tr><th>city: </th><td><input type=\"text\" name=\"city\"></td></tr>"+
+              "<tr><th>state: </th><td><input type=\"text\" name=\"state\"></td></tr>"+
+              "<tr><th>postalCode: </th><td><input type=\"text\" name=\"postalCode\"></td></tr>"+
+              "<tr><th>country: </th><td><input type=\"text\" name=\"country\"></td></tr>"+
+              "<tr><th>userid: </th><td><input type=\"text\" name=\"userid\"></td></tr>"+
+              "<tr><th>password: </th><td><input type=\"text\" name=\"password\"></td></tr>"+
+          "<tr><td style='text-align:center;' colspan = 2 ><input type=\"submit\" name=\"submit\" value=\"Submit\"></td></tr>"+
+            "</table>"+
+          "</form>"
         );
 
       }

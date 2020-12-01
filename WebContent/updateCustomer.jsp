@@ -33,6 +33,7 @@
 		}
 		else
 		{
+			closeConnection();
 			response.sendRedirect("admin.jsp?task=Update+Customer"); // If customerId not specified, redirect back to admin page...
 		}
 		//Run the SQL
