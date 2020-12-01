@@ -96,10 +96,7 @@ new Chart(document.getElementById("line-chart"), {
 </script>
 <%
 try{
-    getConnection();
-    
     out.println("</table>");
-
     out.println("</td><td>");
             //   |Q2   CUSTOMER LIST
             // --+--
@@ -160,6 +157,7 @@ if (task.equals("Add New Product")){
 catch (SQLException ex) { 	
 	out.println(ex); 
 }
+
 finally {
     closeConnection();
 }
