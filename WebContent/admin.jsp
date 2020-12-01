@@ -46,7 +46,6 @@ try{
             
                 //print it out
                 out.println("<tr><td>"+rst0.getDate(1)+"</td><td>"+currFormat.format(rst0.getDouble(2))+"</td></tr>");
-                out.print(rst0.getDate(1));
             }
 }
 catch (SQLException ex) { 	
