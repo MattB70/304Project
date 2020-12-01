@@ -214,7 +214,13 @@ new Chart(document.getElementById("line-chart"), {
       else if(task.equals("Add Warehouse"))
       {
         out.print(
-          "<br><h2>Add a Warehouse: </h2><br>"
+          "<br><h2>Add a Warehouse: </h2><br>"+
+          "<form action=\"addWarehouse.jsp\">"+
+            "<table>"+
+              "<tr><th>Warehouse Name: </th><td><input type=\"text\" name=\"warehouseName\"></td></tr>"+
+          "<tr><td style='text-align:center;' colspan = 2 ><input type=\"submit\" name=\"submit\" value=\"Submit\"></td></tr>"+
+            "</table>"+
+          "</form>"
         );
 
       }
