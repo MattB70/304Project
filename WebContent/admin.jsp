@@ -46,14 +46,16 @@ try{
             
                 //print it out
                 out.println("<tr><td>"+rst0.getDate(1)+"</td><td>"+currFormat.format(rst0.getDouble(2))+"</td></tr>");
+                out.print(rst0.getDate(1));
             }
-
-
 }
 catch (SQLException ex) { 	
 	out.println(ex); 
 }
-            // CHART
+
+
+
+// CHART
 %>
 
 
@@ -71,15 +73,21 @@ new Chart(document.getElementById("line-chart"), {
   data: {
             // label dates: should print something like " '2019-10-15', '2019-10-16', '2019-10-17' "
     labels: [<%
-                
-                out.print(" '2019-10-15', '2019-10-16', '2019-10-17' ");
+                String sqlChart = "SELECT DATEADD(day, 2, CAST(orderDate AS DATE)), SUM(totalAmount) FROM ordersummary WHERE orderDate BETWEEN '2018-01-01' AND '2020-11-20' GROUP BY CAST(orderDate AS DATE) ORDER BY 1";
+                PreparedStatement pstL = con.prepareStatement(sqlChart);
+                ResultSet rstL = pstL.executeQuery();
+
+                while(rstL.next()){ out.println("'"+rstL.getString(1) + "', "); }
 
             %>],
     datasets: [{
                 // label dates: should print something like " 509.10, 106.75, 327.85 "
         data:   [<%
 
-                    out.print(" 509.10, 106.75, 327.85 ");
+                    PreparedStatement pstD = con.prepareStatement(sqlChart);
+                    ResultSet rstD = pstD.executeQuery();
+
+                    while(rstD.next()){ out.println(rstD.getDouble(2) + ", "); }
 
                 %>],
         label: "Total Order Amount ($)",
@@ -98,11 +106,10 @@ new Chart(document.getElementById("line-chart"), {
 </script>
 
 
-
-
-
-
 <%
+
+
+
 
 try{
     getConnection();
