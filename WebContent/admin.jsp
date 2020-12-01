@@ -123,18 +123,18 @@ new Chart(document.getElementById("line-chart"), {
 
             // SQL
             // Get customer info
-            String sql = "SELECT customerid, firstName, lastName, userid FROM customer";
+            String sql = "SELECT customerid, firstName, lastName, userid, email, phonenum FROM customer";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rst1 = pst.executeQuery();
 
             // PRINTING
             out.print("<h3>All Customers:</h3><br>");
-            out.println("<table border=3><tr><th>"+ "ID" +"</th><th>"+ "NAME" +"</th><th>"+ "USERID" +"</th></tr>");
+            out.println("<table border=2><tr><th>"+ "ID" +"</th><th>"+ "NAME" +"</th><th>"+ "USERID" +"</th><th>"+ "EMAIL" +"</th><th>"+ "PHONE NUM" +"</th></tr>");
 
             while(rst1.next()){
             
                 //print it out
-                out.println("<tr><td>"+rst1.getString(1)+"</td><td>"+rst1.getString(2)+" "+rst1.getString(3)+"</td><td>"+rst1.getString(4)+"</td></tr>");
+                out.println("<tr><td>"+rst1.getString(1)+"</td><td>"+rst1.getString(2)+" "+rst1.getString(3)+"</td><td>"+rst1.getString(4)+"</td><td>"+rst1.getString(5)+"</td><td>"+rst1.getString(6)+"</td></tr>");
             }
 
             out.println("</table>");
@@ -235,7 +235,16 @@ new Chart(document.getElementById("line-chart"), {
       else if(task.equals("Update Customer"))
       {
         out.print(
-          "<br><h2>Update a Customer: </h2><br>"
+          "<br><h2>Update a Customer: </h2><br>"+
+          "<form action=\"updateCustomer.jsp\">"+
+            "<table>"+
+              "<tr><th>Customer ID: </th><td><input type=\"text\" name=\"customerId\"></td></tr>"+
+              "<tr><th>User ID: </th><td><input type=\"text\" name=\"userId\"></td></tr>"+
+              "<tr><th>Email: </th><td><input type=\"text\" name=\"email\"></td></tr>"+
+              "<tr><th>Phone Number: </th><td><input type=\"text\" name=\"phonenum\"></td></tr>"+
+          "<tr><td style='text-align:center;' colspan = 2 ><input type=\"submit\" name=\"submit\" value=\"Submit\"></td></tr>"+
+            "</table>"+
+          "</form>"
         );
 
       }

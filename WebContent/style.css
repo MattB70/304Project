@@ -58,7 +58,7 @@ th {
     font-variant-caps: all-small-caps;
     font-size: xx-large;
     padding: 8px;
-    min-width: 120px;
+    min-width: 10px;
     white-space: nowrap;
 }
 /* Table content */
