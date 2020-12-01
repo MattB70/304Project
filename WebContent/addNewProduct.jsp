@@ -6,7 +6,7 @@
 			String sql = "INSERT INTO product (productName, productPrice, productDesc, categoryId) VALUES (?, ?, ?, ?)";
 			PreparedStatement pst = con.prepareStatement(sql);
 			pst.setString(1, request.getParameter("productName"));
-			pst.setDouble(2, Double.parseDouble(request.getParameter("productPrice")));
+			pst.setDouble(2, Double.parseDouble(request.getParameter("productPrice"))); //price needs to be entered in double format -- catch exceptions
 			pst.setString(3, request.getParameter("productDesc"));
 			pst.setInt(4, Integer.parseInt(request.getParameter("categoryId")));
 			pst.executeUpdate();
