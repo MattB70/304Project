@@ -146,6 +146,7 @@ CREATE TABLE review (
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+
 INSERT INTO category(categoryName) VALUES ('T-Shirts');
 INSERT INTO category(categoryName) VALUES ('Mugs');
 INSERT INTO category(categoryName) VALUES ('Magnets');
@@ -269,6 +270,9 @@ INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (7,
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (8, 1, 0, 40);
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (9, 1, 2, 97);
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (10, 1, 3, 31);
+
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2019-10-16 18:00:00', 1, 1, 'Love it, Fits perfectly');
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2018-10-15 18:00:00', 2, 1, 'Great quality');
 
 
 -- Order 1 can be shipped as have enough inventory
