@@ -13,14 +13,14 @@
 <%@ include file="header.jsp" %>
 
 <div id="main-content">
-<%
+  <%
 // TODO: Write SQL query that prints out total order amount by day
-try{
-    getConnection();
-    NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
+    try{
+        getConnection();
+        NumberFormat currFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
-    // Display in quadrants, Q1 has Administrator Sales Report, Q2 has Customers list
-    out.print("<table border=10><tr><td>");
+        // Display in quadrants, Q1 has Administrator Sales Report, Q2 has Customers list
+        out.print("<table border=10><tr><td>");
 
 
             // Q1|      ADMINISTRATOR SALES REPORT
@@ -47,12 +47,12 @@ try{
                 //print it out
                 out.println("<tr><td>"+rst0.getDate(1)+"</td><td>"+currFormat.format(rst0.getDouble(2))+"</td></tr>");
             }
-}
-catch (SQLException ex) { 	
-	out.println(ex); 
-}
+    }
+    catch (SQLException ex) { 	
+      out.println(ex); 
+    }
 // CHART
-%>
+  %>
 <canvas id="line-chart" width="auto" height="auto"></canvas>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -62,24 +62,28 @@ new Chart(document.getElementById("line-chart"), {
   type: 'line',
   data: {
             // label dates: should print something like " '2019-10-15', '2019-10-16', '2019-10-17' "
-    labels: [<%
+    labels: [
+            <%
                 String sqlChart = "SELECT DATEADD(day, 2, CAST(orderDate AS DATE)), SUM(totalAmount) FROM ordersummary WHERE orderDate BETWEEN '2018-01-01' AND '2020-11-20' GROUP BY CAST(orderDate AS DATE) ORDER BY 1";
                 PreparedStatement pstL = con.prepareStatement(sqlChart);
                 ResultSet rstL = pstL.executeQuery();
 
                 while(rstL.next()){ out.println("'"+rstL.getString(1) + "', "); }
 
-            %>],
+            %>
+            ],
     datasets: [{
                 // label dates: should print something like " 509.10, 106.75, 327.85 "
-        data:   [<%
+        data:   [
+                <%
 
                     PreparedStatement pstD = con.prepareStatement(sqlChart);
                     ResultSet rstD = pstD.executeQuery();
 
                     while(rstD.next()){ out.println(rstD.getDouble(2) + ", "); }
 
-                %>],
+                %>
+                ],
         label: "Total Order Amount ($)",
         borderColor: "#0062ad",
         fill: true
@@ -94,10 +98,10 @@ new Chart(document.getElementById("line-chart"), {
   }
 });
 </script>
-<%
-try{
-    out.println("</table>");
-    out.println("</td><td>");
+  <%
+    try{
+        out.println("</table>");
+        out.println("</td><td>");
             //   |Q2   CUSTOMER LIST
             // --+--
             //   |
@@ -121,7 +125,15 @@ try{
             out.println("</table>");
 
     out.print("</td></tr></table>");
-%>
+
+    }catch (SQLException ex) { 	
+	    out.println(ex); 
+    }
+  %>
+
+
+
+
    <br><br><br><h1>Select what task you would like to complete:</h1><br>
 <form method="get" action="admin.jsp">
 <select size = "1" name= "task">
@@ -137,32 +149,37 @@ try{
 </select>
 <input type="submit" value="Submit"><br>
 </form> 
-<%
-String task = request.getParameter("task");
-if (task.equals("Add New Product")){
-  %>
-  <br><h2>Add a New Product: </h2><br>
-	<form action="addNewProduct.jsp">
-		<table>
-			<tr><th>Name: </th><td><input type="text" name="productName"></td></tr>
-			<tr><th>Price: </th><td><input type="text" name="productPrice"></td></tr>
-			<tr><th>Description: </th><td><input type="text" name="productDesc"></td></tr>
-			<tr><th>Category Id: </th><td><input type="text" name="categoryId"></td></tr>
-	<tr><td style='text-align:center;' colspan = 2 ><input type="submit" name="submit" value="Submit"></td></tr>
-		</table>
-	</form>
+
   <%
-}
-}
-catch (SQLException ex) { 	
-	out.println(ex); 
-}
+    try{
+      String task = request.getParameter("task");
+      if (task.equals("Add New Product")){
+        out.print(
+          "<br><h2>Add a New Product: </h2><br>"+
+          "<form action=\"addNewProduct.jsp\">"+
+            "<table>"+
+              "<tr><th>Name: </th><td><input type=\"text\" name=\"productName\"></td></tr>"+
+              "<tr><th>Price: </th><td><input type=\"text\" name=\"productPrice\"></td></tr>"+
+              "<tr><th>Description: </th><td><input type=\"text\" name=\"productDesc\"></td></tr>"+
+              "<tr><th>Category Id: </th><td><input type=\"text\" name=\"categoryId\"></td></tr>"+
+          "<tr><td style='text-align:center;' colspan = 2 ><input type=\"submit\" name=\"submit\" value=\"Submit\"></td></tr>"+
+            "</table>"+
+          "</form>"
+        );
+      }
+    }
+    catch (Exception ex) { 	
+      out.println(ex); 
+    }
+  %>
 
-finally {
-    closeConnection();
-}
-%>
 
+
+
+
+  <%
+    closeConnection();  // close connection without a finally, this is easier when there are so many try/catch
+  %>
 </div>
 </body>
 </html>
