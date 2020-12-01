@@ -13,6 +13,21 @@
 <%@ include file="header.jsp" %>
 
 <div id="main-content">
+
+  <!-- Database restore -->
+  <button onclick="myFunction()">Restore Database</button>
+  <script> // Database Restore Button
+  function myFunction() {
+    var txt;
+    if (confirm("Are you sure you wish to restore the database? This action cannot be undone.")) {
+      window.location.href = "loaddata.jsp";
+    }
+  }
+  </script>
+  <br>
+  <br>
+
+
   <%
 // TODO: Write SQL query that prints out total order amount by day
     try{
@@ -180,6 +195,7 @@ new Chart(document.getElementById("line-chart"), {
   <%
     closeConnection();  // close connection without a finally, this is easier when there are so many try/catch
   %>
+
 </div>
 </body>
 </html>

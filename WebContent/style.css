@@ -19,7 +19,7 @@
 
   div#main-content {
     padding-top: 50px; 
-    padding-bottom: 1000px; 
+    padding-bottom: 100px; 
     margin: auto;
     width: min-content;
     min-width: 300px;
@@ -31,6 +31,7 @@
     background-color: purple;
     background-position: center;
   }
+
 /*=========================================================*/
 /* Main */
 body {
@@ -108,8 +109,14 @@ a:active {
 
 
 /*=========================================================*/
-/* Input Field */
+/* Input Fields */
 input {
+    padding: 5px;
+    border: 1px solid var(--border);
+    background-color: var(--accent1);
+    color: var(--font);
+}
+button {
     padding: 5px;
     border: 1px solid var(--border);
     background-color: var(--accent1);

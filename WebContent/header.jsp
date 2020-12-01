@@ -4,7 +4,7 @@
         <th class="buttons" align="left"><a href="index.jsp"><img src="images/icon.png" alt="Home" height="100" ></a></th>      <!-- Home -->
         <th class="buttons"><a href="listprod.jsp">Begin Shopping</a></th>      <!-- listprod   -->
         <th class="buttons"><a href="customer.jsp">Customer Info</a></th>       <!-- customer   -->
-        <th class="buttons"><a href="admin.jsp">Administators</a></th>          <!-- admin      -->
+        <th class="buttons"><a href="admin.jsp?task=Add+New+Product">Administators</a></th>          <!-- admin   defaults to Add New Product   -->
         <th class="buttons"><a href="listorder.jsp">List All Orders</a></th>    <!-- listorder  -->
 <!--    <th class="buttons"><a href="ship.jsp">Shipment</a></th>                <!-- ship       -->
         <th class="buttons" align="right"><a href="addcart.jsp"><img src="images/cart.png" alt="Cart" height="100" ></a></th>   <!-- Cart -->
