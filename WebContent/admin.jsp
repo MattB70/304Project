@@ -51,17 +51,8 @@ try{
 catch (SQLException ex) { 	
 	out.println(ex); 
 }
-
-
-
 // CHART
 %>
-
-
-
-
-
-
 <canvas id="line-chart" width="auto" height="auto"></canvas>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -103,21 +94,13 @@ new Chart(document.getElementById("line-chart"), {
   }
 });
 </script>
-
-
 <%
-
-
-
-
 try{
     getConnection();
     
     out.println("</table>");
 
     out.println("</td><td>");
-
-
             //   |Q2   CUSTOMER LIST
             // --+--
             //   |
@@ -141,7 +124,38 @@ try{
             out.println("</table>");
 
     out.print("</td></tr></table>");
-
+%>
+   <br><br><br><h1>Select what task you would like to complete:</h1><br>
+<form method="get" action="admin.jsp">
+<select size = "1" name= "task">
+<option>Add New Product</option>
+<option>Update Product</option>
+<option>Delete Product</option>
+<option>Change Order Status</option>
+<option>Upload a Product Image to File</option>
+<option>Add Warehouse</option>
+<option>Update Warehouse</option>
+<option>Add Customer</option>
+<option>Update Customer</option>
+</select>
+<input type="submit" value="Submit"><br>
+</form> 
+<%
+String task = request.getParameter("task");
+if (task.equals("Add New Product")){
+  %>
+  <br><h2>Add a New Product: </h2><br>
+	<form action="addNewProduct.jsp">
+		<table>
+			<tr><th>Name: </th><td><input type="text" name="productName"></td></tr>
+			<tr><th>Price: </th><td><input type="text" name="productPrice"></td></tr>
+			<tr><th>Description: </th><td><input type="text" name="productDesc"></td></tr>
+			<tr><th>Category Id: </th><td><input type="text" name="categoryId"></td></tr>
+	<tr><td style='text-align:center;' colspan = 2 ><input type="submit" name="submit" value="Submit"></td></tr>
+		</table>
+	</form>
+  <%
+}
 }
 catch (SQLException ex) { 	
 	out.println(ex); 
