@@ -168,7 +168,8 @@ new Chart(document.getElementById("line-chart"), {
   <%
     try{
       String task = request.getParameter("task");
-      if (task.equals("Add New Product")){
+      if (task.equals("Add New Product"))
+      {
         out.print(
           "<br><h2>Add a New Product: </h2><br>"+
           "<form action=\"addNewProduct.jsp\">"+
@@ -181,6 +182,62 @@ new Chart(document.getElementById("line-chart"), {
             "</table>"+
           "</form>"
         );
+      }
+      else if(task.equals("Update Product"))
+      {
+        out.print(
+          "<br><h2>Update a Product: </h2><br>"
+        );
+
+      }
+      else if(task.equals("Delete Product"))
+      {
+        out.print(
+          "<br><h2>Delete a Product: </h2><br>"
+        );
+
+      }
+      else if(task.equals("Change Order Status"))
+      {
+        out.print(
+          "<br><h2>Change an Order's Status: </h2><br>"
+        );
+
+      }
+      else if(task.equals("Upload a Product Image to File"))
+      {
+        out.print(
+          "<br><h2>Upload a Product Image: </h2><br>"
+        );
+
+      }
+      else if(task.equals("Add Warehouse"))
+      {
+        out.print(
+          "<br><h2>Add a Warehouse: </h2><br>"
+        );
+
+      }
+      else if(task.equals("Update Warehouse"))
+      {
+        out.print(
+          "<br><h2>Update a Warehouse: </h2><br>"
+        );
+
+      }
+      else if(task.equals("Add Customer"))
+      {
+        out.print(
+          "<br><h2>Add a Customer: </h2><br>"
+        );
+
+      }
+      else if(task.equals("Update Customer"))
+      {
+        out.print(
+          "<br><h2>Update a Customer: </h2><br>"
+        );
+
       }
     }
     catch (Exception ex) { 	
