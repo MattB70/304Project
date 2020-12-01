@@ -50,21 +50,20 @@ while(rst.next()){
     out.println("<h2><a href=\"" + addCartLink + "\">Add to Cart</a></h2>");
     out.println("<h2><a href=listprod.jsp>Continue Shopping</a></h2>");
 }
-String sql2 = "SELECT R.reviewId, R.reviewRating, R.reviewDate, R.reviewComment, R.customerId, C.firstName, C.lastName "
+String sql2 = "SELECT R.reviewRating, R.reviewDate, R.reviewComment, C.firstName, C.lastName "
               +"FROM review R, customer C "
               +"WHERE R.customerId = C.customerId AND productId = ?";
 
 PreparedStatement pst2 = con.prepareStatement(sql2);
 pst2.setInt(1, Integer.parseInt(productId));
 ResultSet rst2 = pst2.executeQuery();
-
+out.println("<br><h1>Reviews: </h1>");
+out.println("<table border=3><th>Rating</th><th>Customer Name</th><th>Date</th><th>Comment</th>");
 while(rst2.next()){
-out.println("<h1>Reviews: </h2>");
-out.println("<table borde=3><th>Rating</th><th>Customer Name</th><th>Date</th><th>Comment</th>");
-out.println("<tr><td>"+rst2.getInt(2)+"</td><td>"+rst2.getString(6)+" "+rst2.getString(7)+"</td><td>"+rst.getDate(3)+"</td><td>"+rst2.getString(4)+"</td></tr></table>");
-
+int reviewRating = rst2.getInt(1);
+out.println("<tr><td>"+reviewRating+"</td><td>"+rst2.getString(4)+" "+rst2.getString(5)+"</td><td>"+rst2.getDate(2)+"</td><td>"+rst2.getString(3)+"</td></tr>");
 }
-
+out.println("</table>");
 
               
 closeConnection();
@@ -72,10 +71,6 @@ closeConnection();
 catch (SQLException ex) { 	
 	out.println(ex); 
 }
-		
-// TODO: Retrieve any image stored directly in database. Note: Call displayImage.jsp with product id as parameter.
-		
-// TODO: Add links to Add to Cart and Continue Shopping
 %>
 </div>
 </body>
