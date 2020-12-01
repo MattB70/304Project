@@ -12,14 +12,13 @@
 	String userid = request.getParameter("userid");
 	String password = request.getParameter("password");
 	String sql = "";
-	boolean comma = false;
 	try{
 		if(	firstName == null || lastName == null || email == null || phonenum == null ||
 			address == null || city == null || state == null || postalCode == null ||
 			country == null || userid == null || password == null)
 		{
 			
-			response.sendRedirect("admin.jsp?task=Update+Customer"); // Form not filled out... Return without doing anything...
+			response.sendRedirect("admin.jsp?task=Add+Customer"); // Form not filled out... Return without doing anything...
 		}
 		getConnection();
 		//Create SQL
@@ -34,6 +33,6 @@
 	finally{
 		closeConnection();
 		out.print("<br>"+sql+"<br>");
-		//response.sendRedirect("admin.jsp?task=Add+Customer"); // Return
+		response.sendRedirect("admin.jsp?task=Add+Customer"); // Return
 	}
 %>
