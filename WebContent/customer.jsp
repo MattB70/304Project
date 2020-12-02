@@ -61,7 +61,7 @@
 		out.print("</table>");
 		%>
         <br>
-		<h2><a href="listAllUserOrders.jsp">Click here to see all of your orders!</a></h2>
+		<h2><a href="listUserOrders.jsp">Click here to see all of your orders!</a></h2>
         <%
 	}
 	catch(Exception ex){
