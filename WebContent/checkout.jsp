@@ -11,7 +11,6 @@
 <%@ include file="header.jsp" %>
 
 
-
 <div id="main-content">
 
 <h1>Enter your Customer ID and Password to complete the transaction:</h1>
@@ -20,9 +19,29 @@
 <table>
 <tr><td>Customer ID: </td><td><input type="text" name="customerId" size="30"></td></tr>
 <tr><td>Password: </td><td><input type="password" name="password" size="30"></td></tr>
+
+<tr><td>Payment Type: </td><td><input type="paymentType" name="paymentType" size="30"></td></tr>
+<tr><td>Payment Number: </td><td><input type="paymentNumber" name="paymentNumber" size="30"></td></tr>
+<tr><td>Payment Expiry Date: </td><td><input type="paymentExpiryDate" name="paymentExpiryDate" size="30"></td></tr>
+
 </table>
 <input type="submit" value="Submit"><input type="reset" value="Reset">
 </form>
+<%-- <%
+getConnection();
+
+//get payment and shipment info
+//maybe input info then insert into tables?
+String sql = "SELECT * " 
+           + "FROM shipment s, paymentmethod p ";
+           //+ "WHERE ";
+PreparedStatement pst = con.prepareStatement(sql);
+ResultSet rst = pst.executeQuery();
+
+%>
+<%
+closeConnection();
+%> --%>
 
 </div>
 </body>

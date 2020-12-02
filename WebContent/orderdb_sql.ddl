@@ -258,6 +258,7 @@ INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Darren', 'Doe', 'oe@doe.com', '250-807-2222', '444 Dover Lane', 'Kelowna', 'BC', 'V1V 2X9', 'Canada', 'darren' , 'pw');
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Elizabeth', 'Elliott', 'engel@uiowa.edu', '555-666-7777', '555 Everwood Street', 'Iowa City', 'IA', '52241', 'United States', 'beth' , 'test');
 
+INSERT INTO paymentmethod (paymentType, paymentNumber, paymentExpiryDate, customerId) VALUES ('Visa', '1234', '2022-12-01', '1');
 
 INSERT INTO warehouse(warehouseName) VALUES ('Main warehouse');
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (1, 1, 5, 18);

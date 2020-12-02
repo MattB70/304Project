@@ -29,6 +29,10 @@
 // Get customer id
 String custId = request.getParameter("customerId");
 String password = request.getParameter("password");
+String paytype = request.getParameter("paymentType");
+String paynum = request.getParameter("paymentNumber");
+String payexdate = request.getParameter("paymentExpiryDate");
+
 @SuppressWarnings({"unchecked"})
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 session.getAttribute("productList");
@@ -60,6 +64,7 @@ try { getConnection();
 			<%
 			return;
 		}
+	
 		//Determine if customer id exists in the database
 		String sqlc = "SELECT customerId, firstName, lastName, address, city, C.state, postalCode, country, password, T.tax, T.shipping FROM customer C JOIN taxes T ON C.state = T.state WHERE customerId = ?";
 		PreparedStatement pstc = con.prepareStatement(sqlc);
@@ -69,7 +74,12 @@ try { getConnection();
 		String cFirstName = "";
 		String cLastName = "";
 
-		if(!rstc.next()){
+		String sqlcheck = "SELECT customerId, paymentType, paymentNumber, paymentExpiryDate FROM paymentmethod WHERE customerId=?";
+		PreparedStatement pstcheck = con.prepareStatement(sqlcheck);
+		pstcheck.setInt(1,num);
+		ResultSet rstcheck = pstcheck.executeQuery();
+
+		if(!rstc.next()||!rstcheck.next()){
 			out.println("<h1>Invalid Customer ID. Please go back and try again!</h1><br>");
 			%>
 			<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
@@ -77,10 +87,36 @@ try { getConnection();
 			return;
 		}else{
 			String dbpw = rstc.getString(9);
-
+			String checkpt = rstcheck.getString(2);
+			String checkpn = rstcheck.getString(3);
+			String checkped = rstcheck.getString(4);
 			if(!dbpw.equals(password)){
 				 //check if password matches the one stored in db
 				out.println("<h1>Incorrect Password. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!checkpt.equals(paytype)){
+				 //check if password matches the one stored in db
+				out.println("<h1>Incorrect Payment Type. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!checkpn.equals(paynum)){
+				 //check if password matches the one stored in db
+				out.println("<h1>Incorrect Payment Number. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!checkped.equals(payexdate)){
+				 //check if password matches the one stored in db
+				out.println("<h1>Incorrect Payment Expiry Date. Please go back and try again!</h1><br>");
 				%>
 				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 				<%
