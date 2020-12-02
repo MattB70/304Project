@@ -59,7 +59,10 @@
 		out.print(formatRow("Country", 		rst.getString(10)));
 		out.print(formatRow("User id", 		rst.getString(11)));
 		out.print("</table>");
-
+		%>
+        <br>
+		<h2><a href="listUserOrders.jsp">Click here to see all of your orders!</a></h2>
+        <%
 	}
 	catch(Exception ex){
 		out.print("<span title=\""+ex+"\">You must be logged in to view customer info...</span>");
