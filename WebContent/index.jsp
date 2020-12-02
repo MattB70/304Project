@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<%@ page import="java.text.NumberFormat" %>
+<%@ include file="jdbc.jsp" %>
 
 
 <%@ include file="header.jsp" %>
@@ -22,54 +24,110 @@
         <br>
         <br>
         <br>
-        <h2 align="center">Popular Items - Click to See Details</h2>
+        <h2 align="center">Recommended Products - Click to See Details</h2>
         <br>
+
+        <%      // Get recommended items based on customer ID.
+                int customerId;
+                int orderId;
+                int categoryId;
+                int productIds[] = new int[6];                  // recommended product ids
+                for(int i = 1; i < 7; i++) productIds[i-1] = i;   // Initialize default product ids
+
+                try{
+                        getConnection();
+                       
+                        String userName = (String) session.getAttribute("authenticatedUser");
+                        if(userName != null)
+                        {
+                                 // Get customer Id:
+                                String sql = "SELECT customerId FROM customer WHERE userId = ?";
+                                PreparedStatement pst = con.prepareStatement(sql);
+                                pst.setString(1, userName);
+                                ResultSet rst = pst.executeQuery();
+                                rst.next();
+                                customerId = rst.getInt(1);
+
+                                // Get most recent orderId for customer:
+                                sql = "SELECT orderId, orderDate FROM ordersummary WHERE customerId = ? ORDER BY orderDate DESC";
+                                pst = con.prepareStatement(sql);
+                                pst.setInt(1, customerId);
+                                rst = pst.executeQuery();
+                                rst.next();
+                                orderId = rst.getInt(1);
+
+                                // Get a categoryId from product from orderId:
+                                sql = "SELECT categoryId FROM orderproduct OP JOIN product P ON OP.productId = P.productId WHERE orderId = ?";
+                                pst = con.prepareStatement(sql);
+                                pst.setInt(1, orderId);
+                                rst = pst.executeQuery();
+                                rst.next();
+                                categoryId = rst.getInt(1);
+
+                                // Get productIds to display with categoryId:
+                                sql = "SELECT productId FROM product WHERE categoryId = ?";
+                                pst = con.prepareStatement(sql);
+                                pst.setInt(1, categoryId);
+                                rst = pst.executeQuery();
+
+                                // Add product Ids to array:
+                                int i = 0;
+                                while(rst.next() && i < 6)
+                                {
+                                        productIds[i] = rst.getInt(1);
+                                        i++;
+                                }
+                        }
+                }
+                catch(SQLException ex){ out.print(ex); }
+                catch(Exception ex){ out.print(ex); }
+                finally{ closeConnection(); }
+
+        %>
+
         <table align="center" width="Page" border="30" cellpadding="5">
                 <tr>
 
                         <td align="center" valign="center">
-                                <a href= product.jsp?id=7><img src="images/7.jpg" alt="product image" height="300"></a>
+                                <%
+                                        out.print("<a href= product.jsp?id="+productIds[0]+"><img src=\"images/"+productIds[0]+".jpg\" alt=\"product image\" height=\"300\"></a>");
+                                %>
                         </td>
                         
                         <td align="center" valign="center">
-                                <a href= product.jsp?id=6><img src="images/6.jpg" alt="product image" height="300"></a>
+                                <%
+                                        out.print("<a href= product.jsp?id="+productIds[1]+"><img src=\"images/"+productIds[1]+".jpg\" alt=\"product image\" height=\"300\"></a>");
+                                %>
                         </td>
 
                         <td align="center" valign="center">
-                                <a href= product.jsp?id=2><img src="images/2.jpg" alt="product image" height="300"></a>
+                                <%
+                                        out.print("<a href= product.jsp?id="+productIds[2]+"><img src=\"images/"+productIds[2]+".jpg\" alt=\"product image\" height=\"300\"></a>");
+                                %>
                         </td>
                         
                 </tr> 
                 <tr>
 
                         <td align="center" valign="center">
-                                <a href= product.jsp?id=10><img src="images/10.jpg" alt="product image" height="300"></a>
+                                <%
+                                        out.print("<a href= product.jsp?id="+productIds[3]+"><img src=\"images/"+productIds[3]+".jpg\" alt=\"product image\" height=\"300\"></a>");
+                                %>
                         </td>
                         
                         <td align="center" valign="center">
-                                <a href= product.jsp?id=14><img src="images/14.jpg" alt="product image" height="300"></a>
+                                <%
+                                        out.print("<a href= product.jsp?id="+productIds[4]+"><img src=\"images/"+productIds[4]+".jpg\" alt=\"product image\" height=\"300\"></a>");
+                                %>
                         </td>
 
                         <td align="center" valign="center">
-                                <a href= product.jsp?id=16><img src="images/16.jpg" alt="product image" height="300"></a>
+                                <%
+                                        out.print("<a href= product.jsp?id="+productIds[5]+"><img src=\"images/"+productIds[5]+".jpg\" alt=\"product image\" height=\"300\"></a>");
+                                %>
                         </td>
                         
                 </tr>
-                <tr>
-
-                        <td align="center" valign="center">
-                                <a href= product.jsp?id=28><img src="images/28.jpg" alt="product image" height="300"></a>
-                        </td>
-                        
-                        <td align="center" valign="center">
-                               <a href= product.jsp?id=23><img src="images/23.jpg" alt="product image" height="300"></a>
-                        </td>
-
-                        <td align="center" valign="center">
-                                <a href= product.jsp?id=26><img src="images/26.jpg" alt="product image" height="300"></a>
-                        </td>
-                        
-                </tr> 
         </table>
 </div>
 </body>
