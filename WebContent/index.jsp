@@ -31,6 +31,7 @@
                 int customerId;
                 int orderId;
                 int categoryId;
+                int productId;
                 int productIds[] = new int[6];                  // recommended product ids
                 for(int i = 1; i < 7; i++) productIds[i-1] = i;   // Initialize default product ids
 
@@ -39,8 +40,8 @@
                        
                         String userName = (String) session.getAttribute("authenticatedUser");
                         if(userName != null)
-                        {
-                                 // Get customer Id:
+                        {       // IF a customer is logged in, use their customer id to determine user specific recommended products:
+                                // Get customer Id:
                                 String sql = "SELECT customerId FROM customer WHERE userId = ?";
                                 PreparedStatement pst = con.prepareStatement(sql);
                                 pst.setString(1, userName);
@@ -60,6 +61,37 @@
                                 sql = "SELECT categoryId FROM orderproduct OP JOIN product P ON OP.productId = P.productId WHERE orderId = ?";
                                 pst = con.prepareStatement(sql);
                                 pst.setInt(1, orderId);
+                                rst = pst.executeQuery();
+                                rst.next();
+                                categoryId = rst.getInt(1);
+
+                                // Get productIds to display with categoryId:
+                                sql = "SELECT productId FROM product WHERE categoryId = ?";
+                                pst = con.prepareStatement(sql);
+                                pst.setInt(1, categoryId);
+                                rst = pst.executeQuery();
+
+                                // Add product Ids to array:
+                                int i = 0;
+                                while(rst.next() && i < 6)
+                                {
+                                        productIds[i] = rst.getInt(1);
+                                        i++;
+                                }
+                        }
+                        else    // IF a customer is NOT logged in, display recommended items based on global sales:
+                        {
+                                // Get most popular productId from orderproduct:
+                                String sql = "SELECT productId, SUM(quantity) FROM orderproduct GROUP BY productId ORDER BY SUM(quantity) DESC";
+                                PreparedStatement pst = con.prepareStatement(sql);
+                                ResultSet rst = pst.executeQuery();
+                                rst.next();
+                                productId = rst.getInt(1);
+                                
+                                // Get categoryId from popular productId:
+                                sql = "SELECT categoryId FROM product WHERE productId = ?";
+                                pst = con.prepareStatement(sql);
+                                pst.setInt(1, productId);
                                 rst = pst.executeQuery();
                                 rst.next();
                                 categoryId = rst.getInt(1);
