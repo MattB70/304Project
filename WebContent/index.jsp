@@ -46,37 +46,97 @@
                                 PreparedStatement pst = con.prepareStatement(sql);
                                 pst.setString(1, userName);
                                 ResultSet rst = pst.executeQuery();
-                                rst.next();
-                                customerId = rst.getInt(1);
 
-                                // Get most recent orderId for customer:
-                                sql = "SELECT orderId, orderDate FROM ordersummary WHERE customerId = ? ORDER BY orderDate DESC";
-                                pst = con.prepareStatement(sql);
-                                pst.setInt(1, customerId);
-                                rst = pst.executeQuery();
-                                rst.next();
-                                orderId = rst.getInt(1);
-
-                                // Get a categoryId from product from orderId:
-                                sql = "SELECT categoryId FROM orderproduct OP JOIN product P ON OP.productId = P.productId WHERE orderId = ?";
-                                pst = con.prepareStatement(sql);
-                                pst.setInt(1, orderId);
-                                rst = pst.executeQuery();
-                                rst.next();
-                                categoryId = rst.getInt(1);
-
-                                // Get productIds to display with categoryId:
-                                sql = "SELECT productId FROM product WHERE categoryId = ?";
-                                pst = con.prepareStatement(sql);
-                                pst.setInt(1, categoryId);
-                                rst = pst.executeQuery();
-
-                                // Add product Ids to array:
-                                int i = 0;
-                                while(rst.next() && i < 6)
+                                if(rst.next())
                                 {
-                                        productIds[i] = rst.getInt(1);
-                                        i++;
+                                        customerId = rst.getInt(1);
+                                        // Get most recent orderId for customer:
+                                        sql = "SELECT orderId, orderDate FROM ordersummary WHERE customerId = ? ORDER BY orderDate DESC";
+                                        pst = con.prepareStatement(sql);
+                                        pst.setInt(1, customerId);
+                                        rst = pst.executeQuery();
+                                        if(rst.next())
+                                        {
+                                                orderId = rst.getInt(1);
+                                                // Get a categoryId from product from orderId:
+                                                sql = "SELECT categoryId FROM orderproduct OP JOIN product P ON OP.productId = P.productId WHERE orderId = ?";
+                                                pst = con.prepareStatement(sql);
+                                                pst.setInt(1, orderId);
+                                                rst = pst.executeQuery();
+                                                rst.next();
+                                                categoryId = rst.getInt(1);
+                                                // Get productIds to display with categoryId:
+                                                sql = "SELECT productId FROM product WHERE categoryId = ?";
+                                                pst = con.prepareStatement(sql);
+                                                pst.setInt(1, categoryId);
+                                                rst = pst.executeQuery();
+                                                // Add product Ids to array:
+                                                int i = 0;
+                                                while(rst.next() && i < 6)
+                                                {
+                                                        out.print("while"+i);
+                                                        productIds[i] = rst.getInt(1);
+                                                        i++;
+                                                }
+                                        }else{
+                                                // Get most popular productId from orderproduct:
+                                                sql = "SELECT productId, SUM(quantity) FROM orderproduct GROUP BY productId ORDER BY SUM(quantity) DESC";
+                                                pst = con.prepareStatement(sql);
+                                                rst = pst.executeQuery();
+                                                rst.next();
+                                                productId = rst.getInt(1);
+                                                
+                                                // Get categoryId from popular productId:
+                                                sql = "SELECT categoryId FROM product WHERE productId = ?";
+                                                pst = con.prepareStatement(sql);
+                                                pst.setInt(1, productId);
+                                                rst = pst.executeQuery();
+                                                rst.next();
+                                                categoryId = rst.getInt(1);
+
+                                                // Get productIds to display with categoryId:
+                                                sql = "SELECT productId FROM product WHERE categoryId = ?";
+                                                pst = con.prepareStatement(sql);
+                                                pst.setInt(1, categoryId);
+                                                rst = pst.executeQuery();
+
+                                                // Add product Ids to array:
+                                                int i = 0;
+                                                while(rst.next() && i < 6)
+                                                {
+                                                        productIds[i] = rst.getInt(1);
+                                                        i++;
+                                                }
+                                        }
+                                }else{
+                                        // Get most popular productId from orderproduct:
+                                        sql = "SELECT productId, SUM(quantity) FROM orderproduct GROUP BY productId ORDER BY SUM(quantity) DESC";
+                                        pst = con.prepareStatement(sql);
+                                        rst = pst.executeQuery();
+                                        rst.next();
+                                        productId = rst.getInt(1);
+                                        
+                                        // Get categoryId from popular productId:
+                                        sql = "SELECT categoryId FROM product WHERE productId = ?";
+                                        pst = con.prepareStatement(sql);
+                                        pst.setInt(1, productId);
+                                        rst = pst.executeQuery();
+                                        rst.next();
+                                        categoryId = rst.getInt(1);
+
+                                        // Get productIds to display with categoryId:
+                                        sql = "SELECT productId FROM product WHERE categoryId = ?";
+                                        pst = con.prepareStatement(sql);
+                                        pst.setInt(1, categoryId);
+                                        rst = pst.executeQuery();
+
+                                        // Add product Ids to array:
+                                        int i = 0;
+                                        while(rst.next() && i < 6)
+                                        {
+                                                productIds[i] = rst.getInt(1);
+                                                i++;
+                                        }
                                 }
                         }
                         else    // IF a customer is NOT logged in, display recommended items based on global sales:
@@ -116,6 +176,7 @@
                 finally{ closeConnection(); }
 
         %>
+
 
         <table align="center" width="Page" border="30" cellpadding="5">
                 <tr>
