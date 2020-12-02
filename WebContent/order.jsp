@@ -29,9 +29,16 @@
 // Get customer id
 String custId = request.getParameter("customerId");
 String password = request.getParameter("password");
+//get payment info
 String paytype = request.getParameter("paymentType");
 String paynum = request.getParameter("paymentNumber");
 String payexdate = request.getParameter("paymentExpiryDate");
+//get shipping info
+String shipaddress = request.getParameter("address");
+String shipcity = request.getParameter("city");
+String shipstate = request.getParameter("state");
+String shippostal = request.getParameter("postal");
+String shipcountry = request.getParameter("country");
 
 @SuppressWarnings({"unchecked"})
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
@@ -87,9 +94,16 @@ try { getConnection();
 			return;
 		}else{
 			String dbpw = rstc.getString(9);
+			//strings for payment checks
 			String checkpt = rstcheck.getString(2);
 			String checkpn = rstcheck.getString(3);
 			String checkped = rstcheck.getString(4);
+			//strings for shipment checks
+			String dbaddress = rstc.getString(4);
+			String dbcity = rstc.getString(5);
+			String dbstate = rstc.getString(6);
+			String dbpostal = rstc.getString(7);
+			String dbcountry = rstc.getString(8);
 			if(!dbpw.equals(password)){
 				 //check if password matches the one stored in db
 				out.println("<h1>Incorrect Password. Please go back and try again!</h1><br>");
@@ -99,7 +113,7 @@ try { getConnection();
 				return;
 			}
 			if(!checkpt.equals(paytype)){
-				 //check if password matches the one stored in db
+				 //check if payment type matches the one stored in db
 				out.println("<h1>Incorrect Payment Type. Please go back and try again!</h1><br>");
 				%>
 				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
@@ -107,7 +121,7 @@ try { getConnection();
 				return;
 			}
 			if(!checkpn.equals(paynum)){
-				 //check if password matches the one stored in db
+				 //check if payment number matches the one stored in db
 				out.println("<h1>Incorrect Payment Number. Please go back and try again!</h1><br>");
 				%>
 				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
@@ -115,8 +129,50 @@ try { getConnection();
 				return;
 			}
 			if(!checkped.equals(payexdate)){
-				 //check if password matches the one stored in db
+				 //check if payment expiry date matches the one stored in db
+				out.println("Entered: "+payexdate);
+				out.println("Expected: "+checkped);
 				out.println("<h1>Incorrect Payment Expiry Date. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!dbaddress.equals(shipaddress)){
+				 //check if shipping address matches the one stored in db
+				out.println("<h1>Incorrect Shipping address compared to what's on file. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!dbcity.equals(shipcity)){
+				 //check if shipping city matches the one stored in db
+				out.println("<h1>Incorrect Shipping city compared to what's on file. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!dbstate.equals(shipstate)){
+				 //check if shipping state matches the one stored in db
+				out.println("<h1>Incorrect Shipping state compared to what's on file. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!dbpostal.equals(shippostal)){
+				 //check if shipping postal code matches the one stored in db
+				out.println("<h1>Incorrect Postal code compared to what's on file. Please go back and try again!</h1><br>");
+				%>
+				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
+				<%
+				return;
+			}
+			if(!dbcountry.equals(shipcountry)){
+				 //check if shipping country matches the one stored in db
+				out.println("<h1>Incorrect Country compared to what's on file. Please go back and try again!</h1><br>");
 				%>
 				<h2><a href="checkout.jsp">Back to Checkout Page</a></h2>
 				<%

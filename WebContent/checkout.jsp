@@ -24,6 +24,12 @@
 <tr><td>Payment Number: </td><td><input type="paymentNumber" name="paymentNumber" size="30"></td></tr>
 <tr><td>Payment Expiry Date: </td><td><input type="paymentExpiryDate" name="paymentExpiryDate" size="30"></td></tr>
 
+<tr><td>Shipping address: </td><td><input type="address" name="address" size="30"></td></tr>
+<tr><td>City: </td><td><input type="city" name="city" size="30"></td></tr>
+<tr><td>State: </td><td><input type="state" name="state" size="30"></td></tr>
+<tr><td>Postal Code: </td><td><input type="postal" name="postal" size="30"></td></tr>
+<tr><td>Country: </td><td><input type="country" name="country" size="30"></td></tr>
+
 </table>
 <input type="submit" value="Submit"><input type="reset" value="Reset">
 </form>
