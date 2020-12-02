@@ -79,102 +79,58 @@
                                                         i++;
                                                 }
                                         }else{
-                                                // Get most popular productId from orderproduct:
-                                                sql = "SELECT productId, SUM(quantity) FROM orderproduct GROUP BY productId ORDER BY SUM(quantity) DESC";
-                                                pst = con.prepareStatement(sql);
-                                                rst = pst.executeQuery();
-                                                rst.next();
-                                                productId = rst.getInt(1);
-                                                
-                                                // Get categoryId from popular productId:
-                                                sql = "SELECT categoryId FROM product WHERE productId = ?";
-                                                pst = con.prepareStatement(sql);
-                                                pst.setInt(1, productId);
-                                                rst = pst.executeQuery();
-                                                rst.next();
-                                                categoryId = rst.getInt(1);
-
-                                                // Get productIds to display with categoryId:
-                                                sql = "SELECT productId FROM product WHERE categoryId = ?";
-                                                pst = con.prepareStatement(sql);
-                                                pst.setInt(1, categoryId);
-                                                rst = pst.executeQuery();
-
-                                                // Add product Ids to array:
-                                                int i = 0;
-                                                while(rst.next() && i < 6)
-                                                {
-                                                        productIds[i] = rst.getInt(1);
-                                                        i++;
-                                                }
+                                                productIds = populateDefaults(productIds);
                                         }
                                 }else{
-                                        // Get most popular productId from orderproduct:
-                                        sql = "SELECT productId, SUM(quantity) FROM orderproduct GROUP BY productId ORDER BY SUM(quantity) DESC";
-                                        pst = con.prepareStatement(sql);
-                                        rst = pst.executeQuery();
-                                        rst.next();
-                                        productId = rst.getInt(1);
-                                        
-                                        // Get categoryId from popular productId:
-                                        sql = "SELECT categoryId FROM product WHERE productId = ?";
-                                        pst = con.prepareStatement(sql);
-                                        pst.setInt(1, productId);
-                                        rst = pst.executeQuery();
-                                        rst.next();
-                                        categoryId = rst.getInt(1);
-
-                                        // Get productIds to display with categoryId:
-                                        sql = "SELECT productId FROM product WHERE categoryId = ?";
-                                        pst = con.prepareStatement(sql);
-                                        pst.setInt(1, categoryId);
-                                        rst = pst.executeQuery();
-
-                                        // Add product Ids to array:
-                                        int i = 0;
-                                        while(rst.next() && i < 6)
-                                        {
-                                                productIds[i] = rst.getInt(1);
-                                                i++;
-                                        }
+                                        productIds = populateDefaults(productIds);
                                 }
                         }
                         else    // IF a customer is NOT logged in, display recommended items based on global sales:
                         {
-                                // Get most popular productId from orderproduct:
-                                String sql = "SELECT productId, SUM(quantity) FROM orderproduct GROUP BY productId ORDER BY SUM(quantity) DESC";
-                                PreparedStatement pst = con.prepareStatement(sql);
-                                ResultSet rst = pst.executeQuery();
-                                rst.next();
-                                productId = rst.getInt(1);
-                                
-                                // Get categoryId from popular productId:
-                                sql = "SELECT categoryId FROM product WHERE productId = ?";
-                                pst = con.prepareStatement(sql);
-                                pst.setInt(1, productId);
-                                rst = pst.executeQuery();
-                                rst.next();
-                                categoryId = rst.getInt(1);
-
-                                // Get productIds to display with categoryId:
-                                sql = "SELECT productId FROM product WHERE categoryId = ?";
-                                pst = con.prepareStatement(sql);
-                                pst.setInt(1, categoryId);
-                                rst = pst.executeQuery();
-
-                                // Add product Ids to array:
-                                int i = 0;
-                                while(rst.next() && i < 6)
-                                {
-                                        productIds[i] = rst.getInt(1);
-                                        i++;
-                                }
+                                productIds = populateDefaults(productIds);
                         }
                 }
                 catch(SQLException ex){ out.print(ex); }
                 catch(Exception ex){ out.print(ex); }
                 finally{ closeConnection(); }
 
+        %>
+
+        <%!
+                int[] populateDefaults(int[] productIds) throws Exception
+                {
+                        int productId;
+                        int categoryId;
+                        // Get most popular productId from orderproduct:
+                        String sql = "SELECT productId, SUM(quantity) FROM orderproduct GROUP BY productId ORDER BY SUM(quantity) DESC";
+                        PreparedStatement pst = con.prepareStatement(sql);
+                        ResultSet rst = pst.executeQuery();
+                        rst.next();
+                        productId = rst.getInt(1);
+                        
+                        // Get categoryId from popular productId:
+                        sql = "SELECT categoryId FROM product WHERE productId = ?";
+                        pst = con.prepareStatement(sql);
+                        pst.setInt(1, productId);
+                        rst = pst.executeQuery();
+                        rst.next();
+                        categoryId = rst.getInt(1);
+
+                        // Get productIds to display with categoryId:
+                        sql = "SELECT productId FROM product WHERE categoryId = ?";
+                        pst = con.prepareStatement(sql);
+                        pst.setInt(1, categoryId);
+                        rst = pst.executeQuery();
+
+                        // Add product Ids to array:
+                        int i = 0;
+                        while(rst.next() && i < 6)
+                        {
+                                productIds[i] = rst.getInt(1);
+                                i++;
+                        }
+                        return productIds;
+                }
         %>
 
 
