@@ -21,35 +21,25 @@ try	{
 	PreparedStatement pst = con.prepareStatement(sql);
 	pst.setString(1, productId);
 	ResultSet rst = pst.executeQuery();
+	Date date = new Date(System.currentTimeMillis());
+	SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 	while(rst.next()){
 		out.println("<h1>Write a Review: </h1>");
 		out.println("<h3>Fill in the following to rate: "+rst.getString(1)+" - "+rst.getString(2)+"</h3>");
 	}
-	%>
-	<form name="writeReview" method=get action=writeareview.jsp>
-	<table>
-	<tr>
-	<th><label for="reviewRating">Rating: </label></th>
-	<td><input required type="number" name="reviewRating" placeholder="0" min="0" max= "5"></td>
-	</tr>
-	<%
-	Date date = new Date(System.currentTimeMillis());
-	SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-	out.print("<tr><th>Date: </label></th><td><input name='reviewDate' value="+ dateFormatter.format(date) +"></td></tr>");
-	%>
-
-	<tr>
-	<th><label for="reviewComment">Comment: </label></th>
-	<td><input type="text" name="reviewComment" size="50" placeholder="Enter your comment here..."></td>
-	<tr><td style='text-align:center;'><input type="reset" value="Reset"> </td><td style='text-align:right;'><input class="submit" type="submit" name="SubmitReview" value="Submit"></td></tr>
-	</table>
-	</form>
-	<%
-	String reviewRating = request.getParameter("reviewRating");
-	String reviewDate = request.getParameter("reviewDate");
-	String reviewComment = request.getParameter("reviewComment");
-	String userId = request.getParameter("authenticatedUser");
-	String customerId = null;
+	     out.print(
+          "<form action=\"addreview.jsp\">"+
+            "<table>"+
+              "<tr><th>Product ID: </th><td><input required type=\"number\" name=\"productId\" value = \""+productId+"\"min = \""+productId+"\"max = \""+productId+"\"></td></tr>"+
+              "<tr><th>Customer ID: </th><td><input type=\"number\" name=\"customerId\" placeholder=\"1\"min=\"1\"max=\"5\"></td></tr>"+
+              "<tr><th>Rating: </th><td><input type=\"number\" name=\"reviewRating\"placeholder=\"0\"min=\"0\"max=\"5\"></td></tr>"+
+			   "<tr><th>Date: </th><td><input name=\"reviewDate\"value = \""+dateFormatter.format(date)+"\"></td></tr>"+
+              "<tr><th>Comment: </th><td><input type=\"text\" name=\"reviewComment\" size=\"50\" placeholder=\"Enter your comment here...\"></td></tr>"+
+          "<tr><td style='text-align:center;'><input type=\"reset\" name=\"reset\" value=\"Reset\"></td><td style='text-align:center;'><input type=\"submit\" name=\"submit\" value=\"Submit\"></td></tr>"+
+            "</table>"+
+          "</form>"
+        );
+	
 	/**    Tried to validate reviews:   
 		if(reviewRating == null || reviewDate == null || reviewComment == null){
             return;
@@ -77,14 +67,7 @@ try	{
 				} catch (Exception e) {
 				}
 	 **/
-	String insertR = "INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (?, ?, ?, ?, ?) ";
-	PreparedStatement psti = con.prepareStatement(insertR);
-	psti.setString(1, reviewRating);
-	psti.setString(2, reviewDate);
-	psti.setString(3, customerId);
-	psti.setString(4, productId);
-	psti.setString(5, reviewComment);
-	psti.executeUpdate();
+
 	closeConnection();
 }catch (SQLException ex) { 	
 	out.println(ex); 
