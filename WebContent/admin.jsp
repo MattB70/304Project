@@ -152,11 +152,8 @@ new Chart(document.getElementById("line-chart"), {
    <br><br><br><h1>Select what task you would like to complete:</h1><br>
 <form method="get" action="admin.jsp">
 <select size = "1" name= "task">
+
 <option>Add New Product</option>
-<option>Update Product</option>
-<option>Delete Product</option>
-<option>Change Order Status</option>
-<option>Upload a Product Image to File</option>
 <option>Add Warehouse</option>
 <option>Update Warehouse</option>
 <option>Add Customer</option>
@@ -168,8 +165,8 @@ new Chart(document.getElementById("line-chart"), {
   <%
     try{
       String task = request.getParameter("task");
-      if (task.equals("Add New Product"))
-      {
+    
+     if (task.equals("Add New Product")) {
         out.print(
           "<br><h2>Add a New Product: </h2><br>"+
           "<form action=\"addNewProduct.jsp\">"+
@@ -183,34 +180,7 @@ new Chart(document.getElementById("line-chart"), {
           "</form>"
         );
       }
-      else if(task.equals("Update Product"))
-      {
-        out.print(
-          "<br><h2>Update a Product: </h2><br>"
-        );
-
-      }
-      else if(task.equals("Delete Product"))
-      {
-        out.print(
-          "<br><h2>Delete a Product: </h2><br>"
-        );
-
-      }
-      else if(task.equals("Change Order Status"))
-      {
-        out.print(
-          "<br><h2>Change an Order's Status: </h2><br>"
-        );
-
-      }
-      else if(task.equals("Upload a Product Image to File"))
-      {
-        out.print(
-          "<br><h2>Upload a Product Image: </h2><br>"
-        );
-
-      }
+     
       else if(task.equals("Add Warehouse"))
       {
         out.print(
@@ -281,13 +251,6 @@ new Chart(document.getElementById("line-chart"), {
     catch (Exception ex) { 	
       out.println(ex); 
     }
-  %>
-
-
-
-
-
-  <%
     closeConnection();  // close connection without a finally, this is easier when there are so many try/catch
   %>
 
