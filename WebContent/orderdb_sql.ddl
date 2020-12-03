@@ -281,6 +281,11 @@ INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComme
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2016-08-20 18:00:00', 4, 28, 'Wow, I thought this was the real Ramone');
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (1, '2020-08-20 18:00:00', 3, 28, 'Bobble head is not bobbling');
 
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (1, '2020-12-02 18:00:00', 1, 28, 'Still waiting for it to ship...');
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (4, '2020-03-12 18:00:00', 5, 1, 'Wish it came in more colours.');
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2020-10-23 18:00:00', 4, 23, 'I sent one to my grandma, she loved it.');
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2020-12-01 18:00:00', 3, 28, 'Favourite item on the site!');
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2020-11-12 18:00:00', 4, 28, 'I would give this product bonus stars if I could!!');
 
 -- Order 1 can be shipped as have enough inventory
 DECLARE @orderId int
