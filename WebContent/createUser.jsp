@@ -56,12 +56,10 @@
             <td><div align="left"><font face="Arial, Helvetica, sans-serif" size="2">Password:</font></div></td>
             <td><input type="password" name="pw" placeholder="Enter a password..." size=40 maxlength="20"></td>
         </tr>
+         <tr><td style='text-align:center;'><input type='reset' name='reset' value='Reset'></td><td style='text-align:center;'><input type='submit' name='submit' value='Create Account'></td></tr>
         </table>
 <br/>
-<input class="submit" type="submit" name="createAccount" value="Create Account">
 </form>
-<%
-%> 
 </div>
 </body>
 </html>
