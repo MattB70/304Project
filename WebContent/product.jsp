@@ -51,6 +51,10 @@ try{
         out.println("<h2><a href=\"" + addCartLink + "\">Add to Cart</a></h2>");
         out.println("<h2><a href=listprod.jsp>Continue Shopping</a></h2>");
     }
+%>
+</div>
+<div id="main-content">
+<%
     String sql2 = "SELECT R.reviewRating, R.reviewDate, R.reviewComment, C.firstName, C.lastName "
                 +"FROM review R, customer C "
                 +"WHERE R.customerId = C.customerId AND productId = ?";
