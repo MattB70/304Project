@@ -278,6 +278,9 @@ INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (10
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2019-10-16 18:00:00', 1, 1, 'Love it, Fits perfectly');
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2018-10-15 18:00:00', 2, 1, 'Great quality');
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2018-10-15 18:00:00', 2, 28, 'Great quality! So lifelike');
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2016-08-20 18:00:00', 4, 28, 'Wow, I thought this was the real Ramone');
+INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (1, '2020-08-20 18:00:00', 3, 28, 'Bobble head is not bobbling');
+
 
 -- Order 1 can be shipped as have enough inventory
 DECLARE @orderId int
