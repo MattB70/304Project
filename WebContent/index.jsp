@@ -74,7 +74,6 @@
                                                 int i = 0;
                                                 while(rst.next() && i < 6)
                                                 {
-                                                        out.print("while"+i);
                                                         productIds[i] = rst.getInt(1);
                                                         i++;
                                                 }
