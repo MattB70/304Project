@@ -259,7 +259,7 @@ INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Elizabeth', 'Elliott', 'engel@uiowa.edu', '555-666-7777', '555 Everwood Street', 'Iowa City', 'IA', '52241', 'United States', 'beth' , 'test');
 
 --USE BELOW FOR CHECKOUT
---For entering into the checkout for custId = 1: 1, test, Visa, 1234, 2021-12-30, 103 Anywhere Street, Winnipeg, MB, R3X 45T, Canada
+--For entering into the checkout for custId = 1: 1, test, Visa, 1234, 2021-12-30, 103 AnyWhere Street, Winnipeg, MB, R3X 45T, Canada
 --The Date is getting moved behind by 2 which would be the same error but reversed from forcing the admin table. Don't know if it's related but it's sus
 INSERT INTO paymentmethod (paymentType, paymentNumber, paymentExpiryDate, customerId) VALUES ('Visa', '1234', '2022', '1');
 
@@ -277,11 +277,7 @@ INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (10
 
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2019-10-16 18:00:00', 1, 1, 'Love it, Fits perfectly');
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2018-10-15 18:00:00', 2, 1, 'Great quality');
-<<<<<<< HEAD
- INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2018-10-15 18:00:00', 2, 28, 'Great quality! So lifelike');
-=======
 INSERT INTO review (reviewRating, reviewDate, customerId, productId, reviewComment) VALUES (5, '2018-10-15 18:00:00', 2, 28, 'Great quality! So lifelike');
->>>>>>> 28319808157859a36dea7fa9c9e65d6ce3edc1c0
 
 -- Order 1 can be shipped as have enough inventory
 DECLARE @orderId int
