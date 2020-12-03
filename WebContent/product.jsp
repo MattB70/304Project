@@ -62,8 +62,20 @@ try{
     PreparedStatement pst2 = con.prepareStatement(sql2);
     pst2.setInt(1, Integer.parseInt(productId));
     ResultSet rst2 = pst2.executeQuery();
+
+    String sql3 = "SELECT R.reviewRating, R.reviewDate, R.reviewComment, C.firstName, C.lastName "
+                +"FROM review R, customer C "
+                +"WHERE R.customerId = C.customerId AND productId = ?";
+    PreparedStatement pst3 = con.prepareStatement(sql3);
+    pst3.setInt(1, Integer.parseInt(productId));
+    ResultSet rst3 = pst3.executeQuery();
+
     out.println("<br><h1>Reviews: </h1>");
-    out.println("<table border=3><th>Rating</th><th>Customer Name</th><th>Date</th><th>Comment</th>");
+    if(rst3.next()){
+        out.println("<table border=3><th>Rating</th><th>Customer Name</th><th>Date</th><th>Comment</th>");
+    } else{
+        out.println("<br><h2 style=\"color:#E46F6F; white-space:nowrap;\">This product currently has no reviews.</h2>");
+    }
     while(rst2.next()){
     int reviewRating = rst2.getInt(1);
         if(reviewRating == 5){
