@@ -7,6 +7,7 @@
 <head>
 <title>Ramon's World - Product Information</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
+
 </head>
 <body>
 <%@ include file="jdbc.jsp" %>
@@ -36,8 +37,8 @@ try{
         String imageInBinary = rst.getString(5);
         String addCartLink = "addcart.jsp?id=" + rst.getInt(1) + "&name=" + rst.getString(2) + "&price=" + currFormat.format(rst.getDouble(3));
 
-        out.println("<table border=3><th colspan = 2><h1>"+rst.getString(2)+ " - "+ rst.getString(6)
-    +"</h1></th><tr><td style='text-align:center;' colspan = 2>");
+        out.println("<table border=3><th colspan = 2><h2>"+rst.getString(2)+ " - "+ rst.getString(6)
+    +"</h2></th><tr><td style='text-align:center;' colspan = 2>");
     if(imageInFile != null){ //rest of images stored in file
         out.println("<img style='height:500px' src=\""+ rst.getString(4) + "\">");
     }else if(imageInBinary != null){ //test for product 1 loaded from ddl file
